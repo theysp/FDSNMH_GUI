@@ -1,7 +1,0 @@
-from PyQt5 import uic
-if __name__ == '__main__':
-    uifile = open('ShowResult.ui','r')
-    pyfile = open('Ui_ShowResult.py','w')
-    uic.compileUi(uifile,pyfile)
-    pyfile.close()
-    uifile.close()
