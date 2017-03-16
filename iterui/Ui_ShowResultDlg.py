@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ShowResult.ui'
+# Form implementation generated from reading ui file 'ShowResultDlg.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,7 +26,7 @@ class Ui_ShowResultDlg(object):
         self.verticalLayout.addWidget(self.comboBoxDecayPeriod)
         self.tabWidgetParameters = QtWidgets.QTabWidget(ShowResultDlg)
         self.tabWidgetParameters.setObjectName("tabWidgetParameters")
-        self.Parameters = QtWidgets.QWidget()
+        self.Parameters = WidgetParam()
         self.Parameters.setObjectName("Parameters")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.Parameters)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -45,7 +45,7 @@ class Ui_ShowResultDlg(object):
         self.verticalLayout.addWidget(self.tabWidgetParameters)
 
         self.retranslateUi(ShowResultDlg)
-        self.tabWidgetParameters.setCurrentIndex(3)
+        self.tabWidgetParameters.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(ShowResultDlg)
 
     def retranslateUi(self, ShowResultDlg):
@@ -61,3 +61,4 @@ class Ui_ShowResultDlg(object):
         self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PrimaryNuclides), _translate("ShowResultDlg", "Primary Nuclides"))
         self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PathwayAnalysis), _translate("ShowResultDlg", "Pathway Analysis"))
 
+from widgetparam import WidgetParam

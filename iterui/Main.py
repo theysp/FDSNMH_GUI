@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from ShowResultDlg import ShowResultDlg
+from showresultdlg import ShowResultDlg
 from PyQt5.QtWidgets import QApplication
 
 if __name__ == "__main__":
