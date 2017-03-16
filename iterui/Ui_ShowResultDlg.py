@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ShowResultDlg.ui'
+# Form implementation generated from reading ui file 'ui/ShowResultDlg.ui'
 #
 # Created by: PyQt5 UI code generator 5.8.1
 #
@@ -15,6 +15,12 @@ class Ui_ShowResultDlg(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(ShowResultDlg)
         self.verticalLayout.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(3, 3, 3, 3)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtWidgets.QLabel(ShowResultDlg)
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
         self.comboBoxDecayPeriod = QtWidgets.QComboBox(ShowResultDlg)
         self.comboBoxDecayPeriod.setEditable(True)
         self.comboBoxDecayPeriod.setObjectName("comboBoxDecayPeriod")
@@ -23,7 +29,8 @@ class Ui_ShowResultDlg(object):
         self.comboBoxDecayPeriod.addItem("")
         self.comboBoxDecayPeriod.addItem("")
         self.comboBoxDecayPeriod.addItem("")
-        self.verticalLayout.addWidget(self.comboBoxDecayPeriod)
+        self.horizontalLayout.addWidget(self.comboBoxDecayPeriod)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.tabWidgetParameters = QtWidgets.QTabWidget(ShowResultDlg)
         self.tabWidgetParameters.setObjectName("tabWidgetParameters")
         self.Parameters = WidgetParam()
@@ -33,24 +40,25 @@ class Ui_ShowResultDlg(object):
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.tabWidgetParameters.addTab(self.Parameters, "")
-        self.TransmutationGraph = QtWidgets.QWidget()
+        self.TransmutationGraph = WidgetTransGraph()
         self.TransmutationGraph.setObjectName("TransmutationGraph")
         self.tabWidgetParameters.addTab(self.TransmutationGraph, "")
-        self.PrimaryNuclides = QtWidgets.QWidget()
+        self.PrimaryNuclides = WidgetPrimaryNuclides()
         self.PrimaryNuclides.setObjectName("PrimaryNuclides")
         self.tabWidgetParameters.addTab(self.PrimaryNuclides, "")
-        self.PathwayAnalysis = QtWidgets.QWidget()
+        self.PathwayAnalysis = WidgetPathway()
         self.PathwayAnalysis.setObjectName("PathwayAnalysis")
         self.tabWidgetParameters.addTab(self.PathwayAnalysis, "")
         self.verticalLayout.addWidget(self.tabWidgetParameters)
 
         self.retranslateUi(ShowResultDlg)
-        self.tabWidgetParameters.setCurrentIndex(0)
+        self.tabWidgetParameters.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(ShowResultDlg)
 
     def retranslateUi(self, ShowResultDlg):
         _translate = QtCore.QCoreApplication.translate
         ShowResultDlg.setWindowTitle(_translate("ShowResultDlg", "Dialog"))
+        self.label.setText(_translate("ShowResultDlg", "Select/Input Cooling Period"))
         self.comboBoxDecayPeriod.setItemText(0, _translate("ShowResultDlg", "1"))
         self.comboBoxDecayPeriod.setItemText(1, _translate("ShowResultDlg", "2"))
         self.comboBoxDecayPeriod.setItemText(2, _translate("ShowResultDlg", "3"))
@@ -62,3 +70,6 @@ class Ui_ShowResultDlg(object):
         self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PathwayAnalysis), _translate("ShowResultDlg", "Pathway Analysis"))
 
 from widgetparam import WidgetParam
+from widgetpathway import WidgetPathway
+from widgetprimarynuclides import WidgetPrimaryNuclides
+from widgettransgraph import WidgetTransGraph

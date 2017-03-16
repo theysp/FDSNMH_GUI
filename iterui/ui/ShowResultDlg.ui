@@ -84,7 +84,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidgetParameters">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="WidgetParam" name="Parameters">
       <attribute name="title">
@@ -108,17 +108,17 @@
        </property>
       </layout>
      </widget>
-     <widget class="QWidget" name="TransmutationGraph">
+     <widget class="WidgetTransGraph" name="TransmutationGraph">
       <attribute name="title">
        <string>Transmutation Graph</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="PrimaryNuclides">
+     <widget class="WidgetPrimaryNuclides" name="PrimaryNuclides">
       <attribute name="title">
        <string>Primary Nuclides</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="PathwayAnalysis">
+     <widget class="WidgetPathway" name="PathwayAnalysis">
       <attribute name="title">
        <string>Pathway Analysis</string>
       </attribute>
@@ -132,6 +132,24 @@
    <class>WidgetParam</class>
    <extends>QWidget</extends>
    <header location="global">widgetparam.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetPrimaryNuclides</class>
+   <extends>QWidget</extends>
+   <header location="global">widgetprimarynuclides.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetTransGraph</class>
+   <extends>QWidget</extends>
+   <header location="global">widgettransgraph.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetPathway</class>
+   <extends>QWidget</extends>
+   <header location="global">widgetpathway.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -9,7 +9,8 @@ def CompileUI(uiname,pyname):
 
 if __name__ == '__main__':
     import sys
-    CompileUI('ShowResultDlg.ui','Ui_ShowResultDlg.py')
-    CompileUI('WidgetParam.ui', 'Ui_WidgetParam.py')
-    CompileUI('WidgetPrimaryNuclides.ui', 'Ui_WidgetPrimaryNuclides.py')
-    CompileUI('WidgetTransGraph.ui', 'Ui_WidgetTransGraph.py')
+    CompileUI(sys.argv[1],sys.argv[2])
+   # CompileUI('ShowResultDlg.ui','Ui_ShowResultDlg.py')
+  #  CompileUI('WidgetParam.ui', 'Ui_WidgetParam.py')
+   # CompileUI('WidgetPrimaryNuclides.ui', 'Ui_WidgetPrimaryNuclides.py')
+   # CompileUI('WidgetTransGraph.ui', 'Ui_WidgetTransGraph.py')
