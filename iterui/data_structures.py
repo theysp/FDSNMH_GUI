@@ -13,10 +13,10 @@ import copy
 class AllActivationData:
     def __init__(self):
         #6 activity, dose rate, heat, ingestion dose, #6 spectrums
-        self.activity = []
-        self.dose = []
-        self.heat = []
-        self.idose = []
+        self.activity = [0, 0, 0, 0, 0, 0]
+        self.dose = [0, 0, 0, 0, 0, 0]
+        self.heat = [0, 0, 0, 0, 0, 0]
+        self.idose = [0, 0, 0, 0, 0, 0]
         self.spectrum = []
 
     def __init__(self,fispact_output):
@@ -25,6 +25,7 @@ class AllActivationData:
     def load_file(self,fispact_output):
         #读取活化数据
         #读取核素演变数据
+        return False
 
 class Material:
     def __init__(self):
@@ -41,21 +42,19 @@ class Material:
             self.elements[element_name] = proportion
 
     def calculate_activation(self):
-        propSum = 0.0
+        prop_sum = 0.0
         for name,prop in self.elements.items():
-            propSum += prop
+            prop_sum += prop
         for name,prop in self.elements.items():
-            propSum += prop
+            prop /= prop_sum
+        # to be continued, extra need to be added
 
 class Element(Material):
     def __init__(self,name):
         super(Element,self).__init__(self)
         self.elements[name] = 1.0
         self.name = name
-        if not self.activation_data.load_file(self.get_output_name()):
-            self.valid = False
-        else:
-            self.valid = True
+        self.valid = self.activation_data.load_file(self.get_output_name())
 
     def get_output_name(self):
         return self.name+'.out'
@@ -65,16 +64,22 @@ class ElementPool:
         self.elementPool = {}
 
     def get_element(self,name):
-        if name in self.elementPool:
-            return self.elementPool[name]
-        self.elementPool[name] = Element(name)
+        if not(name in self.elementPool):
+            self.elementPool[name] = Element(name)
+        return self.elementPool[name]
 
 class PathWay:
-    def __init__(self):
-        self.target_nuclide = 'N/A'
+    def __init__(self,target_nuclide):
+        self.target_nuclide = target_nuclide
         #pathway's key is the whole pathway,
         #the val is the generated nulicdes' weight per kilogram (kg) original material
         self.pathway = dict()
+
+    def add_pathway(self,strpathway,proportion):
+        if strpathway in self.pathway:
+            self.pathway[strpathway] += proportion
+        else:
+            self.pathway[strpathway] = proportion
 
     def __imul__(self,factor):
         for key,val in self.pathway.items():
@@ -90,10 +95,7 @@ class PathWay:
         if self.target_nuclide != other_pathway.target_nuclide:
             return False
         for key,val in other_pathway.pathway.items():
-            if(key in self.pathway):
-                self.pathway[key] += other_pathway.pathway[key]
-            else:
-                self.pathway[key] = other_pathway.pathway[key]
+            self.add_pathway(key,val)
         return self
 
     def __add__(self,other_pathway):
