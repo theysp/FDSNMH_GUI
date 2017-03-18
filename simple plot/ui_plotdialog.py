@@ -27,7 +27,6 @@ class Ui_PlotDialog(object):
         self.buttonPlot.setObjectName("buttonPlot")
         self.horizontalLayout.addWidget(self.buttonPlot)
         self.verticalLayout.addLayout(self.horizontalLayout)
-
         self.retranslateUi(PlotDialog)
         QtCore.QMetaObject.connectSlotsByName(PlotDialog)
 
