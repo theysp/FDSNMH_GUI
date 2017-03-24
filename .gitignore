@@ -1,2 +1,7 @@
 *.bak
 *.pyc
+*.i
+*.out
+*.docx
+ITER DATA/move.py
+*.ZIP
