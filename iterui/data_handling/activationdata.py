@@ -44,6 +44,7 @@ class ActivationData:
         else:
             return None
 
+
 class OneSpectrumActivationData:
     def __init__(self):
         self.allStepsActivationData = []
@@ -71,36 +72,51 @@ class OneSpectrumActivationData:
         finally:
             return opensucessful
 
+
 class OneSpectrumOneStepActivationData:
+    param_names = ['total_activity(Bq)',
+                   'total_activity_no_tritium(Bq)',
+                   'alpha_heat(kW)',
+                   'beta_heat(kW)',
+                   'gamma_heat(kW)',
+                   'total_heat(kW)',
+                   'total_heat_ex_tritium(kW)',
+                   'origin_mass(kg)',
+                   'cur_mass(kg)',
+                   'neutron_flux(n/cm**2/s)',
+                   'number_fission',
+                   'dose_rate(Sv)',
+                   'ingestion_dose(Sv)',
+                   'inhalation_dose(Sv)',
+                   'ingestion_dose_ex_tritium(Sv)',
+                   'inhalation_dose_ex_tritium(Sv)',
+                   'gase_rate(appm/sec)']
     def __init__(self):
         self.time = 0.0
         self.nuclides = dict() #核素以及原子数比
-        self.total_activity = 0.0
-        self.total_activity_no_tritium = 0.0
-        self.alpha_heat = 0.0
-        self.beta_heat = 0.0
-        self.gamma_heat = 0.0
-        self.total_heat = 0.0
-        self.init_mass = 0.0
-        self.cur_mass = 0.0
-        self.neutron_flux_during_interval = 0.0
-        self.number_fission = 0.0
-        self.ingestion_harzard = 0.0
-        self.inhalation_harzard = 0.0
-        self.ingestion_harzard_no_tritium = 0.0
-        self.inhalation_harzard_no_tritium = 0.0
-        self.gas_rate = 0.0
+        self.parameters = {}
+        self.gamma_erg_bin = []
+        self.gamma_spectra_cc = []
+        self.gamma_spectra_power = []
 
     def load_from_raw_lines(self, lines, startidx, endidx):
         # nuclides info (first)
         nuclide_data_start_idx = startidx + 4
         nuclide_data_end_idx = nuclide_data_start_idx
-        for i in range(nuclide_data_start_idx,endidx):
-            if
-
+        for i in range(nuclide_data_start_idx, endidx):
+            if lines[i].startswith('0'):
+                nuclide_data_end_idx = i
+                break
+        for i in range(nuclide_data_start_idx, nuclide_data_end_idx):
+            one_nuclide_data = OneNuclideData()
+            if one_nuclide_data.read_raw_line(lines[i]):
+                self.nuclides[one_nuclide_data.nuclide_name] = one_nuclide_data
         # total info
 
+        # spectra
+
         return True
+
 
 class OneNuclideData:
     param_names = ['atoms',
@@ -110,13 +126,13 @@ class OneNuclideData:
                    'alpha_heat(kW)',
                    'gamma_heat(kW)',
                    'dose_rate(Sv)',
-                   'ing_dose(Sv)',
-                   'inh_dose(Sv)',
+                   'ingestion_dose(Sv)',
+                   'inhalation_dose(Sv)',
                    'Bq/A2_Ratio',
                    'half_life(sec)']
     def __init__(self):
-        #  NUCLIDE        ATOMS         GRAMS        Bq       b-Energy    a-Energy   g-Energy    DOSE RATE   INGESTION  INHALATION     Bq/A2     HALF LIFE
-        #                                                kW          kW         kW         Sv/hr      DOSE(Sv)    DOSE(Sv)     Ratio      seconds
+        #  NUCLIDE ATOMS GRAMS Bq b-Energy a-Energy g-Energy DOSE RATE INGESTION INHALATION Bq/A2 HALF LIFE
+        #                            kW       kW       kW      Sv/hr    DOSE(Sv)   DOSE(Sv) Ratio seconds
         self.params = {}
         self.nuclide_name = ''
 
@@ -135,11 +151,12 @@ class OneNuclideData:
             self.params['half_life(sec)'] = eval(val_list[-1])
         return True
 
+
 class PathWay:
     def __init__(self,target_nuclide):
         self.target_nuclide = target_nuclide
-        #pathway's key is the whole pathway,
-        #the val is the generated nulicdes' weight per kilogram (kg) original material
+        # pathway's key is the whole pathway,
+        # the val is the generated nulicdes' weight per kilogram (kg) original material
         self.pathway = dict()
 
     def add_pathway(self,strpathway,proportion):
