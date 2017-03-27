@@ -113,6 +113,7 @@ class OneSpectrumOneStepActivationData:
                    'ingestion_dose_ex_tritium(Sv/kg)',
                    'inhalation_dose_ex_tritium(Sv/kg)',
                    'gase_rate(appm/sec)']
+    data_position = []
 
     def __init__(self):
         self.time = 0.0
