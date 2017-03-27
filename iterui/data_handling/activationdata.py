@@ -5,6 +5,8 @@ import numpy as np
 import re
 import copy
 
+from pathway import PathWay
+
 num_pattern = re.compile('\d+\.?\d+E?[+-]?\d+')
 
 
@@ -82,7 +84,7 @@ class OneSpectrumActivationData:
                     startlinesforsteps.append(i)
             startlinesforsteps.append(len(lines))
             # if need to skip previous time steps, need to change the range
-            for i in range(1, len(startlinesforsteps)):
+            for i in range(len(startlinesforsteps)-6, len(startlinesforsteps)):
                 onestepdata = OneSpectrumOneStepActivationData()
                 try:
                     onestepdata.load_from_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
@@ -133,38 +135,22 @@ class OneSpectrumOneStepActivationData:
             one_nuclide_data = OneNuclideData()
             if one_nuclide_data.read_raw_line(lines[i]):
                 self.nuclides[one_nuclide_data.nuclide_name] = one_nuclide_data
-                # total info
-        # 'total_activity(Bq)'
+        # total info
         self.parameters['total_activity(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 5][40:51])
-        # 'total_activity_no_tritium(Bq)'
         self.parameters['total_activity_no_tritium(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 6][40:51])
-        # 'alpha_heat(kW)'
         self.parameters['alpha_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 7][40:51])
-        # 'beta_heat(kW)'
         self.parameters['beta_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 8][40:51])
-        # 'gamma_heat(kW)'
         self.parameters['gamma_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 9][40:51])
-        # 'total_heat(kW)'
         self.parameters['total_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 9][90:101])
-        # 'total_heat_ex_tritium(kW)'
         self.parameters['total_heat_ex_tritium(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 10][90:101])
-        # 'origin_mass(kg)'
         self.parameters['origin_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 10][40:51])
-        # 'cur_mass(kg)'
         self.parameters['cur_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 11][40:51])
-        # 'neutron_flux(n/cm**2/s)'
         self.parameters['neutron_flux(n/cm**2/s)'] = eval_str_number(lines[nuclide_data_end_idx + 12][40:51])
-        # 'number_fission'
         self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + 13][40:51])
-        # 'ingestion_dose(Sv/kg)'
         self.parameters['ingestion_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
-        # 'inhalation_dose(Sv/kg)'
         self.parameters['inhalation_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
-        # 'ingestion_dose_ex_tritium(Sv/kg)'
         self.parameters['ingestion_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
-        # 'inhalation_dose_ex_tritium(Sv/kg)'
         self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
-        # 'gase_rate(appm/sec)'
         self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
         # spectra
         spectra_beg_idx = -1
@@ -182,7 +168,9 @@ class OneSpectrumOneStepActivationData:
         if spectra_end_idx < 0:
             raise Exception('spectra format error, no empty line after spectra')
         for i in range(spectra_beg_idx, spectra_end_idx):
-            (starterg, enderg, gamma_power, gammas) = num_pattern.find(lines[i])
+            newline = lines[i]
+            newline = lines[i][:63]+' '+lines[i][64:]
+            (starterg, enderg, gamma_power, gammas) = num_pattern.findall(newline)
             self.gamma_erg_bin.append(enderg)
             self.gamma_spectra_cc.append(gamma_power)
             self.gamma_spectra_power.append(gammas)
@@ -235,48 +223,15 @@ class OneNuclideData:
         return True
 
 
-class PathWay:
-    def __init__(self, target_nuclide):
-        self.target_nuclide = target_nuclide
-        # pathway's key is the whole pathway,
-        # the val is the generated nulicdes' weight per kilogram (kg) original material
-        self.pathway = dict()
-
-    def add_pathway(self, strpathway, proportion):
-        if strpathway in self.pathway:
-            self.pathway[strpathway] += proportion
-        else:
-            self.pathway[strpathway] = proportion
-
-    def __imul__(self, factor):
-        for key, val in self.pathway.items():
-            self.pathway[key] += self.pathway[key] * factor
-        return self
-
-    def __mul__(self, factor):
-        new_path_way = copy.deepcopy(self)
-        new_path_way *= factor
-        return new_path_way
-
-    def __iadd__(self, other_pathway):
-        if self.target_nuclide != other_pathway.target_nuclide:
-            return False
-        for key, val in other_pathway.pathway.items():
-            self.add_pathway(key, val)
-        return self
-
-    def __add__(self, other_pathway):
-        new_path_way = copy.deepcopy(self)
-        new_path_way += other_pathway
-        return new_path_way
-
 
 def functest():
     data_test = OneSpectrumActivationData()
-    data_test.read_raw_file('C:/Users/ysp/Desktop/QT_practice/ITER DATA/Flux2/316L/316L.out')
-
+    data_test.read_raw_file('d:/4-Work/项目/2016年3月ITER活化手册项目/ITER_DATA/Flux4/Fe/Fe.out')
+    print('finish')
 
 import timeit
 
 if __name__ == '__main__':
-    print(timeit.timeit('functest', 'from __main__ import functest'))
+   # for i in range(100):
+   #     functest(x)
+    print(timeit.timeit(stmt='functest()', setup='from __main__ import functest',number=1))
