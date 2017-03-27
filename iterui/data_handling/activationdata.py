@@ -226,7 +226,7 @@ class OneNuclideData:
 
 def functest():
     data_test = OneSpectrumActivationData()
-    data_test.read_raw_file('d:/4-Work/项目/2016年3月ITER活化手册项目/ITER_DATA/Flux4/Fe/Fe.out')
+    data_test.read_raw_file('e:/tmp/Fe/Fe.out')
     print('finish')
 
 import timeit

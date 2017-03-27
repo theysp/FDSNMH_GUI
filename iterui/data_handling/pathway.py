@@ -46,7 +46,7 @@ class PathWay:
         self.pathway = dict()
 
     def load_raw_lines(self,lines):
-
+        return True
 
     def add_pathway(self, strpathway, proportion):
         if strpathway in self.pathway:
