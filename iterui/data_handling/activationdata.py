@@ -5,7 +5,8 @@ import numpy as np
 import re
 import copy
 
-from pathway import PathWay
+from data_handling.pathway import MaterialPathWays
+from data_handling.pathway import BaseData
 
 num_pattern = re.compile('\d+\.?\d+E?[+-]?\d+')
 
@@ -25,7 +26,9 @@ def eval_str_number(num_str):
         return -1.0
 
 
-class ActivationData:
+
+
+class ActivationData(BaseData):
     def __init__(self):
         # 6 activity, dose rate, heat, ingestion dose, #6 spectrums
         self.activition_data = []
@@ -44,6 +47,7 @@ class ActivationData:
             new_one_spectra_data = OneSpectrumActivationData()
             new_one_spectra_data.read_raw_file(file_name)
             self.activition_data.append(new_one_spectra_data)
+
         # read 5 data files
         return False
 
@@ -63,10 +67,20 @@ class ActivationData:
         else:
             return None
 
+    def __imul__(self, number):
+        for data in self.activition_data:
+            data *= number
 
-class OneSpectrumActivationData:
+    def __iadd__(self, other):
+        assert (len(self.activition_data) == len(other.activition_data))
+        for i in range(0,len(self.activition_data)):
+            self.activition_data[i] += other.activition_data[i]
+
+
+class OneSpectrumActivationData(BaseData):
     def __init__(self):
-        self.allStepsActivationData = []
+        self.all_steps_activation_data = []
+        self.path_way = MaterialPathWays()
 
     def read_raw_file(self, inputfilename):
         lines = []
@@ -78,6 +92,7 @@ class OneSpectrumActivationData:
             opensucessful = False
         else:
             opensucessful = True
+            self.path_way.read_raw_lines(lines)
             startlinesforsteps = []
             for i in range(0, len(lines)):
                 if lines[i].startswith('1* * * * * TIME INTERVAL'):
@@ -87,15 +102,27 @@ class OneSpectrumActivationData:
             for i in range(len(startlinesforsteps)-6, len(startlinesforsteps)):
                 onestepdata = OneSpectrumOneStepActivationData()
                 try:
-                    onestepdata.load_from_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
+                    onestepdata.read_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
                 except Exception as err:
                     print(err.args)
-                self.allStepsActivationData.append(onestepdata)
+                self.all_steps_activation_data.append(onestepdata)
         finally:
             return opensucessful
 
+    def __imul__(self, number):
+        for data in self.all_steps_activation_data:
+            data *= number
+        self.path_way *= number
+        return self
 
-class OneSpectrumOneStepActivationData:
+    def __iadd__(self, other):
+        assert(len(self.all_steps_activation_data) == len(other.all_steps_activation_data))
+        for i in range(0,len(self.all_steps_activation_data)):
+            self.all_steps_activation_data[i] += other.all_steps_activation_data[i]
+        self.path_way += other.path_way
+        return self
+
+class OneSpectrumOneStepActivationData(BaseData):
     param_names = ['total_activity(Bq)',
                    'total_activity_no_tritium(Bq)',
                    'alpha_heat(kW)',
@@ -124,7 +151,7 @@ class OneSpectrumOneStepActivationData:
         self.gamma_spectra_power = []
         self.ok = False
 
-    def load_from_raw_lines(self, lines, startidx, endidx):
+    def read_raw_lines(self, lines, startidx, endidx):
         # nuclides info (first)
         nuclide_data_start_idx = startidx + 4
         nuclide_data_end_idx = nuclide_data_start_idx
@@ -172,9 +199,9 @@ class OneSpectrumOneStepActivationData:
             newline = lines[i]
             newline = lines[i][:63]+' '+lines[i][64:]
             (starterg, enderg, gamma_power, gammas) = num_pattern.findall(newline)
-            self.gamma_erg_bin.append(enderg)
-            self.gamma_spectra_cc.append(gamma_power)
-            self.gamma_spectra_power.append(gammas)
+            self.gamma_erg_bin.append(eval(enderg))
+            self.gamma_spectra_cc.append(eval(gamma_power))
+            self.gamma_spectra_power.append(eval(gammas))
         # 'dose_rate(Sv/kg)'
         dose_rate_idx = -1
         for i in range(spectra_end_idx, endidx):
@@ -188,8 +215,36 @@ class OneSpectrumOneStepActivationData:
         self.ok = True
         return True
 
+    def __imul__(self, number):
+        for key, val in self.nuclides.items():
+            val *= number
+        for key, val in self.parameters.items():
+            val *= number
+        assert(len(self.gamma_erg_bin) == len(self.gamma_spectra_cc) and len(self.gamma_spectra_cc) == len(self.gamma_spectra_power))
+        for i in range(0, len(self.gamma_erg_bin)):
+            self.gamma_spectra_cc[i] *= number
+            self.gamma_spectra_power[i] *= number
+        return self
 
-class OneNuclideData:
+    def __iadd__(self, other):
+        for key, val in other.nuclides.items():
+            if key in self.nuclides:
+                self.nuclides[key] += other.nuclides[key]
+            else:
+                self.nuclides[key] = other.nuclides[key]
+        for key, val in other.parameters.items():
+            if key in self.parameters:
+                self.parameters[key] += val
+            else:
+                self.parameters[key] = val
+        assert(len(self.gamma_erg_bin) == len(other.gamma_erg_bin))
+        for i in range(0,len(self.gamma_erg_bin)):
+            self.gamma_spectra_cc[i] += other.gamma_spectra_cc[i]
+            self.gamma_spectra_power[i] += other.gamma_spectra_power[i]
+        return self
+
+
+class OneNuclideData(BaseData):
     param_names = ['atoms',
                    'weight(g)',
                    'activation(Bq)',
@@ -223,16 +278,34 @@ class OneNuclideData:
             self.params['half_life(sec)'] = eval_str_number(val_list[-1])
         return True
 
+    def __imul__(self, number):
+        for i in range(2, len(OneNuclideData.param_names) - 1):
+            self.params[OneNuclideData.param_names[i - 2]] *= number
+        return self
 
+    def __iadd__(self, other):
+        assert(self.nuclide_name == other.nuclide_name)
+        for i in range(2, len(OneNuclideData.param_names) - 1):
+            self.params[OneNuclideData.param_names[i - 2]] += other.params[OneNuclideData.param_names[i - 2]]
+        return self
 
-def functest():
+def functest_activation():
     data_test = OneSpectrumActivationData()
     data_test.read_raw_file('C:/Users/ysp/Desktop/QT_practice/ITER DATA/Flux1/Fe/Fe.out')
-    print('finish')
+    data_test *= 0.5
+    data_test.path_way.output()
+    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    data_test2 = OneSpectrumActivationData()
+    data_test2.read_raw_file('C:/Users/ysp/Desktop/QT_practice/ITER DATA/Flux1/Cu/Cu.out')
+    data_test2 *= 0.5
+    data_test2.path_way.output()
+    data_test += data_test2
+    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    data_test.path_way.output()
 
 import timeit
 
 if __name__ == '__main__':
-   # for i in range(100):
-   #     functest(x)
-    print(timeit.timeit(stmt='functest()', setup='from __main__ import functest',number=1))
+    # for i in range(100):
+    functest_activation()
+    # print(timeit.timeit(stmt='functest()', setup='from __main__ import functest', number=1))
