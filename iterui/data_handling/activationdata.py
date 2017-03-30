@@ -4,6 +4,7 @@
 import numpy as np
 import re
 import copy
+import pickle
 
 from data_handling.pathway import MaterialPathWays
 from data_handling.pathway import BaseData
@@ -26,23 +27,21 @@ def eval_str_number(num_str):
         return -1.0
 
 
-
-
 class ActivationData(BaseData):
     def __init__(self):
         # 6 activity, dose rate, heat, ingestion dose, #6 spectrums
         self.activition_data = []
 
-    def __init__(self, fispact_output):
-        self.read_raw_file(fispact_output)
+    def __init__(self, raw_name):
+        self.read_raw_file(raw_name)
 
-    def read_raw_file(self, matname):
+    def read_raw_file(self, raw_name):
         # obtain 5 files
-        data_file_names = ['Flux1\\{0}\\{0}.out'.format(matname),
-                           'Flux2\\{0}\\{0}.out'.format(matname),
-                           'Flux4\\{0}\\{0}.out'.format(matname),
-                           'Flux5\\{0}\\{0}.out'.format(matname),
-                           'Flux6\\{0}\\{0}.out'.format(matname)]
+        data_file_names = ['Flux1\\{0}\\{0}.out'.format(raw_name),
+                           'Flux2\\{0}\\{0}.out'.format(raw_name),
+                           'Flux4\\{0}\\{0}.out'.format(raw_name),
+                           'Flux5\\{0}\\{0}.out'.format(raw_name),
+                           'Flux6\\{0}\\{0}.out'.format(raw_name)]
         for file_name in data_file_names:
             new_one_spectra_data = OneSpectrumActivationData()
             new_one_spectra_data.read_raw_file(file_name)
@@ -243,7 +242,6 @@ class OneSpectrumOneStepActivationData(BaseData):
             self.gamma_spectra_power[i] += other.gamma_spectra_power[i]
         return self
 
-
 class OneNuclideData(BaseData):
     param_names = ['atoms',
                    'weight(g)',
@@ -289,6 +287,10 @@ class OneNuclideData(BaseData):
             self.params[OneNuclideData.param_names[i - 2]] += other.params[OneNuclideData.param_names[i - 2]]
         return self
 
+
+# ysp: we will need pickle for faster data persistence
+
+
 def functest_activation():
     data_test = OneSpectrumActivationData()
     data_test.read_raw_file('C:/Users/ysp/Desktop/QT_practice/ITER DATA/Flux1/Fe/Fe.out')
@@ -301,9 +303,20 @@ def functest_activation():
     data_test2.path_way.output()
     data_test += data_test2
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    data_test.path_way.normalize()
     data_test.path_way.output()
+    with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
+        pickle.dump(data_test, outdata)
+    for i in range(0,1000):
+        with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data",'rb') as indata:
+            tmp = pickle.load(indata)
+        print('over')
+        if i % 100 == 0:
+            print('it')
+
 
 import timeit
+
 
 if __name__ == '__main__':
     # for i in range(100):

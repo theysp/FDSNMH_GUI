@@ -47,6 +47,10 @@ class MaterialPathWays(BaseData):
         # all_path_ways contains all the pathways for all the target nuclides of this material
         self.all_path_ways = dict()
 
+    def normalize(self):
+        for key, val in self.all_path_ways.items():
+            val.normalize()
+
     def read_raw_lines(self, lines, start_idx=0):
         real_start_idx = -1
         for i in range(start_idx, len(lines)):
@@ -108,6 +112,13 @@ class PathWay(BaseData):
         # pathway's key is the whole pathway,
         # the val is the percentage
         self.pathway = dict()
+
+    def normalize(self):
+        sum_prop = 0.0
+        for key, val in self.pathway.items():
+            sum_prop += val
+        for key, val in self.pathway.items():
+            self.pathway[key] = val*100/sum_prop
 
     def read_raw_lines(self,lines,start_idx):
         if not lines[start_idx].startswith(' Target nuclide '):

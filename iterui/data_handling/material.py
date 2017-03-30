@@ -4,7 +4,16 @@ import numpy as np
 
 import copy
 
-from activationdata import *
+from data_handling.activationdata import ActivationData
+from base.base import *
+import pickle
+
+global_material_list = []
+with open('mat_list.txt','r') as mat_list_file:
+    lines = mat_list_file.readlines()
+    for line in lines:
+        line.strip('\r\n')
+        global_material_list.append(line)
 
 
 class Material:
@@ -12,10 +21,13 @@ class Material:
         self.elements = dict()
         self.activationdata = ActivationData()
 
-    def __init__(self, input_elements):
-        self.elements = input_elements
+    def __init__(self, line):
+        elems = [a for a in line.split(' ') if len(a) > 0 and a != '\n']
+        if len(elems) % 2 != 1:
+            raise YSPException("error, in ")
 
-    def add_element(self,element_name,proportion):
+
+    def add_element(self, element_name,proportion):
         if "elementName" in self.elements:
             self.elements[element_name] = self.elements[element_name] + proportion
         else:
@@ -23,28 +35,29 @@ class Material:
 
     def calculate_activation(self):
         prop_sum = 0.0
-        for name,prop in self.elements.items():
+        for name, prop in self.elements.items():
             prop_sum += prop
-        for name,prop in self.elements.items():
+        for name, prop in self.elements.items():
             prop /= prop_sum
         # to be continued, extra need to be added
+
 
 class Element(Material):
     def __init__(self,name):
         super(Element,self).__init__(self)
         self.elements[name] = 1.0
         self.name = name
-        self.valid = self.activationdata.load_file(self.get_output_name())
+        self.valid = self.activationdata.read_raw_file(name)
 
-    def get_output_name(self):
-        return self.name+'.out'
+    def get_restored_file(self):
+        return self.name+'.cache'
 
 class ElementPool:
-    def __init__(self):
-        self.elementPool = {}
+    dict_elems = {}
 
-    def get_element(self,name):
-        if not(name in self.elementPool):
-            self.elementPool[name] = Element(name)
-        return self.elementPool[name]
+    def get_elem(name):
+        if name in ElementPool.dict_elems:
+            return ElementPool.dict_elems[name]
+        else:
+
 
