@@ -22,25 +22,28 @@ class MaterialListLibrary:
                 for line in lines:
                     line = line.strip('\r\n\s')
                     if len(line) > 0:
-                        newMat = Material(line)
-                        self.material_list.append(newMat)
-
+                        new_mat = Material(line)
+                        self.material_list.append(new_mat)
 
     def save_material_list(self):
         with open(BasicPath.material_list_file_name, 'w') as list_file:
             for mat in self.material_list:
                 list_file.write(mat)
 
+
 class Material:
     def __init__(self):
         self.elements = dict()
+        self.name = ''
         self.activationdata = ActivationData()
 
     def __init__(self, line):
         elems = [a for a in line.split(' ') if len(a) > 0 and a != '\n']
         if len(elems) % 2 != 1:
             raise YSPException("error, in ")
-        for i in range(0,(len(elems)-1)/2):
+        self.elements = dict()
+        self.name = elems[0]
+        for i in range(0, int((len(elems)-1)/2)):
             self.elements[elems[2*i+1]] = elems[2*i+2]
 
     def add_element(self, element_name,proportion):
