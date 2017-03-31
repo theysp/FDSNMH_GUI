@@ -28,6 +28,7 @@ def eval_str_number(num_str):
 
 
 class ActivationData(BaseData):
+
     def __init__(self):
         # 6 activity, dose rate, heat, ingestion dose, #6 spectrums
         self.activition_data = []
@@ -35,13 +36,13 @@ class ActivationData(BaseData):
     def __init__(self, raw_name):
         self.read_raw_file(raw_name)
 
-    def read_raw_file(self, raw_name):
+    def read_raw_files(self, raw_name):
         # obtain 5 files
-        data_file_names = ['Flux1\\{0}\\{0}.out'.format(raw_name),
-                           'Flux2\\{0}\\{0}.out'.format(raw_name),
-                           'Flux4\\{0}\\{0}.out'.format(raw_name),
-                           'Flux5\\{0}\\{0}.out'.format(raw_name),
-                           'Flux6\\{0}\\{0}.out'.format(raw_name)]
+        data_file_names = ['activation_data_path/Flux1/{0}/{0}.out'.format(raw_name),
+                           'activation_data_path/Flux2/{0}/{0}.out'.format(raw_name),
+                           'activation_data_path/Flux4/{0}/{0}.out'.format(raw_name),
+                           'activation_data_path/Flux5/{0}/{0}.out'.format(raw_name),
+                           'activation_data_path/Flux6/{0}/{0}.out'.format(raw_name)]
         for file_name in data_file_names:
             new_one_spectra_data = OneSpectrumActivationData()
             new_one_spectra_data.read_raw_file(file_name)

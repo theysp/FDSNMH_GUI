@@ -3,4 +3,5 @@ python compileui.py ui/WidgetParam.ui Ui_WidgetParam.py
 python compileui.py ui/WidgetPrimaryNuclides.ui Ui_WidgetPrimaryNuclides.py 
 python compileui.py ui/WidgetTransGraph.ui Ui_WidgetTransGraph.py 
 python compileui.py ui/WidgetPathway.ui Ui_WidgetPathway.py 
+python compileui.py ui/InputDlg.ui Ui_InputDlg.py 
 pause
