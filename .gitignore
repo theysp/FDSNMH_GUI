@@ -18,3 +18,4 @@ ITER DATA/move.py
 ITER_DATA/move.py
 *.xml
 .idea/workspace.xml
+iterui/.idea/workspace.xml
