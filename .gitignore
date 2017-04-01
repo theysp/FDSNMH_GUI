@@ -14,3 +14,7 @@ ITER DATA/move.py
 *.xml
 *.xml
 *.txt
+*.xml
+ITER_DATA/move.py
+*.xml
+.idea/workspace.xml

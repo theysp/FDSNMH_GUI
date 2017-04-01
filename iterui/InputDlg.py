@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QHBoxLayout
 from Ui_InputDlg import Ui_InputDlg
 from data_handling.material import MaterialListLibrary
@@ -20,6 +21,16 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.matlib.load_material_list()
         for mat in self.matlib.material_list:
             self.listWidgetMaterialLib.addItem(mat.name)
+
+    def data_to_table(self, material, tableWidget: QtWidgets.QTableWidget):
+        tableWidget.clear()
+        tableWidget.insertRow(len(material.elements))
+        for m in material.elements:
+            tableWidget.item()
+
+    @pyqtSlot()
+    def on_tableWidgetSelectedMatComposition_itemSelectionChanged(self):
+
 
     @pyqtSlot(str)
     def on_textMaterialSearch_textChanged(self, text):

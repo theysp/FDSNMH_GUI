@@ -28,8 +28,8 @@ class MaterialListLibrary:
     def save_material_list(self):
         with open(BasicPath.material_list_file_name, 'w') as list_file:
             for mat in self.material_list:
-                list_file.write(mat)
-
+                line = mat.to_string()
+                list_file.write(line+'\n')
 
 class Material:
     def __init__(self):
@@ -38,13 +38,14 @@ class Material:
         self.activationdata = ActivationData()
 
     def __init__(self, line):
-        elems = [a for a in line.split(' ') if len(a) > 0 and a != '\n']
-        if len(elems) % 2 != 1:
+        (name, elemline) = line.split('|')
+        elems = [a for a in elemline.split(' ') if len(a) > 0 and a != '\n']
+        if len(elems) % 2 != 0:
             raise YSPException("error, in ")
         self.elements = dict()
-        self.name = elems[0]
+        self.name = name.strip(' ')
         for i in range(0, int((len(elems)-1)/2)):
-            self.elements[elems[2*i+1]] = elems[2*i+2]
+            self.elements[elems[2*i]] = eval(elems[2*i+1])
 
     def add_element(self, element_name,proportion):
         if "elementName" in self.elements:
@@ -60,6 +61,11 @@ class Material:
             prop /= prop_sum
         # to be continued, extra need to be added
 
+    def to_string(self):
+        line = self.name + ' | '
+        for elem, prop in self.elements:
+            line = line + "{0} {1} ".format(elem,prop)
+        return line
 
 class Element(Material):
     def __init__(self,name):
@@ -82,6 +88,7 @@ class ElementPool:
             return ElementPool.dict_elems[name]
         else:
             new_elem = Element(name)
+            ElementPool.dict_elems[name] = new_elem
 
 
 
