@@ -8,18 +8,20 @@
 
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidget
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QLineEdit, QComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Ui_WidgetParam import Ui_WidgetParam
-from data_handling.material import MaterialListLibrary
-from data_handling.material import Material
+from data_handling.material import *
+from base.base import BasicPath
+
 
 class QTableWidgetMaterial(QTableWidget):
-    def __init__(self, material:Material=None, parent=None):
+    def __init__(self, parent=None):
         super(QTableWidgetMaterial, self).__init__(parent)
         self.setColumnCount(2)
         self.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidgetMatComposition.setHorizontalHeaderItem(0, item)
+        self.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.setHorizontalHeaderItem(1, item)
         self.horizontalHeader().setDefaultSectionSize(88)
@@ -27,17 +29,95 @@ class QTableWidgetMaterial(QTableWidget):
         self.verticalHeader().setVisible(False)
         self.verticalHeader().setMinimumSectionSize(16)
         self.verticalHeader().setStretchLastSection(False)
+        self.retranslate_ui()
+        self.cur_material = None
+        self.elemlist = []
+        with open(BasicPath.element_list_file_name) as input_elemnt:
+            lines = [a for a in input_elemnt.readlines() if len(a) > 0]
+            for line in lines:
+                self.elemlist.append(line.strip('\r\n '))
+        self.connect_signal_slots()
 
-    def retranslateUI(self):
+    def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
         item = self.horizontalHeaderItem(0)
         item.setText(_translate("InputDlg", "Nuclide"))
         item = self.horizontalHeaderItem(1)
         item.setText(_translate("InputDlg", "Weight Proportion (%)"))
 
-    def matInfoToUI(self, material):
-        size = len(material.elements)
+    def connect_signal_slots(self):
+        self.currentCellChanged.connect(self.on_self_currentCellChanged)
+        self.itemChanged.connect(self.on_self_itemChanged)
 
-    def uiToMatInfo(self, material):
-        return True
-        return False
+    def disconnect_signal_slots(self):
+        self.currentCellChanged.disconnect()
+        self.itemChanged.disconnect()
+
+    def mat_info_to_ui(self, material:Material):
+        self.disconnect_signal_slots()
+        self.cur_material = material
+        self.setRowCount(0)
+        size = len(material.elements)
+        if size > 0:
+            self.setRowCount(size+1)
+            row_idx = 0
+            for key, val in material.elements.items():
+                self.setItem(row_idx, 0, QTableWidgetItem(key))
+                self.setItem(row_idx, 1, QTableWidgetItem('{0}'.format(val)))
+                row_idx += 1
+        else:
+            size = 1
+            self.setRowCount(1+1)
+            self.setItem(0, 0, QTableWidgetItem(material.name))
+            self.setItem(0, 1, QTableWidgetItem('{0}'.format(100)))
+        self.setItem(size, 0, QTableWidgetItem(''))
+        self.setItem(size, 1, QTableWidgetItem(''))
+        self.connect_signal_slots()
+
+    def ui_to_mat_info(self):
+        if self.cur_material is None:
+            return None
+        material = Material()
+        material.name = self.cur_material.name
+        for i in range(0, self.rowCount()-1):
+            if not self.item(i, 0).text() in self.elemlist:
+                self.setCurrentCell(i,0)
+                QMessageBox.Warning('Error element name: \"'+self.item(i, 0).text()+'\"')
+                return None
+            isnumber = False
+            try:
+                number = eval(self.item(i, 1).text())
+                isnumber = True
+            except ValueError:
+                isnumber = False
+            if not isnumber:
+                self.setCurrentCell(i,1)
+                QMessageBox.Warning('Error element propotion: \"' + self.item(i, 0).text() + '\"')
+                return None
+            material.add_element(self.item(i, 0).text(),eval(self.item(i, 1).text()))
+        return material
+
+    def on_self_currentCellChanged(self, p_int, p_int_1, p_int_2, p_int_3):
+        # recover the previous cell to plaintext
+        if p_int_3 == 0:
+            old_combo = self.cellWidget(p_int_2, p_int_3)
+            item = self.item(p_int_2, p_int_3)
+            item.setText(old_combo.currentText())
+            self.setCellWidget(p_int_2, p_int_3, None)
+        # set widget to QComboBox with elements if select new item
+        if p_int_1 == 0:
+            new_combo = QComboBox()
+            for elem in self.elemlist:
+                new_combo.addItem(elem)
+            new_combo.setCurrentText(self.item(p_int, p_int_1).text())
+            self.setCellWidget(p_int, p_int_1, new_combo)
+
+    # if the last row has been updated, add new line to the table, means a new element
+    def on_self_itemChanged(self, item):
+        self.disconnect_signal_slots()
+        irow = item.row()
+        if irow == self.rowCount()-1:
+            self.insertRow(self.rowCount())
+            self.setItem(irow+1, 0, QTableWidgetItem(''))
+            self.setItem(irow+1, 1, QTableWidgetItem(''))
+        self.connect_signal_slots()

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/InputDlg.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.1
+# Created by: PyQt5 UI code generator 5.7.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -21,6 +21,7 @@ class Ui_InputDlg(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setContentsMargins(0, -1, -1, -1)
+        self.verticalLayout_4.setSpacing(9)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.groupBox_3 = QtWidgets.QGroupBox(InputDlg)
         self.groupBox_3.setObjectName("groupBox_3")

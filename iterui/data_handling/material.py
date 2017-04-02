@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-
 import copy
-
 from data_handling.activationdata import ActivationData
 from base.base import *
 import pickle
-
 import os
+
 
 class MaterialListLibrary:
     def __init__(self):
-        self.material_list = []
+        self.materials = {}
         self.load_material_list()
 
     def load_material_list(self):
@@ -23,22 +21,28 @@ class MaterialListLibrary:
                     line = line.strip('\r\n\s')
                     if len(line) > 0:
                         new_mat = Material(line)
-                        self.material_list.append(new_mat)
+                        self.materials[new_mat.name] = (new_mat)
 
     def save_material_list(self):
         with open(BasicPath.material_list_file_name, 'w') as list_file:
-            for mat in self.material_list:
+            for mat in self.materials.values():
                 line = mat.to_string()
                 list_file.write(line+'\n')
 
-class Material:
-    def __init__(self):
-        self.elements = dict()
-        self.name = ''
-        self.activationdata = ActivationData()
+    def add_material(self,material):
+        if material.name in self.materials.keys():
+            raise MaterialAlreadyException('material: '+material.name+' already exists, please change material name')
+        self.materials[material.name] = material
 
-    def __init__(self, line):
-        (name, elemline) = line.split('|')
+
+class Material:
+    def __init__(self, line='Empty'):
+        name = ''
+        elemline = ''
+        try:
+            (name, elemline) = line.split('|')
+        except ValueError:
+            name = line.strip('\n\r ')
         elems = [a for a in elemline.split(' ') if len(a) > 0 and a != '\n']
         if len(elems) % 2 != 0:
             raise YSPException("error, in ")
@@ -66,6 +70,7 @@ class Material:
         for elem, prop in self.elements:
             line = line + "{0} {1} ".format(elem,prop)
         return line
+
 
 class Element(Material):
     def __init__(self,name):
