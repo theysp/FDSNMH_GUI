@@ -52,7 +52,7 @@ class Ui_ShowResultDlg(object):
         self.verticalLayout.addWidget(self.tabWidgetParameters)
 
         self.retranslateUi(ShowResultDlg)
-        self.tabWidgetParameters.setCurrentIndex(3)
+        self.tabWidgetParameters.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(ShowResultDlg)
 
     def retranslateUi(self, ShowResultDlg):

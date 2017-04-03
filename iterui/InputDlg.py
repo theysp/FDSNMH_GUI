@@ -8,10 +8,11 @@ from data_handling.material import MaterialListLibrary
 from widgetparam import WidgetParam
 from base.base import MaterialAlreadyException
 from data_handling.material import *
+from ShowResultDlg import ShowResultDlg
 import pickle
 import os
 import copy
-
+import sys
 
 class InputDlg(QDialog, Ui_InputDlg):
     def __init__(self, parent=None):
@@ -19,6 +20,7 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.setupUi(self)
         self.matlib = MaterialListLibrary()
         self.init_ui_data()
+        self.resultdlg = None
 
     def init_ui_data(self):
         self.listWidgetMaterialLib.clear()
@@ -34,12 +36,12 @@ class InputDlg(QDialog, Ui_InputDlg):
             tableWidget.item()
 
     def current_material(self):
-        if self.tableWidgetMatComposition.cur_material is None:
+        mat_ret = self.tableWidgetMatComposition.ui_to_mat_info()
+        if mat_ret is None:
             return None
         else:
-            material = self.tableWidgetMatComposition.cur_material
-            material.name = self.textMatName.toPlainText()
-            return material
+            mat_ret.name = self.textMatName.toPlainText()
+            return mat_ret
 
     def show_message(self, msg):
         msg_box = QMessageBox()
@@ -107,18 +109,19 @@ class InputDlg(QDialog, Ui_InputDlg):
             ' or from scratch')
             return
         if cur_mat.calculate_activation():
+            # with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
+            #    pickle.dump(cur_mat, outdata)
             index = self.comboBoxSelectSpectra.currentIndex()
-
+            self.resultdlg = ShowResultDlg(cur_mat, index+1)
+            self.resultdlg.show()
         else:
             self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
 
-import sys
-
 if __name__ == "__main__":
-    try:
-        app = QApplication(sys.argv)
-        resultDlg = InputDlg()
-        resultDlg.show()
-        sys.exit(app.exec_())
-    except Exception as err:
-        print(err.args)
+    # try:
+    app = QApplication(sys.argv)
+    resultDlg = InputDlg()
+    resultDlg.show()
+    sys.exit(app.exec_())
+   #  except Exception as err:
+   #     print(err.args)

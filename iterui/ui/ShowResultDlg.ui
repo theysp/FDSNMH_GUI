@@ -84,7 +84,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidgetParameters">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="WidgetParam" name="Parameters">
       <attribute name="title">

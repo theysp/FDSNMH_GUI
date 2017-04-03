@@ -5,6 +5,7 @@ class BasicPath:
     activation_data_path = '../ITER DATA'
     material_list_file_name = "../Data Save/matlist.txt"
     element_list_file_name = "../Data Save/elemlist.txt"
+    element_cache_folder = "../Data Save/Elem Cache"
 
 
 class YSPException(Exception):

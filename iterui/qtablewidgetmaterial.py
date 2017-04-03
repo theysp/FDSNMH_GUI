@@ -24,11 +24,11 @@ class QTableWidgetMaterial(QTableWidget):
         self.setColumnCount(2)
         self.setRowCount(1)
         item = QTableWidgetItem('')
-        item.setBackground(QColor=QColor(200,200,200))
+        item.setBackground(QColor(200,200,200))
         self.setItem(0, 0, QTableWidgetItem(''))
         self.setItem(0, 1, QTableWidgetItem(''))
         item = QtWidgets.QTableWidgetItem()
-        item.setBackground(QColor=QColor(200, 200, 200))
+        item.setBackground(QColor(200, 200, 200))
         self.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.setHorizontalHeaderItem(1, item)
@@ -64,6 +64,7 @@ class QTableWidgetMaterial(QTableWidget):
         self.itemChanged.disconnect()
 
     def mat_info_to_ui(self, material:Material):
+        self.cur_material = material
         self.disconnect_signal_slots()
         self.cur_material = material
         self.setRowCount(0)

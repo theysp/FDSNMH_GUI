@@ -8,6 +8,7 @@ import pickle
 
 from data_handling.pathway import MaterialPathWays
 from data_handling.pathway import BaseData
+from base.base import *
 
 num_pattern = re.compile('\d+\.?\d+E?[+-]?\d+')
 
@@ -29,27 +30,24 @@ def eval_str_number(num_str):
 
 class ActivationData(BaseData):
 
-    def __init__(self):
-        # 6 activity, dose rate, heat, ingestion dose, #6 spectrums
+    def __init__(self, raw_name = None):
         self.activition_data = []
-
-    def __init__(self, raw_name):
-        self.read_raw_file(raw_name)
+        if not(raw_name is None):
+            self.read_raw_file(raw_name)
 
     def read_raw_files(self, raw_name):
         # obtain 5 files
-        data_file_names = ['activation_data_path/Flux1/{0}/{0}.out'.format(raw_name),
-                           'activation_data_path/Flux2/{0}/{0}.out'.format(raw_name),
-                           'activation_data_path/Flux4/{0}/{0}.out'.format(raw_name),
-                           'activation_data_path/Flux5/{0}/{0}.out'.format(raw_name),
-                           'activation_data_path/Flux6/{0}/{0}.out'.format(raw_name)]
+        data_file_names = [BasicPath.activation_data_path+'/Flux1/{0}/{0}.out'.format(raw_name),
+                           BasicPath.activation_data_path+'/Flux2/{0}/{0}.out'.format(raw_name),
+                           BasicPath.activation_data_path+'/Flux4/{0}/{0}.out'.format(raw_name),
+                           BasicPath.activation_data_path+'/Flux5/{0}/{0}.out'.format(raw_name),
+                           BasicPath.activation_data_path+'/Flux6/{0}/{0}.out'.format(raw_name)]
         for file_name in data_file_names:
             new_one_spectra_data = OneSpectrumActivationData()
             new_one_spectra_data.read_raw_file(file_name)
             self.activition_data.append(new_one_spectra_data)
-
         # read 5 data files
-        return False
+        return True
 
     def get_spectra_data(self, spectraidx):
         if spectraidx == 1:
@@ -70,12 +68,13 @@ class ActivationData(BaseData):
     def __imul__(self, number):
         for data in self.activition_data:
             data *= number
+        return self
 
     def __iadd__(self, other):
         assert (len(self.activition_data) == len(other.activition_data))
         for i in range(0,len(self.activition_data)):
             self.activition_data[i] += other.activition_data[i]
-
+        return self
 
 class OneSpectrumActivationData(BaseData):
     def __init__(self):
@@ -99,7 +98,7 @@ class OneSpectrumActivationData(BaseData):
                     startlinesforsteps.append(i)
             startlinesforsteps.append(len(lines))
             # if need to skip previous time steps, need to change the range
-            for i in range(len(startlinesforsteps)-6, len(startlinesforsteps)):
+            for i in range(len(startlinesforsteps)-7, len(startlinesforsteps)):
                 onestepdata = OneSpectrumOneStepActivationData()
                 try:
                     onestepdata.read_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
@@ -243,6 +242,7 @@ class OneSpectrumOneStepActivationData(BaseData):
             self.gamma_spectra_power[i] += other.gamma_spectra_power[i]
         return self
 
+
 class OneNuclideData(BaseData):
     param_names = ['atoms',
                    'weight(g)',
@@ -309,7 +309,7 @@ def functest_activation():
     with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
         pickle.dump(data_test, outdata)
     for i in range(0,1000):
-        with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data",'rb') as indata:
+        with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'rb') as indata:
             tmp = pickle.load(indata)
         print('over')
         if i % 100 == 0:

@@ -19,3 +19,7 @@ ITER_DATA/move.py
 *.xml
 .idea/workspace.xml
 iterui/.idea/workspace.xml
+iterui/.idea/workspace.xml
+iterui/.idea/workspace.xml
+*.pyc
+Data Save/Elem Cache/name.cache

@@ -49,8 +49,11 @@ class Material:
         self.elements = dict()
         self.name = name.strip(' ')
         self.activation_data = None
-        for i in range(0, int((len(elems)-1)/2)):
-            self.elements[elems[2*i]] = eval(elems[2*i+1])
+        if len(elems) > 1: # normal material
+            for i in range(0, int(len(elems)/2)):
+                self.elements[elems[2*i]] = eval(elems[2*i+1])
+        elif line != 'Empty':              # single elements
+            self.elements[self.name] = 100.0
 
     def add_element(self, element_name,proportion):
         if "elementName" in self.elements:
@@ -81,12 +84,12 @@ class Material:
 
 
 class Element(Material):
-    def __init__(self,name):
-        super(Element,self).__init__(self)
+    def __init__(self, name):
+        super(Element, self).__init__()
         self.elements[name] = 1.0
         self.name = name
-        self.activationdata = ActivationData()
-        self.valid = self.activationdata.read_raw_files(self.name)
+        self.activation_data = ActivationData()
+        self.valid = self.activation_data.read_raw_files(self.name)
 
     def get_restored_file(self):
         return self.name+'.cache'
@@ -100,8 +103,17 @@ class ElementPool:
         if name in ElementPool.dict_elems:
             return ElementPool.dict_elems[name]
         else:
-            new_elem = Element(name)
-            ElementPool.dict_elems[name] = new_elem
+            # check if there is cache
+            new_elem = None
+            if os.path.exists(BasicPath.element_cache_folder+'/name.cache'):
+                with open(BasicPath.element_cache_folder+'/name.cache','rb') as infile:
+                    new_elem = pickle.load(infile)
+            else:
+                new_elem = Element(name)
+                ElementPool.dict_elems[name] = new_elem
+                with open(BasicPath.element_cache_folder+'/name.cache','wb') as outfile:
+                    pickle.dump(new_elem,outfile)
+            return new_elem
 
 
 
