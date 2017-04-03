@@ -48,6 +48,7 @@ class Material:
             raise YSPException("error, in ")
         self.elements = dict()
         self.name = name.strip(' ')
+        self.activation_data = None
         for i in range(0, int((len(elems)-1)/2)):
             self.elements[elems[2*i]] = eval(elems[2*i+1])
 
@@ -64,6 +65,13 @@ class Material:
         for name, prop in self.elements.items():
             prop /= prop_sum
         # to be continued, extra need to be added
+        for element_name in self.elements.keys():
+            element = ElementPool.get_elem(element_name)
+            if self.activation_data is None:
+                self.activation_data = element.activation_data*self.elements[element_name]
+            else:
+                self.activation_data += element.activation_data*self.elements[element_name]
+        return True
 
     def to_string(self):
         line = self.name + ' | '

@@ -10,17 +10,25 @@ from PyQt5.QtCore import pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidget
 from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QLineEdit, QComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.Qt import QKeyEvent
+from PyQt5.QtGui import QBrush, QColor
 from Ui_WidgetParam import Ui_WidgetParam
 from data_handling.material import *
 from base.base import BasicPath
 
 
 class QTableWidgetMaterial(QTableWidget):
-    def __init__(self, parent=None):
+    def __init__(self, editable=True, parent=None):
         super(QTableWidgetMaterial, self).__init__(parent)
         self.setColumnCount(2)
-        self.setRowCount(0)
+        self.setRowCount(1)
+        item = QTableWidgetItem('')
+        item.setBackground(QColor=QColor(200,200,200))
+        self.setItem(0, 0, QTableWidgetItem(''))
+        self.setItem(0, 1, QTableWidgetItem(''))
         item = QtWidgets.QTableWidgetItem()
+        item.setBackground(QColor=QColor(200, 200, 200))
         self.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.setHorizontalHeaderItem(1, item)
@@ -32,11 +40,13 @@ class QTableWidgetMaterial(QTableWidget):
         self.retranslate_ui()
         self.cur_material = None
         self.elemlist = []
+        self.elemlist.append('')
         with open(BasicPath.element_list_file_name) as input_elemnt:
             lines = [a for a in input_elemnt.readlines() if len(a) > 0]
             for line in lines:
                 self.elemlist.append(line.strip('\r\n '))
         self.connect_signal_slots()
+        self.editable = editable
 
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
@@ -82,7 +92,9 @@ class QTableWidgetMaterial(QTableWidget):
         for i in range(0, self.rowCount()-1):
             if not self.item(i, 0).text() in self.elemlist:
                 self.setCurrentCell(i,0)
-                QMessageBox.Warning('Error element name: \"'+self.item(i, 0).text()+'\"')
+                msg_box = QMessageBox()
+                msg_box.setText('Error element name: \"'+self.item(i, 0).text()+'\"')
+                msg_box.exec()
                 return None
             isnumber = False
             try:
@@ -92,7 +104,9 @@ class QTableWidgetMaterial(QTableWidget):
                 isnumber = False
             if not isnumber:
                 self.setCurrentCell(i,1)
-                QMessageBox.Warning('Error element propotion: \"' + self.item(i, 0).text() + '\"')
+                msg_box = QMessageBox()
+                msg_box.setText('Error element propotion: \"' + self.item(i, 0).text() + '\"')
+                msg_box.exec()
                 return None
             material.add_element(self.item(i, 0).text(),eval(self.item(i, 1).text()))
         return material
@@ -121,3 +135,15 @@ class QTableWidgetMaterial(QTableWidget):
             self.setItem(irow+1, 0, QTableWidgetItem(''))
             self.setItem(irow+1, 1, QTableWidgetItem(''))
         self.connect_signal_slots()
+
+    # inherit the handler for pressing keys
+    def keyPressEvent(self, event: QKeyEvent):
+        if event.key() == Qt.Key_Delete:
+            item = self.currentItem()
+            row_idx = item.row()
+            if row_idx < self.rowCount()-1:
+                self.takeItem(row_idx, 0)
+                self.takeItem(row_idx, 1)
+                self.removeRow(row_idx)
+        else:
+            super(QTableWidgetMaterial,self).keyPressEvent(event)

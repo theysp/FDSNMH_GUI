@@ -33,6 +33,19 @@ class InputDlg(QDialog, Ui_InputDlg):
         for m in material.elements:
             tableWidget.item()
 
+    def current_material(self):
+        if self.tableWidgetMatComposition.cur_material is None:
+            return None
+        else:
+            material = self.tableWidgetMatComposition.cur_material
+            material.name = self.textMatName.toPlainText()
+            return material
+
+    def show_message(self, msg):
+        msg_box = QMessageBox()
+        msg_box.setText(msg)
+        msg_box.exec()
+
     @pyqtSlot()
     def on_listWidgetMaterialLib_itemSelectionChanged(self):
         selected_row_idx = self.listWidgetMaterialLib.currentRow()
@@ -75,9 +88,7 @@ class InputDlg(QDialog, Ui_InputDlg):
                 try:
                     self.matlib.add_material(material)
                 except MaterialAlreadyException as err:
-                    msg_box = QMessageBox()
-                    msg_box.setText('\"'+material.name + "\" already exists in the material library, please change the material name to save it.")
-                    msg_box.exec()
+                    self.show_message('\"'+material.name + "\" already exists in the material library, please change the material name to save it.")
                     return
                 except Exception:
                     pass
@@ -86,6 +97,20 @@ class InputDlg(QDialog, Ui_InputDlg):
     @pyqtSlot()
     def on_pushButtonSaveMaterialLib_clicked(self):
         self.matlib.save_material_list()
+
+    @pyqtSlot()
+    def on_pushButtonShowResult_clicked(self):
+        cur_mat = self.current_material()
+        if cur_mat is None:
+            self.show_message('Please specify the material needed to'
+            ' be displayed from the material libraray'
+            ' or from scratch')
+            return
+        if cur_mat.calculate_activation():
+            index = self.comboBoxSelectSpectra.currentIndex()
+
+        else:
+            self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
 
 import sys
 

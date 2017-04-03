@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>432</height>
+    <width>523</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidgetDisplay">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Data">
       <attribute name="title">
@@ -52,13 +52,117 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTableView" name="tableParams">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>300</height>
-          </size>
-         </property>
+        <widget class="QTableWidget" name="tableWidgetParams">
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>100</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderHighlightSections">
+          <bool>true</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1E5</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1E6</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1E7</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1E8</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1E9</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>1.5E9</string>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>Cooling (s)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Act (Bq/kg)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Heat (kW/kg)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Dose (Sv/h)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Ing (Sv/h)</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>1.000</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>1.0E5</string>
+          </property>
+         </item>
+         <item row="2" column="0">
+          <property name="text">
+           <string>1.0E6</string>
+          </property>
+         </item>
+         <item row="3" column="0">
+          <property name="text">
+           <string>1.0E7</string>
+          </property>
+         </item>
+         <item row="4" column="0">
+          <property name="text">
+           <string>1.0E8</string>
+          </property>
+         </item>
+         <item row="5" column="0">
+          <property name="text">
+           <string>1.0E9</string>
+          </property>
+         </item>
+         <item row="6" column="0">
+          <property name="text">
+           <string>1.5E9</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
