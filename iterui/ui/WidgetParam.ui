@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidgetDisplay">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="Data">
       <attribute name="title">
@@ -240,7 +240,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayoutBelowPlot">
          <property name="leftMargin">
           <number>3</number>
          </property>
@@ -254,22 +254,42 @@
           <number>3</number>
          </property>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QCheckBox" name="checkBoxAct">
+           <property name="text">
+            <string>Activity</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
+           <property name="checked">
+            <bool>true</bool>
            </property>
-          </spacer>
+          </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonSavePlot">
+          <widget class="QCheckBox" name="checkBoxHeat">
            <property name="text">
-            <string>Save</string>
+            <string>Heat</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxDose">
+           <property name="text">
+            <string>Dose</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxIng">
+           <property name="text">
+            <string>Ing</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

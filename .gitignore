@@ -23,3 +23,5 @@ iterui/.idea/workspace.xml
 iterui/.idea/workspace.xml
 *.pyc
 Data Save/Elem Cache/name.cache
+*.xml
+iterui/__pycache__/ShowResultDlg.cpython-35.pyc
