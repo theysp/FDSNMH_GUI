@@ -11,8 +11,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_InputDlg(object):
     def setupUi(self, InputDlg):
         InputDlg.setObjectName("InputDlg")
+        InputDlg.setEnabled(True)
         InputDlg.resize(717, 512)
         InputDlg.setMinimumSize(QtCore.QSize(700, 500))
+        InputDlg.setSizeGripEnabled(False)
         InputDlg.setModal(False)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(InputDlg)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -126,8 +128,6 @@ class Ui_InputDlg(object):
         self.comboBoxSelectSpectra.addItem("")
         self.comboBoxSelectSpectra.addItem("")
         self.verticalLayout_5.addWidget(self.comboBoxSelectSpectra)
-        self.comboBoxSelectSpectra.raise_()
-        self.comboBoxSelectSpectra.raise_()
         self.verticalLayout.addWidget(self.groupBox)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(-1, 0, -1, -1)
@@ -148,7 +148,7 @@ class Ui_InputDlg(object):
 
     def retranslateUi(self, InputDlg):
         _translate = QtCore.QCoreApplication.translate
-        InputDlg.setWindowTitle(_translate("InputDlg", "Dialog"))
+        InputDlg.setWindowTitle(_translate("InputDlg", "Input parameters for activation data"))
         self.groupBox_3.setTitle(_translate("InputDlg", "Material Library"))
         self.label_3.setText(_translate("InputDlg", "Search Material:"))
         self.label_2.setText(_translate("InputDlg", "Material list in libraray:"))

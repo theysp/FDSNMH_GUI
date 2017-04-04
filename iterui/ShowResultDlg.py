@@ -3,6 +3,7 @@
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QDialog, QApplication, QHBoxLayout
 from Ui_ShowResultDlg import Ui_ShowResultDlg
+from PyQt5 import Qt
 from widgetparam import WidgetParam
 from data_handling.material import *
 import sys
@@ -16,9 +17,12 @@ class ShowResultDlg(QDialog, Ui_ShowResultDlg):
         self.material = material
         self.spectra_idx = spectraidx
         self.data_to_uis()
+        # self.setWindowFlags(Qt.WindowMinimizeButtonHint)
 
     def data_to_uis(self):
-        self.Parameters.ui_to_data(self.material.activation_data.get_spectra_data(self.spectra_idx))
+        self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
+        self.PathwayAnalysis.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
+        self.PrimaryNuclides.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
 
 if __name__ is '__main__':
     app = QApplication(sys.argv)

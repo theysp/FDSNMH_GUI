@@ -20,7 +20,7 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.setupUi(self)
         self.matlib = MaterialListLibrary()
         self.init_ui_data()
-        self.resultdlg = None
+        self.resultdlgs = []
 
     def init_ui_data(self):
         self.listWidgetMaterialLib.clear()
@@ -112,8 +112,10 @@ class InputDlg(QDialog, Ui_InputDlg):
             # with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
             #    pickle.dump(cur_mat, outdata)
             index = self.comboBoxSelectSpectra.currentIndex()
-            self.resultdlg = ShowResultDlg(cur_mat, index+1)
-            self.resultdlg.show()
+            self.resultdlgs.append(ShowResultDlg(cur_mat, index+1))
+            self.resultdlgs[-1].setWindowTitle('Activation data of material \"{0}\", spectra \"{1}\"'
+                                               .format(cur_mat.name, index))
+            self.resultdlgs[-1].show()
         else:
             self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
 

@@ -11,7 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ShowResultDlg(object):
     def setupUi(self, ShowResultDlg):
         ShowResultDlg.setObjectName("ShowResultDlg")
-        ShowResultDlg.resize(652, 484)
+        ShowResultDlg.resize(900, 524)
+        ShowResultDlg.setMinimumSize(QtCore.QSize(720, 0))
         self.verticalLayout = QtWidgets.QVBoxLayout(ShowResultDlg)
         self.verticalLayout.setContentsMargins(2, 2, 2, 2)
         self.verticalLayout.setObjectName("verticalLayout")

@@ -9,6 +9,7 @@
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QVBoxLayout
 from Ui_WidgetParam import Ui_WidgetParam
+from PyQt5.Qt import QResizeEvent, QSize
 from data_handling.activationdata import OneSpectrumActivationData
 from PyQt5.QtWidgets import QTableWidgetItem
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -16,10 +17,10 @@ from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationTo
 from matplotlib.figure import Figure
 
 class WidgetParam(QWidget, Ui_WidgetParam):
-    param_names = ['total_activity(Bq)',
+    param_names = ['activity(Bq)',
                    'total_heat(kW)',
-                   'dose_rate(Sv/kg)',
-                   'ingestion_dose(Sv/kg)']
+                   'dose_rate(Sv)',
+                   'ingestion_dose(Sv)']
     cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
 
     def __init__(self, parent=None):
@@ -29,17 +30,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         self.initialize_canvas_parameters()
         self.axes = [None, None, None, None]
         self.checkButtons = [self.checkBoxAct, self.checkBoxHeat, self.checkBoxDose, self.checkBoxIng]
+        for checkButton in self.checkButtons:
+            checkButton.clicked.connect(self.on_click)
 
-    def ui_to_data(self, act_data: OneSpectrumActivationData):
+    def data_to_ui(self, act_data: OneSpectrumActivationData):
         # show parameters of 6 cooling times
         self.act_data = act_data
         for i in range(0, len(act_data.all_steps_activation_data)):
             one_step_data = act_data.all_steps_activation_data[i]
-
             for j in range(0, 4):
                 val = act_data.all_steps_activation_data[i].parameters[WidgetParam.param_names[j]]
                 new_item = QTableWidgetItem('{0}'.format(val))
-                self.tableWidgetParams.setItem(i,j+1,new_item)
+                self.tableWidgetParams.setItem(i, j+1, new_item)
         # plot data to plot widge
         self.initialize_figs_parameters()
 
@@ -57,7 +59,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
     def initialize_figs_parameters(self):
         self.canvas.figure.clf()
         checked_button_num = 0
-        for i in range(0,4):
+        for i in range(0, 4):
             if self.checkButtons[i].isChecked():
                 checked_button_num += 1
         if checked_button_num is 0:
@@ -65,8 +67,10 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         idx = 1
         if checked_button_num % 2 is 0:
             totalnum = checked_button_num * 50 + 20
+        elif checked_button_num == 3:
+            totalnum = 220
         else:
-            totalnum = checked_button_num*100+10
+            totalnum = checked_button_num * 100 + 10
         for i in range(0, 4):
             if self.checkButtons[i].isChecked():
                 self.axes[i] = self.figure.add_subplot(totalnum + idx)
@@ -74,25 +78,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
                 idx += 1
         self.canvas.draw()
 
-    @pyqtSlot()
-    def on_checkBoxAct_clicked(self):
+    def on_click(self):
         self.update()
         self.initialize_figs_parameters()
 
-    @pyqtSlot()
-    def on_checkBoxHeat_clicked(self):
-        self.update()
-        self.initialize_figs_parameters()
-
-    @pyqtSlot()
-    def on_checkBoxDose_clicked(self):
-        self.update()
-        self.initialize_figs_parameters()
-
-    @pyqtSlot()
-    def on_checkBoxIng_clicked(self):
-        self.update()
-        self.initialize_figs_parameters()
+    def resizeEvent(self, event: QResizeEvent):
+        super(WidgetParam, self).resizeEvent(event)
+        new_size = event.size()
+        new_width = new_size.width()
+        one_column_width = new_width/6
+        for i in range(1,4):
+            if self.tableWidgetParams.columnWidth(i) < one_column_width:
+                self.tableWidgetParams.setColumnWidth(i,one_column_width)
 
     def draw_axe(self, idx):
         assert(self.checkButtons[idx].isChecked())

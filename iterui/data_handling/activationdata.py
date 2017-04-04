@@ -122,8 +122,8 @@ class OneSpectrumActivationData(BaseData):
         return self
 
 class OneSpectrumOneStepActivationData(BaseData):
-    param_names = ['total_activity(Bq)',
-                   'total_activity_no_tritium(Bq)',
+    param_names = ['activity(Bq)',
+                   'activity_no_tritium(Bq)',
                    'alpha_heat(kW)',
                    'beta_heat(kW)',
                    'gamma_heat(kW)',
@@ -133,18 +133,18 @@ class OneSpectrumOneStepActivationData(BaseData):
                    'cur_mass(kg)',
                    'neutron_flux(n/cm**2/s)',
                    'number_fission',
-                   'dose_rate(Sv/kg)',
-                   'ingestion_dose(Sv/kg)',
-                   'inhalation_dose(Sv/kg)',
-                   'ingestion_dose_ex_tritium(Sv/kg)',
-                   'inhalation_dose_ex_tritium(Sv/kg)',
+                   'dose_rate(Sv)',
+                   'ingestion_dose(Sv)',
+                   'inhalation_dose(Sv)',
+                   'ingestion_dose_ex_tritium(Sv)',
+                   'inhalation_dose_ex_tritium(Sv)',
                    'gase_rate(appm/sec)']
     data_position = []
 
     def __init__(self):
         self.time = 0.0
-        self.nuclides = dict()  # 核素以及原子数比
-        self.parameters = {}
+        self.nuclides = dict()  # nuclides and their parameters
+        self.parameters = dict()
         self.gamma_erg_bin = []
         self.gamma_spectra_cc = []
         self.gamma_spectra_power = []
@@ -163,8 +163,8 @@ class OneSpectrumOneStepActivationData(BaseData):
             if one_nuclide_data.read_raw_line(lines[i]):
                 self.nuclides[one_nuclide_data.nuclide_name] = one_nuclide_data
         # total info
-        self.parameters['total_activity(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 5][40:51])
-        self.parameters['total_activity_no_tritium(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 6][40:51])
+        self.parameters['activity(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 5][40:51])
+        self.parameters['activity_no_tritium(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 6][40:51])
         self.parameters['alpha_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 7][40:51])
         self.parameters['beta_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 8][40:51])
         self.parameters['gamma_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 9][40:51])
@@ -174,11 +174,11 @@ class OneSpectrumOneStepActivationData(BaseData):
         self.parameters['cur_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 11][40:51])
         self.parameters['neutron_flux(n/cm**2/s)'] = eval_str_number(lines[nuclide_data_end_idx + 12][40:51])
         self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + 13][40:51])
-        self.parameters['ingestion_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
-        self.parameters['inhalation_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
-        self.parameters['ingestion_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
-        self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
-        self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
+        self.parameters['ingestion_dose(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
+        self.parameters['inhalation_dose(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
+        self.parameters['ingestion_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
+        self.parameters['inhalation_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
+        self.parameters['inhalation_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
         # spectra
         spectra_beg_idx = -1
         spectra_end_idx = -1
@@ -208,9 +208,9 @@ class OneSpectrumOneStepActivationData(BaseData):
                 dose_rate_idx = i
                 break
         if dose_rate_idx < 0:
-            self.parameters['dose_rate(Sv/kg)'] = -1.0
+            self.parameters['dose_rate(Sv)'] = -1.0
         else:
-            self.parameters['dose_rate(Sv/kg)'] = eval_str_number(lines[dose_rate_idx][75:88])
+            self.parameters['dose_rate(Sv)'] = eval_str_number(lines[dose_rate_idx][75:88])
         self.ok = True
         return True
 
@@ -246,7 +246,7 @@ class OneSpectrumOneStepActivationData(BaseData):
 class OneNuclideData(BaseData):
     param_names = ['atoms',
                    'weight(g)',
-                   'activation(Bq)',
+                   'activity(Bq)',
                    'beta_heat(kW)',
                    'alpha_heat(kW)',
                    'gamma_heat(kW)',
@@ -254,7 +254,8 @@ class OneNuclideData(BaseData):
                    'ingestion_dose(Sv)',
                    'inhalation_dose(Sv)',
                    'Bq/A2_Ratio',
-                   'half_life(sec)']
+                   'half_life(sec)',
+                   'total_heat(kW)']
 
     def __init__(self):
         #  NUCLIDE ATOMS GRAMS Bq b-Energy a-Energy g-Energy DOSE RATE INGESTION INHALATION Bq/A2 HALF LIFE
@@ -275,6 +276,7 @@ class OneNuclideData(BaseData):
             self.params['half_life(sec)'] = -1
         else:
             self.params['half_life(sec)'] = eval_str_number(val_list[-1])
+        self.params['total_heat(kW)'] = self.params['beta_heat(kW)']+self.params['alpha_heat(kW)']+self.params['gamma_heat(kW)']
         return True
 
     def __imul__(self, number):

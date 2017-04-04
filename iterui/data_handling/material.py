@@ -105,13 +105,13 @@ class ElementPool:
         else:
             # check if there is cache
             new_elem = None
-            if os.path.exists(BasicPath.element_cache_folder+'/name.cache'):
-                with open(BasicPath.element_cache_folder+'/name.cache','rb') as infile:
+            if os.path.exists(BasicPath.element_cache_folder+'/{0}.cache'.format(name)):
+                with open(BasicPath.element_cache_folder+'/{0}.cache'.format(name),'rb') as infile:
                     new_elem = pickle.load(infile)
             else:
                 new_elem = Element(name)
                 ElementPool.dict_elems[name] = new_elem
-                with open(BasicPath.element_cache_folder+'/name.cache','wb') as outfile:
+                with open(BasicPath.element_cache_folder+'/{0}.cache'.format(name),'wb') as outfile:
                     pickle.dump(new_elem,outfile)
             return new_elem
 

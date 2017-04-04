@@ -7,12 +7,43 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
-from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout
+from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidgetItem
 from Ui_WidgetPathway import Ui_WidgetPathway
+from data_handling.activationdata import *
 
 
 class WidgetPathway(QWidget, Ui_WidgetPathway):
-    def __init__(self, parent=None):
+    def __init__(self, data: OneSpectrumActivationData = None, parent=None):
         super(WidgetPathway, self).__init__(parent)
         self.setupUi(self)
+        self.data = data
 
+    def data_to_ui(self, data: OneSpectrumActivationData):
+        for i in range(0, self.tableWidgetPathway.rowCount()):
+            for j in range(0, self.tableWidgetPathway.columnCount()):
+                self.tableWidgetPathway.item(i, j).setText('')
+        idx = 0
+        search_keys = [a for a in self.plainTextEditSearchNuclide.toPlainText().split(' ')]
+        self.data = data
+        assert(self.data is not None)
+        for nuclide, one_target_pathway in self.data.path_way.all_path_ways.items():
+            all_keys_found = True
+            for key in search_keys:
+                if key not in nuclide:
+                    all_keys_found = False
+            if all_keys_found:
+                one_target_pathway.normalize()
+                for pathway in sorted(one_target_pathway.pathway.keys(), key=lambda a: one_target_pathway.pathway[a]):
+                    while idx >= self.tableWidgetPathway.rowCount():
+                        self.tableWidgetPathway.insertRow(self.tableWidgetPathway.rowCount())
+                        for i in range(0, self.tableWidgetPathway.columnCount()):
+                            self.tableWidgetPathway.setItem(idx, i, QTableWidgetItem(''))
+                    self.tableWidgetPathway.item(idx, 0).setText(nuclide)
+                    self.tableWidgetPathway.item(idx, 1).setText("{0}".format(one_target_pathway.pathway[pathway]))
+                    self.tableWidgetPathway.item(idx, 2).setText(pathway)
+                    idx += 1
+        self.tableWidgetPathway.scrollToTop()
+
+    @pyqtSlot()
+    def on_plainTextEditSearchNuclide_textChanged(self):
+        self.data_to_ui(self.data)

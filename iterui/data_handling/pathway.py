@@ -132,6 +132,7 @@ class PathWay(BaseData):
         for i in range(start_idx+1, len(lines)-1):
             if lines[i].startswith(' path  '):
                 (percent_part, pathway_str) = lines[i].split('%')
+                pathway_str.strip('\r\n ')
                 percent = eval(percent_part[percent_part.rfind(' '):])
                 self.pathway[pathway_str] = percent
                 number_target = number_target-1
