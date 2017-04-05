@@ -23,6 +23,7 @@ class ShowResultDlg(QDialog, Ui_ShowResultDlg):
         self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
         self.PathwayAnalysis.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
         self.PrimaryNuclides.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
+        self.TransmutationGraph.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
 
 if __name__ is '__main__':
     app = QApplication(sys.argv)

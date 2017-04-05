@@ -28,3 +28,5 @@ iterui/__pycache__/ShowResultDlg.cpython-35.pyc
 *.cache
 iterui/.idea/workspace.xml
 *.pyc
+*.xml
+iterui/__pycache__/ShowResultDlg.cpython-35.pyc

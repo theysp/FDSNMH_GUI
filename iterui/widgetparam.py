@@ -46,6 +46,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         self.initialize_figs_parameters()
 
     def initialize_canvas_parameters(self):
+        # frame_size = self.framePlot.size()
+        # self.figure = Figure(figsize=(frame_size.width(), frame_size.height()), dpi=1, tight_layout=True)
+        # #self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
+        # self.figure.set_facecolor('#F5F5F5')
+        # self.figure.subplots_adjust(left=0.08, top=0.92, bottom=0.08)
+        # # self.figure.subplots_adjust(left=3, top=3, bottom=3)
+        # self.canvas = FigureCanvas(self.figure)
+        # layout = QVBoxLayout(self.framePlot)
+        # layout.setContentsMargins(0, 0, 0, 0)
+        # layout.addWidget(self.canvas)
+        # self.toolbar = NavigationToolbar(self.canvas, self.framePlot)
+        # self.horizontalLayoutBelowPlot.addWidget(self.toolbar)
         self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
         self.figure.set_facecolor('#F5F5F5')
         self.figure.subplots_adjust(left=0.08, top=0.92, bottom=0.1)
