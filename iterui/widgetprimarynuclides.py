@@ -20,6 +20,8 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
                    'beta_heat(kW)',
                    'dose_rate(Sv)',
                    'ingestion_dose(Sv)']
+    colors = ['#FA8072', '#7FFF00', '#87CEFA', '#8A2BE2', '#A9A9A9', '#E9967A', '#FF1493', '#9932CC', '#CD853F',
+              '#FF7F50', '#2E8B57']
 
     def __init__(self, parent=None):
         super(WidgetPrimaryNuclides, self).__init__(parent)
@@ -78,13 +80,18 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
         one_step_data = self.act_data.all_steps_activation_data[cooling_time_idx]
         # get primary nuclides for xxx
         parameter_name = WidgetPrimaryNuclides.param_names[idx]
-        total_val = 0.0 # one_step_data.parameters[parameter_name]
+        # total_val = 0.0 # one_step_data.parameters[parameter_name]
+        total_val = one_step_data.parameters[parameter_name]
+        if total_val <= 0.0:
+            self.axes[idx].set_title("Primary nuclides for: "+parameter_name+" is not valid.\nBecause the total value is 0.")
+            self.axes[idx].pie([],labels=[])
+            return
         nuclides = []
         nuclide_props = []
         accumulate_amount = 0.0
         primary_limit = self.horizontalSliderPrimaryAmount.value()*1.0/100
-        for nuclide in one_step_data.nuclides.keys():
-            total_val += one_step_data.nuclides[nuclide].params[parameter_name]
+        # for nuclide in one_step_data.nuclides.keys():
+        #     total_val += one_step_data.nuclides[nuclide].params[parameter_name]
         for nuclide in sorted(one_step_data.nuclides.keys(), key=lambda a: -one_step_data.nuclides[a].params[parameter_name]):
             nuclides.append(nuclide)
             act_value = one_step_data.nuclides[nuclide].params[parameter_name]
@@ -93,7 +100,7 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
             nuclide_props.append(prop)
             if accumulate_amount >= primary_limit:
                 break
-        self.axes[idx].pie(nuclide_props,labels=nuclides)
+        self.axes[idx].pie(nuclide_props,labels=nuclides,colors=WidgetPrimaryNuclides.colors,autopct='%1.2f%%',shadow=True,startangle=90)
         self.axes[idx].set_title("Primary nuclides for: "+parameter_name)
         return
 

@@ -217,8 +217,8 @@ class OneSpectrumOneStepActivationData(BaseData):
     def __imul__(self, number):
         for key, val in self.nuclides.items():
             val *= number
-        for key, val in self.parameters.items():
-            val *= number
+        for key in self.parameters.keys():
+            self.parameters[key] *= number
         assert(len(self.gamma_erg_bin) == len(self.gamma_spectra_cc) and len(self.gamma_spectra_cc) == len(self.gamma_spectra_power))
         for i in range(0, len(self.gamma_erg_bin)):
             self.gamma_spectra_cc[i] *= number
@@ -264,7 +264,11 @@ class OneNuclideData(BaseData):
         self.nuclide_name = ''
 
     def read_raw_line(self, line):
-        val_list = [a for a in line.split(' ') if len(a) > 0 and a != '\n']
+        val_list = [a for a in line.split(' ') if len(a) > 0
+                    and a != '\n'
+                    and ('#' not in a)
+                    and ('<' not in a)
+                    and ('?' not in a)]
         if len(val_list) == 14:
             del val_list[2]
         if len(val_list) < 13:

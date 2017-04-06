@@ -84,23 +84,23 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.figure.set_facecolor('#F5F5F5')
         self.figure.subplots_adjust(left=0.08, top=0.92, bottom=0.1)
         self.canvas = FigureCanvas(self.figure)
-
         self.verticalLayoutPlot.addWidget(self.canvas)
         self.toolbar = NavigationToolbar(self.canvas,self.framePlot)
         self.verticalLayoutPlot.addWidget(self.toolbar)
 
     def initialize_figs(self):
-        cooling_times = ['1', '1.0e5', '1.0e6', '1.0e7', '1.0e8', '1.0e9', '1.5e9']
+        cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
         self.figure.clf()
         self.axe = self.figure.add_subplot(111)
-        self.axe.hold(True)
+        # self.axe.hold(True)
         self.axe.set_xscale('log')
         self.axe.set_yscale('log')
         self.axe.set_xlim([1, 2e9])
-        self.axe.set_ylim([1e-40, 1000])
+        self.axe.set_ylim([1e-50, 1000])
         for key, checkBox in self.sub_checkBoxs.items():
             if checkBox.isChecked():
-                self.axe.plot(xs=[1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9], ys=self.nuclides_trans_data[key], label=key)
+                self.axe.plot(cooling_times, self.nuclides_trans_data[key], color='#A52A2A', label=key)
+                # self.axe.plot(xs=[1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9], ys=[1e-20,2e-10,3e-5,4e-1,5,6,7])
         self.canvas.draw()
 
     def on_major_check(self):
@@ -125,7 +125,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
             if (not all_un_checked) and (not all_checked):
                 break
         if all_checked:
-            self.on_major_check.setChecked(True)
+            self.major_checkBox.setChecked(True)
         if all_un_checked:
-            self.on_major_check.setChecked(False)
+            self.major_checkBox.setChecked(False)
         self.initialize_figs()

@@ -30,3 +30,4 @@ iterui/.idea/workspace.xml
 *.pyc
 *.xml
 iterui/__pycache__/ShowResultDlg.cpython-35.pyc
+*.xml
