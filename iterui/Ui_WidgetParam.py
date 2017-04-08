@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_WidgetParam(object):
     def setupUi(self, WidgetParam):
         WidgetParam.setObjectName("WidgetParam")
-        WidgetParam.resize(523, 391)
+        WidgetParam.resize(900, 679)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(WidgetParam)
         self.horizontalLayout_3.setContentsMargins(1, 1, 1, 1)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -117,7 +117,7 @@ class Ui_WidgetParam(object):
         self.horizontalLayout_3.addWidget(self.tabWidgetDisplay)
 
         self.retranslateUi(WidgetParam)
-        self.tabWidgetDisplay.setCurrentIndex(1)
+        self.tabWidgetDisplay.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(WidgetParam)
 
     def retranslateUi(self, WidgetParam):

@@ -16,6 +16,10 @@ from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationTo
 from matplotlib.figure import Figure
 
 class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
+    color_sequence = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
+                      '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
+                      '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
+                      '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
     def __init__(self, parent=None):
         super(WidgetTransGraph, self).__init__(parent)
         self.setupUi(self)
@@ -82,7 +86,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
     def initialize_canvas(self):
         self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
         self.figure.set_facecolor('#F5F5F5')
-        self.figure.subplots_adjust(left=0.08, top=0.92, bottom=0.1)
+
         self.canvas = FigureCanvas(self.figure)
         self.verticalLayoutPlot.addWidget(self.canvas)
         self.toolbar = NavigationToolbar(self.canvas,self.framePlot)
@@ -92,15 +96,29 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
         self.figure.clf()
         self.axe = self.figure.add_subplot(111)
+        self.figure.subplots_adjust(left=0.08, top=0.80, bottom=0.1)
         # self.axe.hold(True)
         self.axe.set_xscale('log')
         self.axe.set_yscale('log')
-        self.axe.set_xlim([1, 2e9])
+        self.axe.set_xlim([1, 1e10])
         self.axe.set_ylim([1e-50, 1000])
+        red = 124
+        green = 56
+        blue = 200
+        self.axe.tick_params(axis='both', which='both', bottom='off', top='off',
+                        labelbottom='on', left='off', right='off', labelleft='on')
+
         for key, checkBox in self.sub_checkBoxs.items():
             if checkBox.isChecked():
-                self.axe.plot(cooling_times, self.nuclides_trans_data[key], color='#A52A2A', label=key)
+                color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+                self.axe.plot(cooling_times, self.nuclides_trans_data[key], color=color_str, label=key)
+                self.axe.text(2.0e9, self.nuclides_trans_data[key][-1], key, color=color_str)
+                red = (red+86)%256
+                green = (green+43)%256
+                blue = (blue+6)%256
+                print("{}:{}".format(key, color_str))
                 # self.axe.plot(xs=[1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9], ys=[1e-20,2e-10,3e-5,4e-1,5,6,7])
+        self.axe.set_title('Transmutation graph for selected nuclides', fontsize=18, ha='center')
         self.canvas.draw()
 
     def on_major_check(self):

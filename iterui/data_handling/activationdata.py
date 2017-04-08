@@ -264,18 +264,16 @@ class OneNuclideData(BaseData):
         self.nuclide_name = ''
 
     def read_raw_line(self, line):
-        val_list = [a for a in line.split(' ') if len(a) > 0
+        self.nuclide_name = line[0:8].strip(' ')
+        val_list = [a for a in line[14:].split(' ') if len(a) > 0
                     and a != '\n'
                     and ('#' not in a)
                     and ('<' not in a)
                     and ('?' not in a)]
-        if len(val_list) == 14:
-            del val_list[2]
-        if len(val_list) < 13:
+        if len(val_list) < 11:
             return False
-        self.nuclide_name = val_list[0] + val_list[1]
-        for i in range(2, len(OneNuclideData.param_names) - 1):
-            self.params[OneNuclideData.param_names[i - 2]] = eval_str_number(val_list[i])
+        for i in range(0, len(OneNuclideData.param_names) - 1):
+            self.params[OneNuclideData.param_names[i]] = eval_str_number(val_list[i])
         if val_list[-1] == 'Stable':
             self.params['half_life(sec)'] = -1
         else:

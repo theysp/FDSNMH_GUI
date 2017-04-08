@@ -100,7 +100,10 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
             nuclide_props.append(prop)
             if accumulate_amount >= primary_limit:
                 break
-        self.axes[idx].pie(nuclide_props,labels=nuclides,colors=WidgetPrimaryNuclides.colors,autopct='%1.2f%%',shadow=True,startangle=90)
+        leftprop = 1-accumulate_amount
+        nuclide_props.append(leftprop)
+        nuclides.append('Other')
+        self.axes[idx].pie(nuclide_props, labels=nuclides, colors=WidgetPrimaryNuclides.colors, autopct='%1.2f%%', shadow=True, startangle=90)
         self.axes[idx].set_title("Primary nuclides for: "+parameter_name)
         return
 
