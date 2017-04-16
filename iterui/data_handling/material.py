@@ -65,8 +65,8 @@ class Material:
         prop_sum = 0.0
         for name, prop in self.elements.items():
             prop_sum += prop
-        for name, prop in self.elements.items():
-            prop /= prop_sum
+        for name in self.elements.keys():
+            self.elements[name] /= prop_sum
         # to be continued, extra need to be added
         for element_name in self.elements.keys():
             element = ElementPool.get_elem(element_name)

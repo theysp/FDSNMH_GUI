@@ -17,7 +17,7 @@ from data_handling.activationdata import *
 class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
     cooling_times = ['1', '1.0e5', '1.0e6', '1.0e7', '1.0e8', '1.0e9', '1.5e9']
     param_names = ['activity(Bq)',
-                   'beta_heat(kW)',
+                   'total_heat(kW)',
                    'dose_rate(Sv)',
                    'ingestion_dose(Sv)']
     colors = ['#FA8072', '#7FFF00', '#87CEFA', '#8A2BE2', '#A9A9A9', '#E9967A', '#FF1493', '#9932CC', '#CD853F',

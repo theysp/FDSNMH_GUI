@@ -264,7 +264,7 @@ class OneNuclideData(BaseData):
         self.nuclide_name = ''
 
     def read_raw_line(self, line):
-        self.nuclide_name = line[0:8].strip(' ')
+        self.nuclide_name = line[0:9].strip(' ')
         val_list = [a for a in line[14:].split(' ') if len(a) > 0
                     and a != '\n'
                     and ('#' not in a)

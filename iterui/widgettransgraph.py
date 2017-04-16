@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout
 from Ui_WidgetTransGraph import Ui_WidgetTransGraph
 from data_handling.activationdata import OneSpectrumActivationData
 from PyQt5.QtWidgets import QTableWidgetItem, QCheckBox
+from PyQt5.QtGui import QBrush, QColor, QFont
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
@@ -23,6 +24,8 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
     def __init__(self, parent=None):
         super(WidgetTransGraph, self).__init__(parent)
         self.setupUi(self)
+        self.color_map = {}
+        self.color_item_map = {}
 
     def value_nuclide(nuclide, act_data: OneSpectrumActivationData):
         # cooling times: ['1', '1.0e5', '1.0e6', '1.0e7', '1.0e8', '1.0e9', '1.5e9']
@@ -70,23 +73,32 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.major_checkBox.setChecked(True)
         self.major_checkBox.clicked.connect(self.on_major_check)
         self.sub_checkBoxs = {}
+        red = 124
+        green = 56
+        blue = 200
         for i in range(1, len(self.ordered_nuclides)+1):
             while self.tableWidget.rowCount() <= i:
                 self.tableWidget.insertRow(self.tableWidget.rowCount())
-            new_item1 = QTableWidgetItem('')
+            new_item1 = QTableWidgetItem('■■■■')
             self.tableWidget.setItem(i, 0, new_item1)
+            new_item1.setFont(QFont("Times", 10, QFont.Black ) )
+            new_item1.setForeground(QBrush(QColor(red, green, blue)))
             cur_nuclide_name = self.ordered_nuclides[i-1]
             self.sub_checkBoxs[cur_nuclide_name] = QCheckBox(self)
             self.sub_checkBoxs[cur_nuclide_name].setChecked(True)
             self.sub_checkBoxs[cur_nuclide_name].clicked.connect(self.on_sub_check)
             self.tableWidget.setCellWidget(i, 0, self.sub_checkBoxs[cur_nuclide_name])
-            new_item2 = QTableWidgetItem(self.ordered_nuclides[i-1])
+            new_item2 = QTableWidgetItem(cur_nuclide_name)
             self.tableWidget.setItem(i, 1, new_item2)
+            color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+            self.color_map[cur_nuclide_name] = color_str
+            red = (red + 86) % 256
+            green = (green + 43) % 256
+            blue = (blue + 6) % 256
 
     def initialize_canvas(self):
         self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
         self.figure.set_facecolor('#F5F5F5')
-
         self.canvas = FigureCanvas(self.figure)
         self.verticalLayoutPlot.addWidget(self.canvas)
         self.toolbar = NavigationToolbar(self.canvas,self.framePlot)
@@ -101,7 +113,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.axe.set_xscale('log')
         self.axe.set_yscale('log')
         self.axe.set_xlim([1, 1e10])
-        self.axe.set_ylim([1e-50, 1000])
+        self.axe.set_ylim([1e-60, 1000])
         red = 124
         green = 56
         blue = 200
@@ -110,15 +122,23 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
 
         for key, checkBox in self.sub_checkBoxs.items():
             if checkBox.isChecked():
-                color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+                color_str = ""
+                if key in self.color_map:
+                    color_str = self.color_map[key]
+                else:
+                    color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+                    red = (red + 86) % 256
+                    green = (green + 43) % 256
+                    blue = (blue + 6) % 256
                 self.axe.plot(cooling_times, self.nuclides_trans_data[key], color=color_str, label=key)
                 self.axe.text(2.0e9, self.nuclides_trans_data[key][-1], key, color=color_str)
-                red = (red+86)%256
-                green = (green+43)%256
-                blue = (blue+6)%256
-                print("{}:{}".format(key, color_str))
+                # print("{}:{}".format(key, color_str))
                 # self.axe.plot(xs=[1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9], ys=[1e-20,2e-10,3e-5,4e-1,5,6,7])
+        Font = {'family': 'Tahoma',
+                'weight': 'bold', 'size': 10}
         self.axe.set_title('Transmutation graph for selected nuclides', fontsize=18, ha='center')
+        self.axe.set_xlabel("Cooling time (s)", fontdict=Font)
+        self.axe.set_ylabel("Weight Concerntration (1000wppm)", fontdict=Font)
         self.canvas.draw()
 
     def on_major_check(self):

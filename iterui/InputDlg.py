@@ -60,19 +60,20 @@ class InputDlg(QDialog, Ui_InputDlg):
     @pyqtSlot(str)
     def on_textMaterialSearch_textChanged(self, text):
         if len(text) <= 0:
-            for mat in self.matlib.material_list:
-                self.listWidgetMaterialLib.addItem(mat.name)
+            keys = self.matlib.materials.keys()
+            for matname in sorted(keys, key=lambda a: a):
+                self.listWidgetMaterialLib.addItem(matname)
             return
         self.listWidgetMaterialLib.clear()
         split_text = [a for a in text.split(' ') if len(a) > 0 and a != '\n']
-        for mat in self.matlib.material_list:
+        for mat_name in sorted(self.matlib.materials.keys(), key=lambda a: a):
             allin = True
             for word in split_text:
-                if not(word in mat.name):
+                if not(word in mat_name):
                     allin = False
                     break
             if allin:
-                 self.listWidgetMaterialLib.addItem(mat.name)
+                 self.listWidgetMaterialLib.addItem(mat_name)
 
     @pyqtSlot()
     def on_pushButtonLoad_clicked(self):

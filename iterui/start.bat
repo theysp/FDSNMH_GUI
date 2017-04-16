@@ -1,1 +1,1 @@
-python main.py
+start python InputDlg.py
