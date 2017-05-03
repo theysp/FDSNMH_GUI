@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidgetDisplay">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="Data">
       <attribute name="title">
@@ -254,6 +254,16 @@
           <number>3</number>
          </property>
          <item>
+          <widget class="QCheckBox" name="checkBoxDose">
+           <property name="text">
+            <string>Dose</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="checkBoxAct">
            <property name="text">
             <string>Activity</string>
@@ -274,16 +284,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxDose">
-           <property name="text">
-            <string>Dose</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QCheckBox" name="checkBoxIng">
            <property name="text">
             <string>Ing</string>
@@ -292,6 +292,24 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayoutAboutLoadData">
+           <item>
+            <widget class="QPushButton" name="pushButtonClear">
+             <property name="text">
+              <string>Clear Loaded</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonLoadOther">
+             <property name="text">
+              <string>Load Other</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

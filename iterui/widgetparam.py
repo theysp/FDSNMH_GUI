@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
-from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QVBoxLayout, QFileDialog
 from Ui_WidgetParam import Ui_WidgetParam
 from PyQt5.Qt import QResizeEvent, QSize
 from data_handling.activationdata import OneSpectrumActivationData
@@ -27,26 +27,34 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         super(WidgetParam, self).__init__(parent)
         self.setupUi(self)
         self.act_data = None
+        self.valuess = []   #valuess contains 4 values of the activation values
         self.initialize_canvas_parameters()
         self.axes = [None, None, None, None]
         self.checkButtons = [self.checkBoxAct, self.checkBoxHeat, self.checkBoxDose, self.checkBoxIng]
+        self.extra_valuesss = {} #every extra valuess contains valuess for other element/material
         for checkButton in self.checkButtons:
             checkButton.clicked.connect(self.on_click)
+
 
     def data_to_ui(self, act_data: OneSpectrumActivationData):
         # show parameters of 6 cooling times
         self.act_data = act_data
-        for i in range(0, len(act_data.all_steps_activation_data)):
-            one_step_data = act_data.all_steps_activation_data[i]
-            for j in range(0, 4):
-                val = act_data.all_steps_activation_data[i].parameters[WidgetParam.param_names[j]]
+        for idx in range(0,4):
+            values = []
+            for i in range(0, len(self.act_data.all_steps_activation_data)):
+                one_step_data = self.act_data.all_steps_activation_data[i]
+                values.append(one_step_data.parameters[WidgetParam.param_names[idx]])
+            self.valuess.append(values)
+        for i in range(0, len(self.valuess)):
+            values = self.valuess[i]
+            for j in range(0, len(values)):
+                val = values[j]
                 new_item = QTableWidgetItem('{0}'.format(val))
-                self.tableWidgetParams.setItem(i, j+1, new_item)
+                self.tableWidgetParams.setItem(j, i+1, new_item)
         # plot data to plot widge
         self.initialize_figs_parameters()
 
     def initialize_canvas_parameters(self):
-        # frame_size = self.framePlot.size()
         # self.figure = Figure(figsize=(frame_size.width(), frame_size.height()), dpi=1, tight_layout=True)
         # #self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
         # self.figure.set_facecolor('#F5F5F5')
@@ -107,10 +115,11 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     def draw_axe(self, idx):
         assert(self.checkButtons[idx].isChecked())
-        values = []
-        for i in range(0, len(self.act_data.all_steps_activation_data)):
-            one_step_data = self.act_data.all_steps_activation_data[i]
-            values.append(one_step_data.parameters[WidgetParam.param_names[idx]])
+#        values = []
+#        for i in range(0, len(self.act_data.all_steps_activation_data)):
+#            one_step_data = self.act_data.all_steps_activation_data[i]
+#            values.append(one_step_data.parameters[WidgetParam.param_names[idx]])
+        values = self.valuess[idx]
         assert(self.axes[idx] is not None)
         cur_axe = self.axes[idx]
         Font = {'family': 'Tahoma',
@@ -127,4 +136,40 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         cur_axe.plot(WidgetParam.cooling_times, values)
         cur_axe.set_xscale('log')
         cur_axe.set_yscale('log')
+
+    @pyqtSlot()
+    def on_pushButtonSaveParam_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(parent=self, initialFilter='.txt')
+        if filename:
+            with open(filename,'w') as fileout:
+                fileout.write('cooling time\t ')
+                for coolingtime in WidgetParam.cooling_times:
+                    fileout.write('{0}'.format(coolingtime)+'\t')
+                fileout.write('\n')
+                for idx in range(0,len(self.valuess)):
+                    values = self.valuess[idx]
+                    name = WidgetParam.param_names[idx]
+                    fileout.write(name+'\t')
+                    for val in values:
+                        fileout.write('{0}'.format(val)+'\t')
+                    fileout.write('\n')
+
+    @pyqtSlot()
+    def on_pushButtonClear_clicked(self):
+        pass
+
+    @pyqtSlot()
+    def on_pushButtonLoadOther_clicked(self):
+        filename, _ = QFileDialog.getOpenFileName(parent=self)
+        try:
+            if filename:
+                with open(filename,'w') as filein:
+                    lines = filein.readlines()
+                    if len(lines)<5:
+                        return
+                    for i in range(1,4):
+                        line = lines[i]
+                        
+        except Exception:
+            pass
 
