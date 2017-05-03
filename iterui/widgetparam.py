@@ -115,6 +115,10 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     def draw_axe(self, idx):
         assert(self.checkButtons[idx].isChecked())
+        color_sequence = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
+                          '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
+                          '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
+                          '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
 #        values = []
 #        for i in range(0, len(self.act_data.all_steps_activation_data)):
 #            one_step_data = self.act_data.all_steps_activation_data[i]
@@ -129,11 +133,25 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         cur_axe.set_xticks(WidgetParam.cooling_times)
         cur_axe.set_xticklabels(WidgetParam.cooling_times, fontdict=Font)
         cur_axe.set_xlabel("Cooling time (s)", fontdict=Font)
-        cur_axe.set_ylim([min(values), max(values)*1.5])
+        minval = min(values)+1e-20
+        maxval = max(values)*1.5
+        if len(self.extra_valuesss.items())>0:
+            for val in self.extra_valuesss.values():
+                minval = min(minval,min(val[idx])+1e-20)
+                maxval = max(maxval,max(val[idx])*1.5)
+        cur_axe.set_ylim([minval, maxval])
         # Ordinate
         cur_axe.set_ylabel(WidgetParam.param_names[idx], fontdict=Font)
         cur_axe.grid(True)  # Grid On
-        cur_axe.plot(WidgetParam.cooling_times, values)
+        if len(self.extra_valuesss.items()) == 0:
+            cur_axe.plot(WidgetParam.cooling_times, values)
+        else:
+            color_idx = 0
+            cur_axe.plot(WidgetParam.cooling_times, values, color=color_sequence[color_idx], label='cur')
+            color_idx += 1
+            for key, val in self.extra_valuesss.items():
+                cur_axe.plot(WidgetParam.cooling_times, val[idx], color=color_sequence[color_idx], label=key)
+                color_idx += 1
         cur_axe.set_xscale('log')
         cur_axe.set_yscale('log')
 
@@ -163,13 +181,21 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         filename, _ = QFileDialog.getOpenFileName(parent=self)
         try:
             if filename:
-                with open(filename,'w') as filein:
+                with open(filename, 'r') as filein:
                     lines = filein.readlines()
                     if len(lines)<5:
                         return
-                    for i in range(1,4):
+                    valss = []
+                    for i in range(1, 5):
                         line = lines[i]
-                        
+                        line = line.strip("\r\n")
+                        val_strs = [a for a in line.split('\t') if len(a) > 0]
+                        vals = []
+                        for j in range(1,len(val_strs)):
+                            vals.append(eval(val_strs[j]))
+                        valss.append(vals)
+                    self.extra_valuesss[filename] = valss
+                self.initialize_figs_parameters()
         except Exception:
             pass
 
