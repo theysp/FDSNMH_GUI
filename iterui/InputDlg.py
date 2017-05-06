@@ -21,19 +21,23 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.matlib = MaterialListLibrary()
         self.init_ui_data()
         self.resultdlgs = []
+        self.tableWidgetMatComposition.init_mat_table()
 
     def init_ui_data(self):
+        while self.listWidgetMaterialLib.count() > 0:
+            item = self.listWidgetMaterialLib.takeItem(0)
         self.listWidgetMaterialLib.clear()
         self.matlib.load_material_list()
-        keys = self.matlib.materials.keys()
-        for matname in sorted(keys, key=lambda a: a):
-            self.listWidgetMaterialLib.addItem(matname)
-
-    def data_to_table(self, material, tableWidget: QtWidgets.QTableWidget):
-        tableWidget.clear()
-        tableWidget.insertRow(len(material.elements))
-        for m in material.elements:
-            tableWidget.item()
+        text = self.textMaterialSearch.text()
+        split_text = [a for a in text.split(' ') if len(a) > 0 and a != '\n']
+        for mat_name in sorted(self.matlib.materials.keys(), key=lambda a: a):
+            allin = True
+            for word in split_text:
+                if not (word in mat_name):
+                    allin = False
+                    break
+            if allin:
+                self.listWidgetMaterialLib.addItem(mat_name)
 
     def current_material(self):
         mat_ret = self.tableWidgetMatComposition.ui_to_mat_info()
@@ -64,6 +68,8 @@ class InputDlg(QDialog, Ui_InputDlg):
             for matname in sorted(keys, key=lambda a: a):
                 self.listWidgetMaterialLib.addItem(matname)
             return
+        while self.listWidgetMaterialLib.count() > 0:
+            item = self.listWidgetMaterialLib.takeItem(0)
         self.listWidgetMaterialLib.clear()
         split_text = [a for a in text.split(' ') if len(a) > 0 and a != '\n']
         for mat_name in sorted(self.matlib.materials.keys(), key=lambda a: a):
@@ -98,8 +104,21 @@ class InputDlg(QDialog, Ui_InputDlg):
                 self.init_ui_data()
 
     @pyqtSlot()
-    def on_pushButtonSaveMaterialLib_clicked(self):
+    def on_pushButtonUpdateMaterialLib_clicked(self):
         self.matlib.save_material_list()
+
+    @pyqtSlot()
+    def on_pushButtonDeleteMatFromLib_clicked(self):
+        selected_item = self.listWidgetMaterialLib.currentItem()
+        if selected_item:
+            reply = QMessageBox.information(self, "Question", "Do you really want to delete "
+            "the material \"{}\" from the meterial library?".format(selected_item.text()),
+                                             QMessageBox.Ok |QMessageBox.Cancel)
+            if reply == QMessageBox.Ok:
+                self.matlib.del_material(selected_item.text())
+                self.on_pushButtonUpdateMaterialLib_clicked()
+                self.init_ui_data()
+                self.matlib.save_material_list()
 
     @pyqtSlot()
     def on_pushButtonShowResult_clicked(self):

@@ -34,6 +34,10 @@ class MaterialListLibrary:
             raise MaterialAlreadyException('material: '+material.name+' already exists, please change material name')
         self.materials[material.name] = material
 
+    def del_material(self, matname):
+        if matname in self.materials.keys():
+            self.materials.pop(matname)
+
 
 class Material:
     def __init__(self, line='Empty'):
@@ -52,7 +56,7 @@ class Material:
         if len(elems) > 1: # normal material
             for i in range(0, int(len(elems)/2)):
                 self.elements[elems[2*i]] = eval(elems[2*i+1])
-        elif line != 'Empty':              # single elements
+        elif line != 'Empty' and len(line)>0:              # single elements
             self.elements[self.name] = 100.0
 
     def add_element(self, element_name,proportion):
@@ -78,7 +82,7 @@ class Material:
 
     def to_string(self):
         line = self.name + ' | '
-        for elem, prop in self.elements:
+        for elem, prop in self.elements.items():
             line = line + "{0} {1} ".format(elem,prop)
         return line
 

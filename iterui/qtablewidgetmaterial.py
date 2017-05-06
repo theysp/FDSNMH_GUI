@@ -63,6 +63,10 @@ class QTableWidgetMaterial(QTableWidget):
         self.currentCellChanged.disconnect()
         self.itemChanged.disconnect()
 
+    def init_mat_table(self):
+        self.cur_material = Material('')
+        self.mat_info_to_ui(self.cur_material)
+
     def mat_info_to_ui(self, material:Material):
         self.cur_material = material
         self.disconnect_signal_slots()
@@ -77,10 +81,8 @@ class QTableWidgetMaterial(QTableWidget):
                 self.setItem(row_idx, 1, QTableWidgetItem('{0}'.format(val)))
                 row_idx += 1
         else:
-            size = 1
-            self.setRowCount(1+1)
-            self.setItem(0, 0, QTableWidgetItem(material.name))
-            self.setItem(0, 1, QTableWidgetItem('{0}'.format(100)))
+            size = 0
+            self.setRowCount(1)
         self.setItem(size, 0, QTableWidgetItem(''))
         self.setItem(size, 1, QTableWidgetItem(''))
         self.connect_signal_slots()
@@ -124,7 +126,7 @@ class QTableWidgetMaterial(QTableWidget):
             new_combo = QComboBox()
             for elem in self.elemlist:
                 new_combo.addItem(elem)
-            new_combo.setCurrentText(self.item(p_int, p_int_1).text())
+            new_combo.setCurrentText(self.elemlist[0])
             self.setCellWidget(p_int, p_int_1, new_combo)
 
     # if the last row has been updated, add new line to the table, means a new element

@@ -113,11 +113,25 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonUpdateMaterialLib">
-            <property name="text">
-             <string>Update Material Library</string>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="topMargin">
+             <number>0</number>
             </property>
-           </widget>
+            <item>
+             <widget class="QPushButton" name="pushButtonDeleteMatFromLib">
+              <property name="text">
+               <string>Delete Selected Material</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonUpdateMaterialLib">
+              <property name="text">
+               <string>Update Material Library</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
