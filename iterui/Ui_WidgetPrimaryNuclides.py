@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/WidgetPrimaryNuclides.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -30,14 +30,14 @@ class Ui_WidgetPrimaryNuclides(object):
         self.checkBoxAct.setChecked(True)
         self.checkBoxAct.setObjectName("checkBoxAct")
         self.horizontalLayout.addWidget(self.checkBoxAct)
-        self.checkBoxHeat = QtWidgets.QCheckBox(WidgetPrimaryNuclides)
-        self.checkBoxHeat.setChecked(True)
-        self.checkBoxHeat.setObjectName("checkBoxHeat")
-        self.horizontalLayout.addWidget(self.checkBoxHeat)
         self.checkBoxDose = QtWidgets.QCheckBox(WidgetPrimaryNuclides)
         self.checkBoxDose.setChecked(True)
         self.checkBoxDose.setObjectName("checkBoxDose")
         self.horizontalLayout.addWidget(self.checkBoxDose)
+        self.checkBoxHeat = QtWidgets.QCheckBox(WidgetPrimaryNuclides)
+        self.checkBoxHeat.setChecked(True)
+        self.checkBoxHeat.setObjectName("checkBoxHeat")
+        self.horizontalLayout.addWidget(self.checkBoxHeat)
         self.checkBoxIng = QtWidgets.QCheckBox(WidgetPrimaryNuclides)
         self.checkBoxIng.setChecked(True)
         self.checkBoxIng.setObjectName("checkBoxIng")
@@ -74,10 +74,10 @@ class Ui_WidgetPrimaryNuclides(object):
         _translate = QtCore.QCoreApplication.translate
         WidgetPrimaryNuclides.setWindowTitle(_translate("WidgetPrimaryNuclides", "Form"))
         self.checkBoxAct.setText(_translate("WidgetPrimaryNuclides", "Act"))
-        self.checkBoxHeat.setText(_translate("WidgetPrimaryNuclides", "Heat"))
         self.checkBoxDose.setText(_translate("WidgetPrimaryNuclides", "Dose"))
+        self.checkBoxHeat.setText(_translate("WidgetPrimaryNuclides", "Heat"))
         self.checkBoxIng.setText(_translate("WidgetPrimaryNuclides", "Ing"))
-        self.label.setText(_translate("WidgetPrimaryNuclides", "CoolingTime (s):"))
-        self.label_2.setText(_translate("WidgetPrimaryNuclides", "Primary Amount (%):"))
+        self.label.setText(_translate("WidgetPrimaryNuclides", "Cooling time (s):"))
+        self.label_2.setText(_translate("WidgetPrimaryNuclides", "Contribution threshold (%):"))
         self.labelPrimaryAmount.setText(_translate("WidgetPrimaryNuclides", "95"))
 

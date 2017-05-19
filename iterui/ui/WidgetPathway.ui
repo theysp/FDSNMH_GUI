@@ -40,7 +40,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Search Target Nuclides</string>
+        <string>Search Daughter Nuclide</string>
        </property>
       </widget>
      </item>
@@ -82,7 +82,7 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Target Nuclide</string>
+       <string>Daughter Nuclides</string>
       </property>
      </column>
      <column>

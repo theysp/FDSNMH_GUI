@@ -112,6 +112,7 @@ class QTableWidgetMaterial(QTableWidget):
                 msg_box.exec()
                 return None
             material.add_element(self.item(i, 0).text(),eval(self.item(i, 1).text()))
+        material.normalize()
         return material
 
     def on_self_currentCellChanged(self, p_int, p_int_1, p_int_2, p_int_3):
@@ -123,10 +124,16 @@ class QTableWidgetMaterial(QTableWidget):
             self.setCellWidget(p_int_2, p_int_3, None)
         # set widget to QComboBox with elements if select new item
         if p_int_1 == 0:
+            item = self.item(p_int, p_int_1)
+            elem_text = item.text()
+            new_combo = QComboBox()
             new_combo = QComboBox()
             for elem in self.elemlist:
                 new_combo.addItem(elem)
-            new_combo.setCurrentText(self.elemlist[0])
+            if elem_text in self.elemlist[1:]:
+                new_combo.setCurrentText(elem_text)
+            else:
+                new_combo.setCurrentText(self.elemlist[0])
             self.setCellWidget(p_int, p_int_1, new_combo)
 
     # if the last row has been updated, add new line to the table, means a new element

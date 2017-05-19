@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>717</width>
-    <height>512</height>
+    <height>515</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -47,7 +47,7 @@
          <property name="title">
           <string>Material Library</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0,0,0,0">
+         <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0,0,0,0,0,0">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <property name="topMargin">
@@ -68,7 +68,7 @@
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Material list in libraray:</string>
+             <string>Material List in Library:</string>
             </property>
            </widget>
           </item>
@@ -80,9 +80,30 @@
            </widget>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButtonDeleteMatFromLib">
+              <property name="text">
+               <string>Delete Selected Material</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonUpdateMaterialLib">
+              <property name="text">
+               <string>Update Material Library</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Components of selected material:</string>
+             <string>Components of Selected Material:</string>
             </property>
            </widget>
           </item>
@@ -113,25 +134,72 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <property name="topMargin">
-             <number>0</number>
+           <widget class="QGroupBox" name="groupBox">
+            <property name="title">
+             <string>Choose Spectrum</string>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonDeleteMatFromLib">
-              <property name="text">
-               <string>Delete Selected Material</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonUpdateMaterialLib">
-              <property name="text">
-               <string>Update Material Library</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QComboBox" name="comboBoxSelectSpectra">
+               <property name="editable">
+                <bool>false</bool>
+               </property>
+               <property name="maxVisibleItems">
+                <number>6</number>
+               </property>
+               <property name="insertPolicy">
+                <enum>QComboBox::NoInsert</enum>
+               </property>
+               <property name="duplicatesEnabled">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>1) Upper Cryostat</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>2) Rear of equatorial port </string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>3) Beneath lower port extension</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>4) Cryostat basement</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>5) Port cell</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>6) Neutral beam cell</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonShowResult">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Show Activation Result</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -199,7 +267,7 @@
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>25</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -241,59 +309,11 @@
             </column>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Choose Spectra</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QComboBox" name="comboBoxSelectSpectra">
-            <property name="editable">
-             <bool>false</bool>
+           <widget class="QPushButton" name="pushButtonClearCurrentMat">
+            <property name="text">
+             <string>Clear</string>
             </property>
-            <property name="maxVisibleItems">
-             <number>6</number>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::NoInsert</enum>
-            </property>
-            <property name="duplicatesEnabled">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>1) </string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>2) </string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>3)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>4)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>5)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>6)</string>
-             </property>
-            </item>
            </widget>
           </item>
          </layout>
@@ -304,19 +324,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QPushButton" name="pushButtonShowResult">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Show Activation Result</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>

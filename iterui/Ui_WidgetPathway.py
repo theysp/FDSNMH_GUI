@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/WidgetPathway.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -60,9 +60,9 @@ class Ui_WidgetPathway(object):
     def retranslateUi(self, WidgetPathway):
         _translate = QtCore.QCoreApplication.translate
         WidgetPathway.setWindowTitle(_translate("WidgetPathway", "Form"))
-        self.label.setText(_translate("WidgetPathway", "Search Target Nuclides"))
+        self.label.setText(_translate("WidgetPathway", "Search Daughter Nuclide"))
         item = self.tableWidgetPathway.horizontalHeaderItem(0)
-        item.setText(_translate("WidgetPathway", "Target Nuclide"))
+        item.setText(_translate("WidgetPathway", "Daughter Nuclides"))
         item = self.tableWidgetPathway.horizontalHeaderItem(1)
         item.setText(_translate("WidgetPathway", "Proportion"))
         item = self.tableWidgetPathway.horizontalHeaderItem(2)

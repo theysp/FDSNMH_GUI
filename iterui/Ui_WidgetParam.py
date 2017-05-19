@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/WidgetParam.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -96,14 +96,14 @@ class Ui_WidgetParam(object):
         self.horizontalLayoutBelowPlot = QtWidgets.QHBoxLayout()
         self.horizontalLayoutBelowPlot.setContentsMargins(3, 3, 3, 3)
         self.horizontalLayoutBelowPlot.setObjectName("horizontalLayoutBelowPlot")
-        self.checkBoxDose = QtWidgets.QCheckBox(self.Plot)
-        self.checkBoxDose.setChecked(True)
-        self.checkBoxDose.setObjectName("checkBoxDose")
-        self.horizontalLayoutBelowPlot.addWidget(self.checkBoxDose)
         self.checkBoxAct = QtWidgets.QCheckBox(self.Plot)
         self.checkBoxAct.setChecked(True)
         self.checkBoxAct.setObjectName("checkBoxAct")
         self.horizontalLayoutBelowPlot.addWidget(self.checkBoxAct)
+        self.checkBoxDose = QtWidgets.QCheckBox(self.Plot)
+        self.checkBoxDose.setChecked(True)
+        self.checkBoxDose.setObjectName("checkBoxDose")
+        self.horizontalLayoutBelowPlot.addWidget(self.checkBoxDose)
         self.checkBoxHeat = QtWidgets.QCheckBox(self.Plot)
         self.checkBoxHeat.setChecked(True)
         self.checkBoxHeat.setObjectName("checkBoxHeat")
@@ -147,7 +147,7 @@ class Ui_WidgetParam(object):
         item = self.tableWidgetParams.verticalHeaderItem(6)
         item.setText(_translate("WidgetParam", "1.5E9"))
         item = self.tableWidgetParams.horizontalHeaderItem(0)
-        item.setText(_translate("WidgetParam", "Cooling (s)"))
+        item.setText(_translate("WidgetParam", "Cooling Time(s)"))
         item = self.tableWidgetParams.horizontalHeaderItem(1)
         item.setText(_translate("WidgetParam", "Act (Bq/kg)"))
         item = self.tableWidgetParams.horizontalHeaderItem(2)
@@ -175,8 +175,8 @@ class Ui_WidgetParam(object):
         self.tableWidgetParams.setSortingEnabled(__sortingEnabled)
         self.pushButtonSaveParam.setText(_translate("WidgetParam", "Save"))
         self.tabWidgetDisplay.setTabText(self.tabWidgetDisplay.indexOf(self.Data), _translate("WidgetParam", "Data"))
+        self.checkBoxAct.setText(_translate("WidgetParam", "Act"))
         self.checkBoxDose.setText(_translate("WidgetParam", "Dose"))
-        self.checkBoxAct.setText(_translate("WidgetParam", "Activity"))
         self.checkBoxHeat.setText(_translate("WidgetParam", "Heat"))
         self.checkBoxIng.setText(_translate("WidgetParam", "Ing"))
         self.pushButtonClear.setText(_translate("WidgetParam", "Clear Loaded"))

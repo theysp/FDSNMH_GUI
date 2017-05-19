@@ -8,6 +8,7 @@ from widgetparam import WidgetParam
 from data_handling.material import *
 import sys
 import pickle
+from PyQt5.QtGui import QIcon
 
 
 class ShowResultDlg(QDialog, Ui_ShowResultDlg):
@@ -17,6 +18,7 @@ class ShowResultDlg(QDialog, Ui_ShowResultDlg):
         self.material = material
         self.spectra_idx = spectraidx
         self.data_to_uis()
+        self.setWindowIcon(QIcon('fds.ico'))
         # self.setWindowFlags(Qt.WindowMinimizeButtonHint)
 
     def data_to_uis(self):

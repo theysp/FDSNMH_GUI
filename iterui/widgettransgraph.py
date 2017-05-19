@@ -32,7 +32,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         order_step = [2,0,1,3,4,5,6]
         for i in range(0,7):
             if nuclide in act_data.all_steps_activation_data[i].nuclides:
-                return act_data.all_steps_activation_data[i].nuclides[nuclide].params['activity(Bq)']
+                return act_data.all_steps_activation_data[i].nuclides[nuclide].params['activity(Bq/kg)']
         return -1.0
 
     def data_to_ui(self, act_data: OneSpectrumActivationData):
@@ -55,8 +55,29 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
                 if nuclide_name not in one_step_data.nuclides:
                     if nuclide_name not in self.nuclides_trans_data:
                         self.nuclides_trans_data[nuclide_name] = []
-                    self.nuclides_trans_data[nuclide_name].append(1e-50)
-        self.ordered_nuclides = sorted(all_nuclides_names, key=lambda a: -WidgetTransGraph.value_nuclide(a, self.act_data))
+                    self.nuclides_trans_data[nuclide_name].append(1e-60)
+        # filter nuclides with small amount
+        keys_to_delete = []
+        for key,val in self.nuclides_trans_data.items():
+            if val[0] < 1e-20:
+                keys_to_delete.append(key)
+        for key in keys_to_delete:
+            self.nuclides_trans_data.pop(key)
+        all_nuclides_names = self.nuclides_trans_data.keys()
+        self.ordered_nuclides = sorted(all_nuclides_names) #, key=lambda a: -WidgetTransGraph.value_nuclide(a, self.act_data))
+        red = 124
+        green = 56
+        blue = 200
+        for cur_nuclide_name in self.ordered_nuclides:
+            color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+            self.color_map[cur_nuclide_name] = color_str
+            red = (red + 86) % 256
+            green = (green + 43) % 256
+            blue = (blue + 6) % 256
+            while red > 180 and green > 180 and blue > 180:
+                red = (red + 86) % 256
+                green = (green + 43) % 256
+                blue = (blue + 6) % 256
         self.initialize_table_nuclides()
         self.initialize_canvas()
         self.initialize_figs()
@@ -73,28 +94,22 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.major_checkBox.setChecked(True)
         self.major_checkBox.clicked.connect(self.on_major_check)
         self.sub_checkBoxs = {}
-        red = 124
-        green = 56
-        blue = 200
+
         for i in range(1, len(self.ordered_nuclides)+1):
             while self.tableWidget.rowCount() <= i:
                 self.tableWidget.insertRow(self.tableWidget.rowCount())
-            new_item1 = QTableWidgetItem('■■■■')
+            new_item1 = QTableWidgetItem('')
             self.tableWidget.setItem(i, 0, new_item1)
             new_item1.setFont(QFont("Times", 10, QFont.Black ) )
-            new_item1.setForeground(QBrush(QColor(red, green, blue)))
-            cur_nuclide_name = self.ordered_nuclides[i-1]
+            cur_nuclide_name = self.ordered_nuclides[i - 1]
+            new_item1.setForeground(QBrush(QColor(self.color_map[cur_nuclide_name])))
             self.sub_checkBoxs[cur_nuclide_name] = QCheckBox(self)
             self.sub_checkBoxs[cur_nuclide_name].setChecked(True)
             self.sub_checkBoxs[cur_nuclide_name].clicked.connect(self.on_sub_check)
             self.tableWidget.setCellWidget(i, 0, self.sub_checkBoxs[cur_nuclide_name])
             new_item2 = QTableWidgetItem(cur_nuclide_name)
+            new_item2.setForeground(QBrush(QColor(self.color_map[cur_nuclide_name])))
             self.tableWidget.setItem(i, 1, new_item2)
-            color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
-            self.color_map[cur_nuclide_name] = color_str
-            red = (red + 86) % 256
-            green = (green + 43) % 256
-            blue = (blue + 6) % 256
 
     def initialize_canvas(self):
         self.figure = Figure(figsize=(8, 6), dpi=100, tight_layout=True)
@@ -112,8 +127,9 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         # self.axe.hold(True)
         self.axe.set_xscale('log')
         self.axe.set_yscale('log')
-        self.axe.set_xlim([1, 1e10])
-        self.axe.set_ylim([1e-60, 1000])
+        self.axe.set_xlim([1e-1, 1e10])
+        axe_y_lim_low = 1e-10
+        self.axe.set_ylim([axe_y_lim_low/10, 1000*10])
         red = 124
         green = 56
         blue = 200
@@ -123,15 +139,16 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         for key, checkBox in self.sub_checkBoxs.items():
             if checkBox.isChecked():
                 color_str = ""
-                if key in self.color_map:
-                    color_str = self.color_map[key]
-                else:
-                    color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
-                    red = (red + 86) % 256
-                    green = (green + 43) % 256
-                    blue = (blue + 6) % 256
-                self.axe.plot(cooling_times, self.nuclides_trans_data[key], color=color_str, label=key)
-                self.axe.text(2.0e9, self.nuclides_trans_data[key][-1], key, color=color_str)
+                if self.nuclides_trans_data[key][0] > 1e-10: #filter out nuclides with too low concentration
+                    if key in self.color_map.keys():
+                        color_str = self.color_map[key]
+                    else:
+                        color_str = '#{0:02x}{1:02x}{2:02x}'.format(red, green, blue)
+                        red = (red + 86) % 256
+                        green = (green + 43) % 256
+                        blue = (blue + 6) % 256
+                    self.axe.plot(cooling_times, self.nuclides_trans_data[key], color=color_str, label=key)
+                    self.axe.text(1e-1, self.nuclides_trans_data[key][0], key, color=color_str)
                 # print("{}:{}".format(key, color_str))
                 # self.axe.plot(xs=[1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9], ys=[1e-20,2e-10,3e-5,4e-1,5,6,7])
         Font = {'family': 'Tahoma',

@@ -46,9 +46,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBoxHeat">
+        <widget class="QCheckBox" name="checkBoxDose">
          <property name="text">
-          <string>Heat</string>
+          <string>Dose</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -56,9 +56,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBoxDose">
+        <widget class="QCheckBox" name="checkBoxHeat">
          <property name="text">
-          <string>Dose</string>
+          <string>Heat</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -78,7 +78,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>CoolingTime (s):</string>
+          <string>Cooling time (s):</string>
          </property>
         </widget>
        </item>
@@ -88,7 +88,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Primary Amount (%):</string>
+          <string>Contribution threshold (%):</string>
          </property>
         </widget>
        </item>

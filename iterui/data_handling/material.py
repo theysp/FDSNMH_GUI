@@ -65,19 +65,22 @@ class Material:
         else:
             self.elements[element_name] = proportion
 
-    def calculate_activation(self):
+    def normalize(self):
         prop_sum = 0.0
         for name, prop in self.elements.items():
             prop_sum += prop
         for name in self.elements.keys():
-            self.elements[name] /= prop_sum
+            self.elements[name] = self.elements[name] * 100 / prop_sum
+
+    def calculate_activation(self):
+        self.normalize()
         # to be continued, extra need to be added
         for element_name in self.elements.keys():
             element = ElementPool.get_elem(element_name)
             if self.activation_data is None:
-                self.activation_data = element.activation_data*self.elements[element_name]
+                self.activation_data = element.activation_data*(self.elements[element_name]/100)
             else:
-                self.activation_data += element.activation_data*self.elements[element_name]
+                self.activation_data += element.activation_data*(self.elements[element_name]/100)
         return True
 
     def to_string(self):
@@ -85,6 +88,31 @@ class Material:
         for elem, prop in self.elements.items():
             line = line + "{0} {1} ".format(elem,prop)
         return line
+
+    def get_cache_file_path(self):
+        # hash name
+        line = self.to_string()
+        file_name = BasicPath.element_cache_folder +"/{}_{}.mat".format(self.name, hash(line))
+        return file_name
+
+    def cache_material(self):
+        try:
+            cache_file_path = self.get_cache_file_path()
+            if os.path.exists(cache_file_path):
+                os.remove(cache_file_path)
+            with open(cache_file_path, 'wb') as outfile:
+                pickle.dump(self, outfile)
+            return True
+        except Exception:
+            return False
+
+    def get_cached_material(self):
+        cache_file_path = self.get_cache_file_path()
+        newmat = None
+        if os.path.exists(cache_file_path):
+            with open(cache_file_path, 'rb') as infile:
+                newmat = pickle.load(infile)
+        return newmat
 
 
 class Element(Material):

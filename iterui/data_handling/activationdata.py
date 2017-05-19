@@ -122,22 +122,22 @@ class OneSpectrumActivationData(BaseData):
         return self
 
 class OneSpectrumOneStepActivationData(BaseData):
-    param_names = ['activity(Bq)',
-                   'activity_no_tritium(Bq)',
-                   'alpha_heat(kW)',
-                   'beta_heat(kW)',
-                   'gamma_heat(kW)',
-                   'total_heat(kW)',
-                   'total_heat_ex_tritium(kW)',
+    param_names = ['activity(Bq/kg)',
+                   'activity_no_tritium(Bq/kg)',
+                   'alpha_heat(kW/kg)',
+                   'beta_heat(kW/kg)',
+                   'gamma_heat(kW/kg)',
+                   'total_heat(kW/kg)',
+                   'total_heat_ex_tritium(kW/kg)',
                    'origin_mass(kg)',
                    'cur_mass(kg)',
                    'neutron_flux(n/cm**2/s)',
                    'number_fission',
-                   'dose_rate(Sv)',
-                   'ingestion_dose(Sv)',
-                   'inhalation_dose(Sv)',
-                   'ingestion_dose_ex_tritium(Sv)',
-                   'inhalation_dose_ex_tritium(Sv)',
+                   'dose_rate(Sv/h)',
+                   'ingestion_dose(Sv/h)',
+                   'inhalation_dose(Sv/h)',
+                   'ingestion_dose_ex_tritium(Sv/h)',
+                   'inhalation_dose_ex_tritium(Sv/h)',
                    'gase_rate(appm/sec)']
     data_position = []
 
@@ -163,22 +163,83 @@ class OneSpectrumOneStepActivationData(BaseData):
             if one_nuclide_data.read_raw_line(lines[i]):
                 self.nuclides[one_nuclide_data.nuclide_name] = one_nuclide_data
         # total info
-        self.parameters['activity(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 5][40:51])
-        self.parameters['activity_no_tritium(Bq)'] = eval_str_number(lines[nuclide_data_end_idx + 6][40:51])
-        self.parameters['alpha_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 7][40:51])
-        self.parameters['beta_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 8][40:51])
-        self.parameters['gamma_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 9][40:51])
-        self.parameters['total_heat(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 9][90:101])
-        self.parameters['total_heat_ex_tritium(kW)'] = eval_str_number(lines[nuclide_data_end_idx + 10][90:101])
-        self.parameters['origin_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 10][40:51])
-        self.parameters['cur_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 11][40:51])
-        self.parameters['neutron_flux(n/cm**2/s)'] = eval_str_number(lines[nuclide_data_end_idx + 12][40:51])
-        self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + 13][40:51])
-        self.parameters['ingestion_dose(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
-        self.parameters['inhalation_dose(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
-        self.parameters['ingestion_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
-        self.parameters['inhalation_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
-        self.parameters['inhalation_dose_ex_tritium(Sv)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx+i].find('TOTAL ACTIVITY FOR')>0:
+                self.parameters['activity(Bq/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+
+        #self.parameters['activity(Bq/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 5][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx+i].find('TOTAL ACTIVITY EXCLUDING TRITIUM')>0:
+                self.parameters['activity_no_tritium(Bq/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['activity_no_tritium(Bq/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 6][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx+i].find('TOTAL ALPHA HEAT PRODUCTION')>0:
+                self.parameters['alpha_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 7][40:51])
+                break
+        #self.parameters['alpha_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 7][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx+i].find('TOTAL BETA  HEAT PRODUCTION')>0:
+                self.parameters['beta_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['beta_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 8][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('TOTAL GAMMA HEAT PRODUCTION') > 0:
+                self.parameters['gamma_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['gamma_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 9][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('TOTAL HEAT PRODUCTION') > 0:
+                self.parameters['total_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][90:101])
+                break;
+        #self.parameters['total_heat(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 9][90:101])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('TOTAL HEAT EX TRITIUM') > 0:
+                self.parameters['total_heat_ex_tritium(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][90:101])
+                break
+        #self.parameters['total_heat_ex_tritium(kW/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 10][90:101])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('INITIAL TOTAL MASS OF MATERIAL') > 0:
+                self.parameters['origin_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['origin_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 10][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('TOTAL MASS OF MATERIAL') > 0:
+                self.parameters['cur_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['cur_mass(kg)'] = eval_str_number(lines[nuclide_data_end_idx + 11][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('NEUTRON  FLUX DURING INTERVAL') > 0:
+                self.parameters['neutron_flux(n/cm**2/s)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['neutron_flux(n/cm**2/s)'] = eval_str_number(lines[nuclide_data_end_idx + 12][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('NUMBER OF FISSIONS') > 0:
+                self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + 13][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('INGESTION  HAZARD FOR ALL MATERIALS') > 0:
+                self.parameters['ingestion_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['ingestion_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('INHALATION HAZARD FOR ALL MATERIALS') > 0:
+                self.parameters['inhalation_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['inhalation_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('INGESTION  HAZARD EXCLUDING TRITIUM') > 0:
+                self.parameters['ingestion_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['ingestion_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
+        for i in range(4, 100):
+            if lines[nuclide_data_end_idx + i].find('INHALATION HAZARD EXCLUDING TRITIUM') > 0:
+                self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                break
+        #self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
+        #self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
         # spectra
         spectra_beg_idx = -1
         spectra_end_idx = -1
@@ -208,9 +269,9 @@ class OneSpectrumOneStepActivationData(BaseData):
                 dose_rate_idx = i
                 break
         if dose_rate_idx < 0:
-            self.parameters['dose_rate(Sv)'] = -1.0
+            self.parameters['dose_rate(Sv/h)'] = -1.0
         else:
-            self.parameters['dose_rate(Sv)'] = eval_str_number(lines[dose_rate_idx][75:88])
+            self.parameters['dose_rate(Sv/h)'] = eval_str_number(lines[dose_rate_idx][75:88])
         self.ok = True
         return True
 
@@ -246,20 +307,20 @@ class OneSpectrumOneStepActivationData(BaseData):
 class OneNuclideData(BaseData):
     param_names = ['atoms',
                    'weight(g)',
-                   'activity(Bq)',
-                   'beta_heat(kW)',
-                   'alpha_heat(kW)',
-                   'gamma_heat(kW)',
-                   'dose_rate(Sv)',
-                   'ingestion_dose(Sv)',
-                   'inhalation_dose(Sv)',
+                   'activity(Bq/kg)',
+                   'beta_heat(kW/kg)',
+                   'alpha_heat(kW/kg)',
+                   'gamma_heat(kW/kg)',
+                   'dose_rate(Sv/h)',
+                   'ingestion_dose(Sv/h)',
+                   'inhalation_dose(Sv/h)',
                    'Bq/A2_Ratio',
                    'half_life(sec)',
-                   'total_heat(kW)']
+                   'total_heat(kW/kg)']
 
     def __init__(self):
         #  NUCLIDE ATOMS GRAMS Bq b-Energy a-Energy g-Energy DOSE RATE INGESTION INHALATION Bq/A2 HALF LIFE
-        #                            kW       kW       kW      Sv/hr    DOSE(Sv)   DOSE(Sv) Ratio seconds
+        #                            kW       kW       kW      Sv/hr    DOSE(Sv/h)   DOSE(Sv/h) Ratio seconds
         self.params = {}
         self.nuclide_name = ''
 
@@ -278,18 +339,20 @@ class OneNuclideData(BaseData):
             self.params['half_life(sec)'] = -1
         else:
             self.params['half_life(sec)'] = eval_str_number(val_list[-1])
-        self.params['total_heat(kW)'] = self.params['beta_heat(kW)']+self.params['alpha_heat(kW)']+self.params['gamma_heat(kW)']
+        self.params['total_heat(kW/kg)'] = self.params['beta_heat(kW/kg)']+self.params['alpha_heat(kW/kg)']+self.params['gamma_heat(kW/kg)']
         return True
 
     def __imul__(self, number):
         for i in range(2, len(OneNuclideData.param_names) - 1):
             self.params[OneNuclideData.param_names[i - 2]] *= number
+        self.params['total_heat(kW/kg)'] *= number
         return self
 
     def __iadd__(self, other):
         assert(self.nuclide_name == other.nuclide_name)
         for i in range(2, len(OneNuclideData.param_names) - 1):
             self.params[OneNuclideData.param_names[i - 2]] += other.params[OneNuclideData.param_names[i - 2]]
+        self.params['total_heat(kW/kg)'] += other.params['total_heat(kW/kg)']
         return self
 
 

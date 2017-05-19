@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5.QtCore import pyqtSlot,pyqtSignal
+from PyQt5.QtCore import pyqtSlot,pyqtSignal, Qt
 from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QVBoxLayout, QFileDialog
 from Ui_WidgetParam import Ui_WidgetParam
 from PyQt5.Qt import QResizeEvent, QSize
@@ -15,12 +15,17 @@ from PyQt5.QtWidgets import QTableWidgetItem
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+import os
 
 class WidgetParam(QWidget, Ui_WidgetParam):
-    param_names = ['activity(Bq)',
-                   'total_heat(kW)',
-                   'dose_rate(Sv)',
-                   'ingestion_dose(Sv)']
+    param_names = ['activity(Bq/kg)',
+                   'total_heat(kW/kg)',
+                   'dose_rate(Sv/h)',
+                   'ingestion_dose(Sv/h)']
+    show_names = ['Specific activity(Bq/kg)',
+                   'Heat(kW/kg)',
+                   'Dose rate(Sv/h)',
+                   'Ingestion dose(Sv/h)']
     cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
 
     def __init__(self, parent=None):
@@ -49,7 +54,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
             values = self.valuess[i]
             for j in range(0, len(values)):
                 val = values[j]
-                new_item = QTableWidgetItem('{0}'.format(val))
+                new_item = QTableWidgetItem('{0:.2e}'.format(val))
                 self.tableWidgetParams.setItem(j, i+1, new_item)
         # plot data to plot widge
         self.initialize_figs_parameters()
@@ -124,8 +129,13 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 #            one_step_data = self.act_data.all_steps_activation_data[i]
 #            values.append(one_step_data.parameters[WidgetParam.param_names[idx]])
         values = self.valuess[idx]
+
         assert(self.axes[idx] is not None)
         cur_axe = self.axes[idx]
+        if values[0] < 1e-50:
+            cur_axe.set_title(WidgetParam.show_names[idx]+" is all 0.")
+            cur_axe.pie([], labels=[])
+            return
         Font = {'family': 'Tahoma',
                 'weight': 'bold', 'size': 10}
         # Abscissa
@@ -141,17 +151,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
                 maxval = max(maxval,max(val[idx])*1.5)
         cur_axe.set_ylim([minval, maxval])
         # Ordinate
-        cur_axe.set_ylabel(WidgetParam.param_names[idx], fontdict=Font)
+        cur_axe.set_ylabel(WidgetParam.show_names[idx], fontdict=Font)
         cur_axe.grid(True)  # Grid On
         if len(self.extra_valuesss.items()) == 0:
             cur_axe.plot(WidgetParam.cooling_times, values)
         else:
             color_idx = 0
-            cur_axe.plot(WidgetParam.cooling_times, values, color=color_sequence[color_idx], label='cur')
+            cur_axe.plot(WidgetParam.cooling_times, values, color=color_sequence[color_idx], label='current material')
             color_idx += 1
             for key, val in self.extra_valuesss.items():
                 cur_axe.plot(WidgetParam.cooling_times, val[idx], color=color_sequence[color_idx], label=key)
                 color_idx += 1
+            cur_axe.legend()
         cur_axe.set_xscale('log')
         cur_axe.set_yscale('log')
 
@@ -162,23 +173,27 @@ class WidgetParam(QWidget, Ui_WidgetParam):
             with open(filename,'w') as fileout:
                 fileout.write('cooling time\t ')
                 for coolingtime in WidgetParam.cooling_times:
-                    fileout.write('{0}'.format(coolingtime)+'\t')
+                    fileout.write('{0:.2e}'.format(coolingtime)+'\t')
                 fileout.write('\n')
                 for idx in range(0,len(self.valuess)):
                     values = self.valuess[idx]
                     name = WidgetParam.param_names[idx]
                     fileout.write(name+'\t')
                     for val in values:
-                        fileout.write('{0}'.format(val)+'\t')
+                        fileout.write('{0:.2e}'.format(val)+'\t')
                     fileout.write('\n')
 
     @pyqtSlot()
     def on_pushButtonClear_clicked(self):
-        pass
+        self.setCursor(Qt.WaitCursor)
+        self.extra_valuesss.clear()
+        self.initialize_figs_parameters()
+        self.setCursor(Qt.ArrowCursor)
 
     @pyqtSlot()
     def on_pushButtonLoadOther_clicked(self):
         filename, _ = QFileDialog.getOpenFileName(parent=self)
+        self.setCursor(Qt.WaitCursor)
         try:
             if filename:
                 with open(filename, 'r') as filein:
@@ -194,8 +209,9 @@ class WidgetParam(QWidget, Ui_WidgetParam):
                         for j in range(1,len(val_strs)):
                             vals.append(eval(val_strs[j]))
                         valss.append(vals)
-                    self.extra_valuesss[filename] = valss
+                    self.extra_valuesss[os.path.basename(filename)] = valss
                 self.initialize_figs_parameters()
         except Exception:
             pass
+        self.setCursor(Qt.ArrowCursor)
 

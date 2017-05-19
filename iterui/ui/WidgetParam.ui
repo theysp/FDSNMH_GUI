@@ -105,7 +105,7 @@
          </row>
          <column>
           <property name="text">
-           <string>Cooling (s)</string>
+           <string>Cooling Time(s)</string>
           </property>
          </column>
          <column>
@@ -254,9 +254,9 @@
           <number>3</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBoxDose">
+          <widget class="QCheckBox" name="checkBoxAct">
            <property name="text">
-            <string>Dose</string>
+            <string>Act</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -264,9 +264,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxAct">
+          <widget class="QCheckBox" name="checkBoxDose">
            <property name="text">
-            <string>Activity</string>
+            <string>Dose</string>
            </property>
            <property name="checked">
             <bool>true</bool>

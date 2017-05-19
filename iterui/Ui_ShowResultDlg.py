@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ShowResultDlg.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -43,10 +43,10 @@ class Ui_ShowResultDlg(object):
     def retranslateUi(self, ShowResultDlg):
         _translate = QtCore.QCoreApplication.translate
         ShowResultDlg.setWindowTitle(_translate("ShowResultDlg", "Dialog"))
-        self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.Parameters), _translate("ShowResultDlg", "Parameters"))
+        self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.Parameters), _translate("ShowResultDlg", "Activation Properties"))
         self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.TransmutationGraph), _translate("ShowResultDlg", "Transmutation Graph"))
         self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PrimaryNuclides), _translate("ShowResultDlg", "Primary Nuclides"))
-        self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PathwayAnalysis), _translate("ShowResultDlg", "Pathway Analysis"))
+        self.tabWidgetParameters.setTabText(self.tabWidgetParameters.indexOf(self.PathwayAnalysis), _translate("ShowResultDlg", "Pathways"))
 
 from widgetparam import WidgetParam
 from widgetpathway import WidgetPathway

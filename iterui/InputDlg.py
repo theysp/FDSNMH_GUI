@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtCore import pyqtSlot, pyqtSignal
+from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QHBoxLayout, QListWidgetItem, QListWidget, QMessageBox
 from Ui_InputDlg import Ui_InputDlg
@@ -13,6 +13,7 @@ import pickle
 import os
 import copy
 import sys
+from PyQt5.QtGui import QIcon
 
 class InputDlg(QDialog, Ui_InputDlg):
     def __init__(self, parent=None):
@@ -22,6 +23,7 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.init_ui_data()
         self.resultdlgs = []
         self.tableWidgetMatComposition.init_mat_table()
+        self.setWindowIcon(QIcon('fds.ico'))
 
     def init_ui_data(self):
         while self.listWidgetMaterialLib.count() > 0:
@@ -59,7 +61,7 @@ class InputDlg(QDialog, Ui_InputDlg):
             mat_name = self.listWidgetMaterialLib.item(selected_row_idx).text()
             self.tableWidgetSelectedMatComposition.mat_info_to_ui(self.matlib.materials[mat_name])
         else:
-            self.tableWidgetSelectedMatComposition.clear()
+            self.tableWidgetSelectedMatComposition.init_mat_table()
 
     @pyqtSlot(str)
     def on_textMaterialSearch_textChanged(self, text):
@@ -121,23 +123,47 @@ class InputDlg(QDialog, Ui_InputDlg):
                 self.matlib.save_material_list()
 
     @pyqtSlot()
+    def on_pushButtonClearCurrentMat_clicked(self):
+        self.tableWidgetMatComposition.init_mat_table()
+
+    @pyqtSlot()
     def on_pushButtonShowResult_clicked(self):
-        cur_mat = self.current_material()
+        cur_mat = copy.deepcopy(self.tableWidgetSelectedMatComposition.cur_material) #self.current_material()
         if cur_mat is None:
-            self.show_message('Please specify the material needed to'
-            ' be displayed from the material libraray'
-            ' or from scratch')
+            self.show_message('Please select the material needed to'
+            ' be displayed from the material libraray')
             return
+        spectra_names=['1) Upper Cryostat',
+                       '2) Rear of equatorial port ',
+                       '3) Beneath lower port extension',
+                       '4) Cryostat basement',
+                       '5) Port cell',
+                       '6) Neutral beam cell']
+        self.setCursor(Qt.WaitCursor)
+        #cur_mat_cache = cur_mat.get_cached_material()
+        #if cur_mat_cache is not None: # in case different material with the same name
+        #   for elem in cur_mat.elements.keys():
+        #       if not(elem in cur_mat_cache):
+        #            cur_mat_cache = None
+        #            break;
+        #        elif cur_mat.elements[elem] != cur_mat_cache.elements[elem]:
+        #            cur_mat_cache = None
+        #            break;
+        #if cur_mat_cache is None:
+        #    if cur_mat.calculate_activation():
+        #        cur_mat_cache = cur_mat
+        #        cur_mat_cache.cache_material()
         if cur_mat.calculate_activation():
             # with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
             #    pickle.dump(cur_mat, outdata)
             index = self.comboBoxSelectSpectra.currentIndex()
             self.resultdlgs.append(ShowResultDlg(cur_mat, index+1))
-            self.resultdlgs[-1].setWindowTitle('Activation data of material \"{0}\", spectra \"{1}\"'
-                                               .format(cur_mat.name, index))
+            self.resultdlgs[-1].setWindowTitle('Activation data of material \"{0}\", spectrum \"{1}\"'
+                                               .format(cur_mat.name, spectra_names[index]))
             self.resultdlgs[-1].show()
         else:
             self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
+        self.setCursor(Qt.ArrowCursor)
 
 if __name__ == "__main__":
     # try:

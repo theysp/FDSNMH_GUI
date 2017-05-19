@@ -16,10 +16,14 @@ from data_handling.activationdata import *
 
 class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
     cooling_times = ['1', '1.0e5', '1.0e6', '1.0e7', '1.0e8', '1.0e9', '1.5e9']
-    param_names = ['activity(Bq)',
-                   'total_heat(kW)',
-                   'dose_rate(Sv)',
-                   'ingestion_dose(Sv)']
+    param_names =  ['activity(Bq/kg)',
+                   'total_heat(kW/kg)',
+                   'dose_rate(Sv/h)',
+                   'ingestion_dose(Sv/h)']
+    show_names = ['Specific activity(Bq/kg)',
+                  'Heat(kW/kg)',
+                  'Dose rate(Sv/h)',
+                  'Ingestion dose(Sv/h)']
     colors = ['#FA8072', '#7FFF00', '#87CEFA', '#8A2BE2', '#A9A9A9', '#E9967A', '#FF1493', '#9932CC', '#CD853F',
               '#FF7F50', '#2E8B57']
 
@@ -100,11 +104,15 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
             nuclide_props.append(prop)
             if accumulate_amount >= primary_limit:
                 break
+        if accumulate_amount > 0.999999:
+            accumulate_amount = 1.0
         leftprop = 1-accumulate_amount
         nuclide_props.append(leftprop)
         nuclides.append('Other')
         self.axes[idx].pie(nuclide_props, labels=nuclides, colors=WidgetPrimaryNuclides.colors, autopct='%1.2f%%', shadow=True, startangle=90)
-        self.axes[idx].set_title("Primary nuclides for: "+parameter_name)
+        show_name = WidgetPrimaryNuclides.show_names[idx]
+        self.axes[idx].set_title("Primary nuclides for: "+show_name)
+        self.axes[idx].axis('equal')
         return
 
     def on_click(self):

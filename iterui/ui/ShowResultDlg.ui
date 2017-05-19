@@ -39,7 +39,7 @@
      </property>
      <widget class="WidgetParam" name="Parameters">
       <attribute name="title">
-       <string>Parameters</string>
+       <string>Activation Properties</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
@@ -71,7 +71,7 @@
      </widget>
      <widget class="WidgetPathway" name="PathwayAnalysis">
       <attribute name="title">
-       <string>Pathway Analysis</string>
+       <string>Pathways</string>
       </attribute>
      </widget>
     </widget>

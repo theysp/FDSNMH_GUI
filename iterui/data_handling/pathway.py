@@ -61,8 +61,9 @@ class MaterialPathWays(BaseData):
             raise Exception('read path way failed, cannot find the start of pathway')
         real_end_idx = -1
         for i in range(real_start_idx, len(lines)-1):
-            if len(lines[i])<2 and len(lines[i+1]) < 2:
+            if len(lines[i])<3 and len(lines[i+1]) < 3:
                 real_end_idx = i
+                break
         if real_end_idx < 0:
             raise Exception('read path way failed, cannot find the start of pathway')
         for i in range(real_start_idx, real_end_idx):

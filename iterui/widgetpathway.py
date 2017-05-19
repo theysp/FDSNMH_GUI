@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
-from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidgetItem, QFileDialog
 from Ui_WidgetPathway import Ui_WidgetPathway
 from data_handling.activationdata import *
 
@@ -47,3 +47,21 @@ class WidgetPathway(QWidget, Ui_WidgetPathway):
     @pyqtSlot()
     def on_plainTextEditSearchNuclide_textChanged(self):
         self.data_to_ui(self.data)
+
+    @pyqtSlot()
+    def on_pushButtonSave_clicked(self):
+        filename, _ = QFileDialog.getSaveFileName(parent=self, initialFilter='.txt')
+        if filename:
+            with open(filename, 'w') as fileout:
+                fileout.write('Target Nuclides\tPropotion\tPathway\n')
+                search_keys = [a for a in self.plainTextEditSearchNuclide.toPlainText().split(' ')]
+                for nuclide, one_target_pathway in self.data.path_way.all_path_ways.items():
+                    all_keys_found = True
+                    for key in search_keys:
+                        if key not in nuclide:
+                            all_keys_found = False
+                    if all_keys_found:
+                        one_target_pathway.normalize()
+                        for pathway in sorted(one_target_pathway.pathway.keys(),
+                                              key=lambda a: one_target_pathway.pathway[a]):
+                            fileout.write("{}\t{:.2e}\t{}\n".format(nuclide,one_target_pathway.pathway[pathway],pathway))
