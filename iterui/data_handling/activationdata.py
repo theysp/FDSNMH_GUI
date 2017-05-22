@@ -115,7 +115,8 @@ class OneSpectrumActivationData(BaseData):
         return self
 
     def __iadd__(self, other):
-        assert(len(self.all_steps_activation_data) == len(other.all_steps_activation_data))
+        if(len(self.all_steps_activation_data) != len(other.all_steps_activation_data)):
+            print("here")
         for i in range(0,len(self.all_steps_activation_data)):
             self.all_steps_activation_data[i] += other.all_steps_activation_data[i]
         self.path_way += other.path_way
