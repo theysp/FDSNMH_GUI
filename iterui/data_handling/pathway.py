@@ -3,6 +3,19 @@
 import re
 import copy
 
+def eval_str_number(num_str):
+    new_num_str = num_str
+    pos_minus_plus = num_str.find('-')
+    if pos_minus_plus < 0:
+        pos_minus_plus = num_str.find('+')
+    if pos_minus_plus > 0:
+        ch_before_minus = num_str[pos_minus_plus - 1]
+        if ch_before_minus != 'e' and ch_before_minus != 'E':
+            new_num_str = num_str[:pos_minus_plus] + 'E' + num_str[pos_minus_plus:]
+    try:
+        return eval(new_num_str)
+    except Exception:
+        return -1.0
 
 class BaseData:
     def __mul__(self, number):
@@ -46,6 +59,7 @@ class MaterialPathWays(BaseData):
     def __init__(self):
         # all_path_ways contains all the pathways for all the target nuclides of this material
         self.all_path_ways = dict()
+        self.atom_num_dict ={}
 
     def normalize(self):
         for key, val in self.all_path_ways.items():
@@ -58,7 +72,24 @@ class MaterialPathWays(BaseData):
                 real_start_idx = i
                 break
         if real_start_idx < 0:
-            raise Exception('read path way failed, cannot find the start of pathway')
+            return True
+        #read target nuclides' atom number
+        for atom_start_idx in range(real_start_idx, 0 ,-1):
+            if lines[atom_start_idx-1].find('0   Nuclide')==0:
+                break;
+            if i < 1:
+                return True
+        for i in range(atom_start_idx,real_start_idx):
+            if lines[i].find('1') == 0:
+                break;
+            val_list = [a for a in lines[i].split(' ') if len(a) > 0
+                        and a != '\n'
+                        and ('#' not in a)
+                        and ('<' not in a)
+                        and ('?' not in a)]
+            target_nuclide = val_list[0]+' '+val_list[1]
+            self.atom_num_dict[target_nuclide] = eval_str_number(val_list[2])
+        #read pathway
         real_end_idx = -1
         for i in range(real_start_idx, len(lines)-1):
             if len(lines[i])<3 and len(lines[i+1]) < 3:
@@ -83,17 +114,21 @@ class MaterialPathWays(BaseData):
                 print("{0}:{1}".format(key2,val2))
 
     def __imul__(self, factor):
-        for key, val in self.all_path_ways.items():
-            val *= factor
+        for key in self.atom_num_dict.keys():
+            self.atom_num_dict[key] = self.atom_num_dict[key]*factor
         return self
 
     # seem to be continued
     def __iadd__(self, other):
         for key, val in other.all_path_ways.items():
             if key in self.all_path_ways:
-                self.all_path_ways[key] += val
+                propself = self.atom_num_dict[key] / (self.atom_num_dict[key]+other.atom_num_dict[key])
+                propother = other.atom_num_dict[key] / (self.atom_num_dict[key]+other.atom_num_dict[key])
+                self.all_path_ways[key] = self.all_path_ways[key]*propself+other.all_path_ways[key]*propother
+                self.atom_num_dict[key] = self.atom_num_dict[key]+other.atom_num_dict[key]
             else:
                 self.all_path_ways[key] = val
+                self.atom_num_dict[key] = other.atom_num_dict[key]
         return self
 
 

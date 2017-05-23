@@ -77,8 +77,6 @@ class Material:
         # to be continued, extra need to be added
         for element_name in self.elements.keys():
             element = ElementPool.get_elem(element_name)
-            if(element_name == 'H'):
-                print('here')
             if self.activation_data is None:
                 self.activation_data = element.activation_data*(self.elements[element_name]/100)
             else:

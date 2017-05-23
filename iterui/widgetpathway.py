@@ -33,7 +33,9 @@ class WidgetPathway(QWidget, Ui_WidgetPathway):
                     all_keys_found = False
             if all_keys_found:
                 one_target_pathway.normalize()
-                for pathway in sorted(one_target_pathway.pathway.keys(), key=lambda a: one_target_pathway.pathway[a]):
+                for pathway in sorted(one_target_pathway.pathway.keys(), key=lambda a: -one_target_pathway.pathway[a]):
+                    if one_target_pathway.pathway[pathway] < 1e-4:
+                        continue
                     while idx >= self.tableWidgetPathway.rowCount():
                         self.tableWidgetPathway.insertRow(self.tableWidgetPathway.rowCount())
                         for i in range(0, self.tableWidgetPathway.columnCount()):
