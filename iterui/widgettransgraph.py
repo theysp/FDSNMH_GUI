@@ -26,6 +26,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.setupUi(self)
         self.color_map = {}
         self.color_item_map = {}
+        self.initialized = False
 
     def value_nuclide(nuclide, act_data: OneSpectrumActivationData):
         # cooling times: ['1', '1.0e5', '1.0e6', '1.0e7', '1.0e8', '1.0e9', '1.5e9']
@@ -94,7 +95,6 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.major_checkBox.setChecked(True)
         self.major_checkBox.clicked.connect(self.on_major_check)
         self.sub_checkBoxs = {}
-
         for i in range(1, len(self.ordered_nuclides)+1):
             while self.tableWidget.rowCount() <= i:
                 self.tableWidget.insertRow(self.tableWidget.rowCount())
@@ -129,13 +129,14 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
         self.axe.set_yscale('log')
         self.axe.set_xlim([1e-1, 1e10])
         axe_y_lim_low = 1e-10
+        #if(not self.initialized):
         self.axe.set_ylim([axe_y_lim_low/10, 1000*10])
+        #   self.initialized = True
         red = 124
         green = 56
         blue = 200
         self.axe.tick_params(axis='both', which='both', bottom='off', top='off',
                         labelbottom='on', left='off', right='off', labelleft='on')
-
         for key, checkBox in self.sub_checkBoxs.items():
             if checkBox.isChecked():
                 color_str = ""

@@ -2,6 +2,7 @@
 
 import re
 import copy
+from base.base import *
 
 def eval_str_number(num_str):
     new_num_str = num_str
@@ -96,15 +97,12 @@ class MaterialPathWays(BaseData):
                 real_end_idx = i
                 break
         if real_end_idx < 0:
-            raise Exception('read path way failed, cannot find the start of pathway')
+            raise YSPException('read path way failed, cannot find the start of pathway')
         for i in range(real_start_idx, real_end_idx):
             if lines[i].startswith(' Target nuclide '):
                 new_path_way = PathWay('unknown')
-                try:
-                    new_path_way.read_raw_lines(lines, i)
-                    self.all_path_ways[new_path_way.target_nuclide] = new_path_way
-                except Exception:
-                    next
+                new_path_way.read_raw_lines(lines, i)
+                self.all_path_ways[new_path_way.target_nuclide] = new_path_way
         return True
 
     def output(self):
@@ -158,25 +156,50 @@ class PathWay(BaseData):
 
     def read_raw_lines(self,lines,start_idx):
         if not lines[start_idx].startswith(' Target nuclide '):
-            raise Exception('invalid start of pathway')
+            raise YSPException('invalid start of pathway: line ', start_idx, ": lines[start_idx]")
         # Target nuclide Mn 53    100.000% of inventory given by  2 paths
         words = [a for a in lines[start_idx].split(' ') if len(a) > 0 and a != '\n']
         if len(words) < 11:
-            raise Exception('no enough information in target nuclide line')
+            raise YSPException('No enough information in target nuclide line')
         self.target_nuclide = words[2]+' '+words[3]
         number_target = eval(words[9])
         for i in range(start_idx+1, len(lines)-1):
-            if lines[i].startswith(' path  '):
-                (percent_part, pathway_str) = lines[i].split('%')
-                pathway_str.strip('\r\n ')
+            if lines[i].startswith(' path')>0:
+                (percent_part, pathway_str) = lines[i].strip('\r\n').split('%')
+                pathway_str = pathway_str.strip('\r\n')
                 percent = eval(percent_part[percent_part.rfind(' '):])
-                self.pathway[pathway_str] = percent
                 number_target = number_target-1
+                reactiontypes = []
+                # get the reaction type and replace the (R) (b) and etc with these reaction types
+                for j in range(i+1,len(lines)-1):
+                    if len(lines[j])<18:
+                        break
+                    if lines[j].find('%') < 0:
+                        break
+                    reactStr = lines[j][18:]
+                    for i in range(0, int(len(reactStr)/16)):
+                        tmpreact = reactStr[i*16:i*16+16]
+                        tmpreact = tmpreact.strip(' ')
+                        if len(reactiontypes) > i:
+                            if len(reactiontypes[i])>0 and len(tmpreact) >0:
+                                reactiontypes[i]+=":"+tmpreact
+                            else:
+                                reactiontypes[i] += tmpreact
+                        else:
+                            reactiontypes.append(tmpreact)
+                new_pathway_str = ''
+                # replace the (R) (b) with it.
+                for j in range(0, int(len(pathway_str)/16)):
+                    if len(reactiontypes[j]) > 0:
+                        new_pathway_str += pathway_str[16*j:16*j+11]+reactiontypes[j]+pathway_str[16*j+12:16*j+16]
+                    else:
+                        new_pathway_str += pathway_str[16*j:16*j+16]
+                self.pathway[new_pathway_str] = percent
             if number_target == 0:
                 break
             if (lines[i].startswith(' Target nuclide')
                 or lines[i].find('G E N E R I C   P A T H W A Y S') > 0):
-                raise Exception('path way format error, path number incompact for ', self.target_nuclide)
+                raise YSPException('path way format error, path number incompact for ', self.target_nuclide)
         return True
 
     def __imul__(self, factor):
@@ -201,6 +224,13 @@ def functest_pathway():
     new_pathways.read_raw_lines(lines)
     print('readover')
 
+import traceback
 if __name__ == '__main__':
-    functest_pathway()
-    print('over')
+    try:
+        functest_pathway()
+        print('over')
+    except Exception as err:
+        print(err.args[0])
+        traceback.print_exc()
+    finally:
+        pass

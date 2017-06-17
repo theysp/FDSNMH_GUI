@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9335de09-7fc1-43d6-bd4a-d5319edfed5f" name="Default" comment="add data reading codes">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.gitignore" afterPath="$PROJECT_DIR$/../.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InputDlg.py" afterPath="$PROJECT_DIR$/InputDlg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ShowResultDlg.py" afterPath="$PROJECT_DIR$/ShowResultDlg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ui_InputDlg.py" afterPath="$PROJECT_DIR$/Ui_InputDlg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ui_WidgetParam.py" afterPath="$PROJECT_DIR$/Ui_WidgetParam.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ui_WidgetTransGraph.py" afterPath="$PROJECT_DIR$/Ui_WidgetTransGraph.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/base.py" afterPath="$PROJECT_DIR$/base/base.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_handling/activationdata.py" afterPath="$PROJECT_DIR$/data_handling/activationdata.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_handling/material.py" afterPath="$PROJECT_DIR$/data_handling/material.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_handling/pathway.py" afterPath="$PROJECT_DIR$/data_handling/pathway.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/widgetpathway.py" afterPath="$PROJECT_DIR$/widgetpathway.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qtablewidgetmaterial.py" afterPath="$PROJECT_DIR$/qtablewidgetmaterial.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/InputDlg.ui" afterPath="$PROJECT_DIR$/ui/InputDlg.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/WidgetParam.ui" afterPath="$PROJECT_DIR$/ui/WidgetParam.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/WidgetTransGraph.ui" afterPath="$PROJECT_DIR$/ui/WidgetTransGraph.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/widgetparam.py" afterPath="$PROJECT_DIR$/widgetparam.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/widgetprimarynuclides.py" afterPath="$PROJECT_DIR$/widgetprimarynuclides.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/widgettransgraph.py" afterPath="$PROJECT_DIR$/widgettransgraph.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,112 +37,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="widgetparam.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widgetparam.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4025">
-              <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-              <folding>
-                <element signature="e#198#246#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShowResultDlg.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-              <folding>
-                <element signature="e#25#69#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="widgetpathway.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/widgetpathway.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="38" column="68" lean-forward="true" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
-              <folding>
-                <element signature="e#198#242#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="widgettransgraph.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widgettransgraph.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="37" column="62" lean-forward="false" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="62" />
-              <folding>
-                <element signature="e#198#242#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qtablewidgetmaterial.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qtablewidgetmaterial.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="65" column="22" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activationdata.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_handling/activationdata.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="material.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_handling/material.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InputDlg.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/InputDlg.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3427">
-              <caret line="162" column="38" lean-forward="false" selection-start-line="162" selection-start-column="38" selection-end-line="162" selection-end-column="38" />
-              <folding>
-                <element signature="e#25#74#0" expanded="true" />
-                <marker date="1495185110525" expanded="true" signature="5339:5464" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pathway.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_handling/pathway.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="382">
+              <caret line="191" column="0" lean-forward="false" selection-start-line="190" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+              <folding>
+                <element signature="e#25#34#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="widgetprimarynuclides.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="widgetprimarynuclides.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/widgetprimarynuclides.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="130" column="30" lean-forward="false" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
+            <state relative-caret-position="444">
+              <caret line="115" column="29" lean-forward="false" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -139,36 +63,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ingestion_dose(Sv/h)</find>
-      <find>te</find>
-      <find>text</find>
-      <find>param_names</find>
-      <find>all_nuclides_names</find>
-      <find>extra_valuesss</find>
-      <find>elemlist</find>
-      <find>save</find>
-      <find>primary_limit</find>
-      <find>total_heat(kW/kg)</find>
-      <find>calculate_activation</find>
-      <find>init_ui_data</find>
-      <find>QTableWidgetMaterial`</find>
-      <find>QTableWidgetMaterial</find>
-      <find>tableWidgetSelectedMatComposition</find>
-      <find>tableWidgetMatComposition</find>
-      <find>sub_checkBoxs</find>
-      <find>dee</find>
-      <find>d</find>
-      <find>deep</find>
-      <find>deepc</find>
-      <find>deepco</find>
-      <find>deepcop</find>
-      <find>deepcopy</find>
-      <find>get_restored_file</find>
-      <find>h</find>
-      <find>e</find>
-      <find>he</find>
-      <find>eval_str_number</find>
-      <find>here</find>
+      <find>Nuclid</find>
+      <find>Nuclide</find>
+      <find>&quot;</find>
+      <find>&quot;Nucli</find>
+      <find>&quot;Nuclid</find>
+      <find>&quot;Nuclide&quot;</find>
+      <find>&quot;Nuclide</find>
+      <find>ElementPool</find>
+      <find>chomp</find>
+      <find>comboBoxSelectSpectra</find>
+      <find>resultdlgs</find>
+      <find>ShowResultDlg</find>
+      <find>comboBoxCoolingTime</find>
+      <find>Cannot find data for spectrum:</find>
+      <find>get_spectra_dir</find>
+      <find>activation_data</find>
+      <find>activition_data</find>
+      <find>show_message</find>
+      <find>set_ylim</find>
+      <find>ba</find>
+      <find>bas</find>
+      <find>base</find>
+      <find>split</find>
+      <find>YSPException</find>
+      <find>RAISE</find>
+      <find>RAIS</find>
+      <find>RA</find>
+      <find>ra</find>
+      <find>raise</find>
+      <find>read_raw_lines</find>
     </findStrings>
     <replaceStrings>
       <replace>eval_str_number(</replace>
@@ -196,27 +120,27 @@
         <option value="$PROJECT_DIR$/../simple plot/plotdialog.py" />
         <option value="$PROJECT_DIR$/datastructure.py" />
         <option value="$PROJECT_DIR$/data_structures.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/data_handling/data_structures.py" />
-        <option value="$PROJECT_DIR$/base/base.py" />
-        <option value="$PROJECT_DIR$/Ui_InputDlg.py" />
-        <option value="$PROJECT_DIR$/ShowResultDlg.py" />
-        <option value="$PROJECT_DIR$/widgetparam.py" />
-        <option value="$PROJECT_DIR$/widgetprimarynuclides.py" />
-        <option value="$PROJECT_DIR$/qtablewidgetmaterial.py" />
-        <option value="$PROJECT_DIR$/widgettransgraph.py" />
-        <option value="$PROJECT_DIR$/InputDlg.py" />
-        <option value="$PROJECT_DIR$/data_handling/activationdata.py" />
-        <option value="$PROJECT_DIR$/data_handling/material.py" />
-        <option value="$PROJECT_DIR$/data_handling/pathway.py" />
         <option value="$PROJECT_DIR$/widgetpathway.py" />
+        <option value="$PROJECT_DIR$/qtablewidgetmaterial.py" />
+        <option value="$PROJECT_DIR$/Ui_InputDlg.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/base/base.py" />
+        <option value="$PROJECT_DIR$/ShowResultDlg.py" />
+        <option value="$PROJECT_DIR$/InputDlg.py" />
+        <option value="$PROJECT_DIR$/widgetparam.py" />
+        <option value="$PROJECT_DIR$/widgettransgraph.py" />
+        <option value="$PROJECT_DIR$/data_handling/material.py" />
+        <option value="$PROJECT_DIR$/data_handling/activationdata.py" />
+        <option value="$PROJECT_DIR$/data_handling/pathway.py" />
+        <option value="$PROJECT_DIR$/widgetprimarynuclides.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
-    <option name="width" value="1378" />
-    <option name="height" value="735" />
+    <option name="width" value="1292" />
+    <option name="height" value="991" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -250,8 +174,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -308,6 +230,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -374,6 +298,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="iterui" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/InputDlg.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="iterui" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -493,17 +435,19 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.activationdata" />
       <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests for C:/Users/ysp/Desktop/QT_practice/iterui/data_handling/pathway.py" />
       <item index="2" class="java.lang.String" itemvalue="Python.pathway" />
       <item index="3" class="java.lang.String" itemvalue="Python.InputDlg" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Main" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Python.InputDlg" />
-        <item index="1" class="java.lang.String" itemvalue="Python.pathway" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for C:/Users/ysp/Desktop/QT_practice/iterui/data_handling/pathway.py" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.pathway" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for C:/Users/ysp/Desktop/QT_practice/iterui/data_handling/pathway.py" />
       </list>
     </recent_temporary>
     <configuration default="true" type="tests" factoryName="Attests">
@@ -583,20 +527,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1378" height="735" extended-state="0" />
-    <editor active="true" />
+    <frame x="-7" y="0" width="1292" height="991" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2276176" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29301947" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.496208" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30948418" sideWeight="0.43550834" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23337223" sideWeight="0.46347404" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.48789713" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.496208" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30948418" sideWeight="0.5644916" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.496208" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23337223" sideWeight="0.53652596" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24958402" sideWeight="0.8770865" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3843594" sideWeight="0.82839787" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -617,19 +560,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/InputDlg.py</url>
-          <line>105</line>
-          <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_handling/pathway.py</url>
-          <line>178</line>
-          <option name="timeStamp" value="194" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/data_handling/activationdata.py</url>
-          <line>118</line>
+          <line>111</line>
           <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/widgetparam.py</url>
+          <line>206</line>
+          <option name="timeStamp" value="250" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/widgetparam.py</url>
+          <line>203</line>
+          <option name="timeStamp" value="251" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -642,15 +585,16 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="215" />
+      <option name="time" value="252" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self" />
-        <watch expression="self.activition_data[i]" />
-        <watch expression="other.activition_data[i]" />
-        <watch expression="self.activation_data" />
-        <watch expression="lines[atom_start_idx-1]" />
+        <watch expression="lines[0]" language="Python" />
+        <watch expression="number_target" />
+        <watch expression="cur_mat.elements[elem]" />
+        <watch expression="cur_mat_cache.elements[elem]" />
+        <watch expression="len(tmp_spect_name)" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -770,13 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="10" column="25" lean-forward="false" selection-start-line="6" selection-start-column="3" selection-end-line="10" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../simple plot/plotdialog.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1863">
@@ -789,13 +726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="60" lean-forward="false" selection-start-line="0" selection-start-column="60" selection-end-line="0" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -817,20 +747,6 @@
     </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2017.1/system/python_stubs/268748254/PyQt5/QtWidgets/QMessageBox.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2017.1/system/python_stubs/268748254/PyQt5/QtWidgets/QListWidget.py" />
-    <entry file="file://$PROJECT_DIR$/Ui_InputDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1265">
-          <caret line="55" column="79" lean-forward="false" selection-start-line="55" selection-start-column="79" selection-end-line="55" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ui_ShowResultDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="52" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/start.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -852,94 +768,130 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widgettransgraph.py">
+    <entry file="file://$PROJECT_DIR$/widgetpathway.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="37" column="62" lean-forward="false" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="62" />
+        <state relative-caret-position="828">
+          <caret line="39" column="42" lean-forward="false" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
           <folding>
             <element signature="e#198#242#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/widgetparam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4025">
-          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-          <folding>
-            <element signature="e#198#246#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/InputDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3427">
-          <caret line="162" column="38" lean-forward="false" selection-start-line="162" selection-start-column="38" selection-end-line="162" selection-end-column="38" />
-          <folding>
-            <element signature="e#25#74#0" expanded="true" />
-            <marker date="1495185110525" expanded="true" signature="5339:5464" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-          <folding>
-            <element signature="e#25#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/qtablewidgetmaterial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="65" column="22" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="22" />
+        <state relative-caret-position="391">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widgetprimarynuclides.py">
+    <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="130" column="30" lean-forward="false" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
+        <state relative-caret-position="299">
+          <caret line="15" column="51" lean-forward="false" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
+          <folding>
+            <element signature="e#25#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ui_ShowResultDlg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_handling/activationdata.py">
+    <entry file="file://$PROJECT_DIR$/Ui_InputDlg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        <state relative-caret-position="143">
+          <caret line="171" column="75" lean-forward="false" selection-start-line="171" selection-start-column="75" selection-end-line="171" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InputDlg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2721">
+          <caret line="41" column="33" lean-forward="true" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+          <folding>
+            <element signature="e#25#74#0" expanded="true" />
+            <marker date="1497435302615" expanded="true" signature="5484:5609" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widgetparam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="43" column="54" lean-forward="false" selection-start-line="43" selection-start-column="54" selection-end-line="43" selection-end-column="54" />
+          <folding>
+            <element signature="e#198#246#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/widgettransgraph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="134" column="17" lean-forward="true" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="989">
+          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_handling/material.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+        <state relative-caret-position="151">
+          <caret line="33" column="30" lean-forward="false" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_handling/activationdata.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="933">
+          <caret line="251" column="53" lean-forward="false" selection-start-line="251" selection-start-column="53" selection-end-line="251" selection-end-column="53" />
+          <folding>
+            <element signature="e#26#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_handling/pathway.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="382">
+          <caret line="191" column="0" lean-forward="false" selection-start-line="190" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/widgetpathway.py">
+    <entry file="file://$PROJECT_DIR$/widgetprimarynuclides.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="38" column="68" lean-forward="true" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
-          <folding>
-            <element signature="e#198#242#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="444">
+          <caret line="115" column="29" lean-forward="false" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>

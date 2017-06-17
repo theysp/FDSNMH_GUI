@@ -31,49 +31,47 @@ def eval_str_number(num_str):
 class ActivationData(BaseData):
 
     def __init__(self, raw_name = None):
-        self.activition_data = []
+        self.activation_data = dict()
         if not(raw_name is None):
             self.read_raw_file(raw_name)
 
     def read_raw_files(self, raw_name):
         # obtain 5 files
-        data_file_names = [BasicPath.activation_data_path+'/Flux1/{0}/{0}.out'.format(raw_name),
-                           BasicPath.activation_data_path+'/Flux2/{0}/{0}.out'.format(raw_name),
-                           BasicPath.activation_data_path+'/Flux4/{0}/{0}.out'.format(raw_name),
-                           BasicPath.activation_data_path+'/Flux5/{0}/{0}.out'.format(raw_name),
-                           BasicPath.activation_data_path+'/Flux6/{0}/{0}.out'.format(raw_name)]
-        for file_name in data_file_names:
+        spectra_list = BasicPath.get_spectra_list()
+        for spectrum_name in spectra_list:
+            data_dir_name = BasicPath.get_spectra_dir(spectrum_name)
+            data_file_name = data_dir_name+'/'+raw_name+'/'+raw_name+'.out'
             new_one_spectra_data = OneSpectrumActivationData()
-            new_one_spectra_data.read_raw_file(file_name)
-            self.activition_data.append(new_one_spectra_data)
+            new_one_spectra_data.read_raw_file(data_file_name)
+            self.activation_data[spectrum_name] = new_one_spectra_data
         # read 5 data files
         return True
 
-    def get_spectra_data(self, spectraidx):
-        if spectraidx == 1:
-            return self.activition_data[0]
-        elif spectraidx == 2:
-            return self.activition_data[1]
-        elif spectraidx == 3:
-            return self.activition_data[2]
-        elif spectraidx == 4:
-            return self.activition_data[2]
-        elif spectraidx == 5:
-            return self.activition_data[3]
-        elif spectraidx == 6:
-            return self.activition_data[4]
+    def read_raw_spectrum_file(self,raw_name,spectrum_name):
+        data_dir_name = BasicPath.get_spectra_dir(spectrum_name)
+        data_file_name = data_dir_name + '/' + raw_name +'/'+raw_name+'.out'
+        new_one_spectra_data = OneSpectrumActivationData()
+        new_one_spectra_data.read_raw_file(data_file_name)
+        self.activation_data[spectrum_name] = new_one_spectra_data
+        return True
+
+    def get_spectra_data(self, spectrum_name):
+        if spectrum_name in self.activation_data:
+            return self.activation_data[spectrum_name]
         else:
+            raise(YSPException("Cannot find data for spectrum: \"",spectrum_name,"\""))
             return None
 
     def __imul__(self, number):
-        for data in self.activition_data:
+        for key,data in self.activation_data.items():
             data *= number
         return self
 
     def __iadd__(self, other):
-        assert (len(self.activition_data) == len(other.activition_data))
-        for i in range(0,len(self.activition_data)):
-            self.activition_data[i] += other.activition_data[i]
+        assert (len(self.activation_data) == len(other.activation_data))
+        for key, data in self.activation_data.items():
+            if key in other.activation_data:
+                data += other.activation_data[key]
         return self
 
 class OneSpectrumActivationData(BaseData):
@@ -84,29 +82,24 @@ class OneSpectrumActivationData(BaseData):
     def read_raw_file(self, inputfilename):
         lines = []
         opensucessful = False
-        try:
-            with open(inputfilename) as inputfile:
-                lines.extend(inputfile.readlines())
-        except IOError:
-            opensucessful = False
-        else:
-            opensucessful = True
-            self.path_way.read_raw_lines(lines)
-            startlinesforsteps = []
-            for i in range(0, len(lines)):
-                if lines[i].startswith('1* * * * * TIME INTERVAL'):
-                    startlinesforsteps.append(i)
-            startlinesforsteps.append(len(lines))
-            # if need to skip previous time steps, need to change the range
-            for i in range(len(startlinesforsteps)-7, len(startlinesforsteps)):
-                onestepdata = OneSpectrumOneStepActivationData()
-                try:
-                    onestepdata.read_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
-                except Exception as err:
-                    print(err.args)
-                self.all_steps_activation_data.append(onestepdata)
-        finally:
-            return opensucessful
+        with open(inputfilename) as inputfile:
+            lines.extend(inputfile.readlines())
+        opensucessful = True
+        self.path_way.read_raw_lines(lines)
+        startlinesforsteps = []
+        for i in range(0, len(lines)):
+            if lines[i].startswith('1* * * * * TIME INTERVAL'):
+                startlinesforsteps.append(i)
+        startlinesforsteps.append(len(lines))
+        # if need to skip previous time steps, need to change the range
+        for i in range(len(startlinesforsteps)-7, len(startlinesforsteps)):
+            onestepdata = OneSpectrumOneStepActivationData()
+            try:
+                onestepdata.read_raw_lines(lines, startlinesforsteps[i - 1], startlinesforsteps[i])
+            except Exception as err:
+                print(err.args)
+            self.all_steps_activation_data.append(onestepdata)
+        return opensucessful
 
     def __imul__(self, number):
         for data in self.all_steps_activation_data:
@@ -249,13 +242,13 @@ class OneSpectrumOneStepActivationData(BaseData):
                 spectra_beg_idx = i + 7
                 break
         if spectra_beg_idx < 0:
-            raise Exception('cannot find spectra')
+            raise YSPException('cannot find spectra')
         for i in range(spectra_beg_idx, endidx):
             if lines[i].find('(') < 0:
                 spectra_end_idx = i
                 break
         if spectra_end_idx < 0:
-            raise Exception('spectra format error, no empty line after spectra')
+            raise YSPException('spectra format error, no empty line after spectra')
         for i in range(spectra_beg_idx, spectra_end_idx):
             newline = lines[i]
             newline = lines[i][:63]+' '+lines[i][64:]

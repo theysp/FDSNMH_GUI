@@ -27,7 +27,7 @@ class Ui_WidgetTransGraph(object):
         self.horizontalLayout_2.addWidget(self.framePlot)
         self.tableWidget = QtWidgets.QTableWidget(WidgetTransGraph)
         self.tableWidget.setMinimumSize(QtCore.QSize(0, 0))
-        self.tableWidget.setMaximumSize(QtCore.QSize(130, 16777215))
+        self.tableWidget.setMaximumSize(QtCore.QSize(200, 100000))
         self.tableWidget.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.tableWidget.setAutoScrollMargin(0)
         self.tableWidget.setGridStyle(QtCore.Qt.DashLine)

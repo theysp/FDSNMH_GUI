@@ -51,7 +51,7 @@ class QTableWidgetMaterial(QTableWidget):
     def retranslate_ui(self):
         _translate = QtCore.QCoreApplication.translate
         item = self.horizontalHeaderItem(0)
-        item.setText(_translate("InputDlg", "Nuclide"))
+        item.setText(_translate("InputDlg", "Element"))
         item = self.horizontalHeaderItem(1)
         item.setText(_translate("InputDlg", "Weight Proportion (%)"))
 

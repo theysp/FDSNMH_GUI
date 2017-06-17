@@ -155,7 +155,7 @@ class Ui_WidgetParam(object):
         item = self.tableWidgetParams.horizontalHeaderItem(3)
         item.setText(_translate("WidgetParam", "Dose (Sv/h)"))
         item = self.tableWidgetParams.horizontalHeaderItem(4)
-        item.setText(_translate("WidgetParam", "Ing (Sv/h)"))
+        item.setText(_translate("WidgetParam", "Ing (Sv/kg)"))
         __sortingEnabled = self.tableWidgetParams.isSortingEnabled()
         self.tableWidgetParams.setSortingEnabled(False)
         item = self.tableWidgetParams.item(0, 0)

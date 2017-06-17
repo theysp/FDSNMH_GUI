@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QDialog, QApplication, QHBoxLayout, QListWidgetItem,
 from Ui_InputDlg import Ui_InputDlg
 from data_handling.material import MaterialListLibrary
 from widgetparam import WidgetParam
-from base.base import MaterialAlreadyException
 from data_handling.material import *
 from ShowResultDlg import ShowResultDlg
 import pickle
@@ -14,6 +13,7 @@ import os
 import copy
 import sys
 from PyQt5.QtGui import QIcon
+import traceback
 
 class InputDlg(QDialog, Ui_InputDlg):
     def __init__(self, parent=None):
@@ -32,6 +32,9 @@ class InputDlg(QDialog, Ui_InputDlg):
         self.matlib.load_material_list()
         text = self.textMaterialSearch.text()
         split_text = [a for a in text.split(' ') if len(a) > 0 and a != '\n']
+        spectra_name_list = BasicPath.get_spectra_list()
+        for spectrum_name in sorted(spectra_name_list):
+            self.comboBoxSelectSpectra.addItem(spectrum_name)
         for mat_name in sorted(self.matlib.materials.keys(), key=lambda a: a):
             allin = True
             for word in split_text:
@@ -133,37 +136,48 @@ class InputDlg(QDialog, Ui_InputDlg):
             self.show_message('Please select the material needed to'
             ' be displayed from the material libraray')
             return
-        spectra_names=['1) Upper Cryostat',
-                       '2) Rear of equatorial port ',
-                       '3) Beneath lower port extension',
-                       '4) Cryostat basement',
-                       '5) Port cell',
-                       '6) Neutral beam cell']
-        self.setCursor(Qt.WaitCursor)
-        #cur_mat_cache = cur_mat.get_cached_material()
-        #if cur_mat_cache is not None: # in case different material with the same name
-        #   for elem in cur_mat.elements.keys():
-        #       if not(elem in cur_mat_cache):
-        #            cur_mat_cache = None
-        #            break;
-        #        elif cur_mat.elements[elem] != cur_mat_cache.elements[elem]:
-        #            cur_mat_cache = None
-        #            break;
-        #if cur_mat_cache is None:
-        #    if cur_mat.calculate_activation():
-        #        cur_mat_cache = cur_mat
-        #        cur_mat_cache.cache_material()
-        if cur_mat.calculate_activation():
-            # with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'wb') as outdata:
-            #    pickle.dump(cur_mat, outdata)
+        #spectra_names = BasicPath.get_spectra_list()
+        cur_spectrum_name = self.comboBoxSelectSpectra.currentText()
+        try:
+            self.setCursor(Qt.WaitCursor)
+            #cur_mat_cache = cur_mat.get_cached_material()
             index = self.comboBoxSelectSpectra.currentIndex()
-            self.resultdlgs.append(ShowResultDlg(cur_mat, index+1))
-            self.resultdlgs[-1].setWindowTitle('Activation data of material \"{0}\", spectrum \"{1}\"'
-                                               .format(cur_mat.name, spectra_names[index]))
-            self.resultdlgs[-1].show()
-        else:
-            self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
-        self.setCursor(Qt.ArrowCursor)
+            cur_mat_cache = cur_mat.get_cached_spectrum_material(cur_spectrum_name)
+            if cur_mat_cache is not None: # in case different material with the same name
+                cur_mat.normalize()
+                for elem in cur_mat.elements.keys():
+                    if not(elem in cur_mat_cache.elements.keys()):
+                        cur_mat_cache = None
+                        break
+                    elif abs(cur_mat.elements[elem] - cur_mat_cache.elements[elem]) > 1e-5:
+                        cur_mat_cache = None
+                        break
+            if cur_mat_cache is None:
+                if cur_mat.calculate_spectrum_activation(cur_spectrum_name):
+                    print("calculate activation of material: "+cur_mat.name)
+                    cur_mat_cache = cur_mat
+                    cur_mat_cache.cache_spectrum_material(cur_spectrum_name)
+            else:
+                print("loaded cached material: " + cur_mat.name)
+            #if cur_mat.calculate_activation():
+            if cur_mat_cache is not None:
+                self.resultdlgs.append(ShowResultDlg(cur_mat_cache))
+                self.resultdlgs[-1].setWindowTitle('Activation data of material \"{0}\", spectrum \"{1}\"'
+                                                   .format(cur_mat_cache.name, cur_spectrum_name))
+                self.resultdlgs[-1].show()
+            else:
+                self.show_message('The activation data of \'{0}\' calculation failed.'.format(cur_mat.name))
+            self.setCursor(Qt.ArrowCursor)
+        except YSPException as error:
+            print("Error in calculating activation properties for material: "
+                  +cur_mat.name+" under spectrum: "+cur_spectrum_name+", info: "+error.message)
+            print("Please check if the files under " + BasicPath.getspectra_dir(cur_spectrum_name))
+            traceback.print_exc()
+        except Exception as err:
+            print(err)
+            traceback.print_exc()
+        finally:
+            self.setCursor(Qt.ArrowCursor)
 
 if __name__ == "__main__":
     # try:

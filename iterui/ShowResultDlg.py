@@ -12,26 +12,29 @@ from PyQt5.QtGui import QIcon
 
 
 class ShowResultDlg(QDialog, Ui_ShowResultDlg):
-    def __init__(self, material, spectraidx, parent=None):
+    def __init__(self, material, parent=None):
         super(ShowResultDlg, self).__init__(parent)
         self.setupUi(self)
         self.material = material
-        self.spectra_idx = spectraidx
+        self.material_name = material.name
+        self.spectrum_name = material.spectrum
         self.data_to_uis()
         self.setWindowIcon(QIcon('fds.ico'))
         # self.setWindowFlags(Qt.WindowMinimizeButtonHint)
 
     def data_to_uis(self):
-        self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
-        self.PathwayAnalysis.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
-        self.PrimaryNuclides.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
-        self.TransmutationGraph.data_to_ui(self.material.activation_data.get_spectra_data(self.spectra_idx))
+        self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name)
+                                   ,self.material_name,self.spectrum_name)
+        self.PathwayAnalysis.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))
+        self.PrimaryNuclides.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))
+        self.TransmutationGraph.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))
 
+#for testing
 if __name__ is '__main__':
     app = QApplication(sys.argv)
     mat = None
     with open("C:/Users/ysp/Desktop/QT_practice/TestActivation.data", 'rb') as indata:
         mat = pickle.load(indata)
-    showdlg=ShowResultDlg(mat, 1)
+    showdlg = ShowResultDlg(mat, 1)
     showdlg.show()
     sys.exit(app.exec_())

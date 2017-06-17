@@ -125,7 +125,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Ing (Sv/h)</string>
+           <string>Ing (Sv/kg)</string>
           </property>
          </column>
          <item row="0" column="0">

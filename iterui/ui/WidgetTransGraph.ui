@@ -56,8 +56,8 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>130</width>
-         <height>16777215</height>
+         <width>200</width>
+         <height>100000</height>
         </size>
        </property>
        <property name="cursor" stdset="0">

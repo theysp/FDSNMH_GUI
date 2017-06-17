@@ -16,6 +16,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import os
+import traceback
 
 class WidgetParam(QWidget, Ui_WidgetParam):
     param_names = ['activity(Bq/kg)',
@@ -35,14 +36,17 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         self.valuess = []   #valuess contains 4 values of the activation values
         self.initialize_canvas_parameters()
         self.axes = [None, None, None, None]
+        self.material_name = ''
+        self.spectrum_name = ''
         self.checkButtons = [self.checkBoxAct, self.checkBoxHeat, self.checkBoxDose, self.checkBoxIng]
         self.extra_valuesss = {} #every extra valuess contains valuess for other element/material
         for checkButton in self.checkButtons:
             checkButton.clicked.connect(self.on_click)
 
-
-    def data_to_ui(self, act_data: OneSpectrumActivationData):
+    def data_to_ui(self, act_data: OneSpectrumActivationData, material_name: str, spectrum_name: str):
         # show parameters of 6 cooling times
+        self.material_name = material_name
+        self.spectrum_name = spectrum_name
         self.act_data = act_data
         for idx in range(0,4):
             values = []
@@ -171,6 +175,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         filename, _ = QFileDialog.getSaveFileName(parent=self, initialFilter='.txt')
         if filename:
             with open(filename,'w') as fileout:
+                fileout.write('{}\t{}\n'.format(self.material_name,self.spectrum_name))
                 fileout.write('cooling time\t ')
                 for coolingtime in WidgetParam.cooling_times:
                     fileout.write('{0:.2e}'.format(coolingtime)+'\t')
@@ -192,16 +197,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     @pyqtSlot()
     def on_pushButtonLoadOther_clicked(self):
-        filename, _ = QFileDialog.getOpenFileName(parent=self)
-        self.setCursor(Qt.WaitCursor)
         try:
+            filename, _ = QFileDialog.getOpenFileName(parent=self)
+            self.setCursor(Qt.WaitCursor)
             if filename:
                 with open(filename, 'r') as filein:
                     lines = filein.readlines()
+                    firstline = lines[0].strip(' \r\n')
+                    tmp_mat_name,tmp_spect_name = [a for a in firstline.split('\t') if len(a)>0]
                     if len(lines)<5:
                         return
                     valss = []
-                    for i in range(1, 5):
+                    for i in range(2, 6):
                         line = lines[i]
                         line = line.strip("\r\n")
                         val_strs = [a for a in line.split('\t') if len(a) > 0]
@@ -209,9 +216,12 @@ class WidgetParam(QWidget, Ui_WidgetParam):
                         for j in range(1,len(val_strs)):
                             vals.append(eval(val_strs[j]))
                         valss.append(vals)
-                    self.extra_valuesss[os.path.basename(filename)] = valss
+                    self.extra_valuesss[tmp_mat_name+" "+tmp_spect_name] = valss
                 self.initialize_figs_parameters()
-        except Exception:
-            pass
-        self.setCursor(Qt.ArrowCursor)
+            self.setCursor(Qt.ArrowCursor)
+        except Exception as err:
+            print(err)
+            traceback.print_exc()
+        finally:
+            self.setCursor(Qt.ArrowCursor)
 

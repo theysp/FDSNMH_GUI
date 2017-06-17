@@ -107,8 +107,9 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
         if accumulate_amount > 0.999999:
             accumulate_amount = 1.0
         leftprop = 1-accumulate_amount
-        nuclide_props.append(leftprop)
-        nuclides.append('Other')
+        if leftprop > 0.0001:
+            nuclide_props.append(leftprop)
+            nuclides.append('Other')
         self.axes[idx].pie(nuclide_props, labels=nuclides, colors=WidgetPrimaryNuclides.colors, autopct='%1.2f%%', shadow=True, startangle=90)
         show_name = WidgetPrimaryNuclides.show_names[idx]
         self.axes[idx].set_title("Primary nuclides for: "+show_name)
