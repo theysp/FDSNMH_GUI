@@ -159,10 +159,16 @@ class PathWay(BaseData):
             raise YSPException('invalid start of pathway: line ', start_idx, ": lines[start_idx]")
         # Target nuclide Mn 53    100.000% of inventory given by  2 paths
         words = [a for a in lines[start_idx].split(' ') if len(a) > 0 and a != '\n']
-        if len(words) < 11:
+        number_target = 0
+        if len(words) > 10:
+            self.target_nuclide = words[2] + ' ' + words[3]
+            number_target = eval(words[9])
+        elif len(words) == 10:
+            self.target_nuclide = words[2]
+            number_target = eval(words[8])
+        else:
             raise YSPException('No enough information in target nuclide line')
         self.target_nuclide = words[2]+' '+words[3]
-        number_target = eval(words[9])
         for i in range(start_idx+1, len(lines)-1):
             if lines[i].startswith(' path')>0:
                 (percent_part, pathway_str) = lines[i].strip('\r\n').split('%')

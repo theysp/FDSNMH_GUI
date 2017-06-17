@@ -172,8 +172,6 @@ class InputDlg(QDialog, Ui_InputDlg):
             self.show_message("Error in calculating activation properties for material: "
                     +cur_mat.name+" under spectrum: "+cur_spectrum_name+", info: "+error.message
                     +"\nPlease check if the files under " + BasicPath.getspectra_dir(cur_spectrum_name))
-            traceback.print_exc()
-            self.show_message("Error: "
         except Exception as err:
             self.show_message("Unknow error. Please check the console for more information.")
             print(err)

@@ -161,7 +161,8 @@ class WidgetParam(QWidget, Ui_WidgetParam):
             cur_axe.plot(WidgetParam.cooling_times, values)
         else:
             color_idx = 0
-            cur_axe.plot(WidgetParam.cooling_times, values, color=color_sequence[color_idx], label='current material')
+            cur_axe.plot(WidgetParam.cooling_times, values, color=color_sequence[color_idx],
+                         label=self.material_name+" "+self.spectrum_name)
             color_idx += 1
             for key, val in self.extra_valuesss.items():
                 cur_axe.plot(WidgetParam.cooling_times, val[idx], color=color_sequence[color_idx], label=key)
