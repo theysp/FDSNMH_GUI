@@ -25,7 +25,7 @@ class BasicPath:
             with open(BasicPath.spectra_list_file_name) as spectra_list:
                 for line in spectra_list:
                     if line.find('|') < 0:
-                        next
+                        continue
                     line = line.strip('\r\n')
                     tmp_spect_name, tmp_dir_name = [a for a in line.split('|') if a != '']
                     tmp_spect_name = tmp_spect_name.strip(' ')

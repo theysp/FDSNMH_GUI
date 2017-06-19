@@ -124,7 +124,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     def draw_axe(self, idx):
         assert(self.checkButtons[idx].isChecked())
-        color_sequence = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
+        color_sequence = ['#1f77b4', '#aec708', '#ff7f0e', '#ffbb78', '#2ca02c',
                           '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
                           '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
                           '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
@@ -173,7 +173,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     @pyqtSlot()
     def on_pushButtonSaveParam_clicked(self):
-        filename, _ = QFileDialog.getSaveFileName(parent=self, initialFilter='.txt')
+        filename, _ = QFileDialog.getSaveFileName(parent=self,directory=self.material_name+self.spectrum_name, initialFilter='.txt')
         if filename:
             with open(filename,'w') as fileout:
                 fileout.write('{}\t{}\n'.format(self.material_name,self.spectrum_name))
