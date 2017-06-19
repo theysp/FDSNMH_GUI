@@ -22,11 +22,11 @@ class WidgetParam(QWidget, Ui_WidgetParam):
     param_names = ['activity(Bq/kg)',
                    'total_heat(kW/kg)',
                    'dose_rate(Sv/h)',
-                   'ingestion_dose(Sv/h)']
+                   'ingestion_dose(Sv/kg)']
     show_names = ['Specific activity(Bq/kg)',
                    'Heat(kW/kg)',
                    'Dose rate(Sv/h)',
-                   'Ingestion dose(Sv/h)']
+                   'Ingestion dose(Sv/kg)']
     cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
 
     def __init__(self, parent=None):

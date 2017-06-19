@@ -170,7 +170,12 @@ class PathWay(BaseData):
             raise YSPException('No enough information in target nuclide line')
         self.target_nuclide = words[2]+' '+words[3]
         for i in range(start_idx+1, len(lines)-1):
-            if lines[i].startswith(' path')>0:
+            if lines[i].find('path continued') > 0:
+                print(lines[i])
+                
+            if lines[i].startswith(' path'):
+                print(lines[i])
+                print(lines[i].find('path continued'))
                 (percent_part, pathway_str) = lines[i].strip('\r\n').split('%')
                 pathway_str = pathway_str.strip('\r\n')
                 percent = eval(percent_part[percent_part.rfind(' '):])

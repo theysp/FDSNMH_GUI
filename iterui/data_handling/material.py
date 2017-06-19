@@ -203,6 +203,7 @@ class ElementPool:
 
     @staticmethod
     def get_spectrum_elem(name, spectrum_name):
+        print("Get element: "+name+" under "+spectrum_name)
         full_name = name+":"+spectrum_name
         if full_name in ElementPool.dict_elems:
             return ElementPool.dict_elems[full_name]

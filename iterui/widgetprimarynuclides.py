@@ -19,11 +19,11 @@ class WidgetPrimaryNuclides(QWidget, Ui_WidgetPrimaryNuclides):
     param_names =  ['activity(Bq/kg)',
                    'total_heat(kW/kg)',
                    'dose_rate(Sv/h)',
-                   'ingestion_dose(Sv/h)']
+                   'ingestion_dose(Sv/kg)']
     show_names = ['Specific activity(Bq/kg)',
                   'Heat(kW/kg)',
                   'Dose rate(Sv/h)',
-                  'Ingestion dose(Sv/h)']
+                  'Ingestion dose(Sv/kg)']
     colors = ['#FA8072', '#7FFF00', '#87CEFA', '#8A2BE2', '#A9A9A9', '#E9967A', '#FF1493', '#9932CC', '#CD853F',
               '#FF7F50', '#2E8B57']
 

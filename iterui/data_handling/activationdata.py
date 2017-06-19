@@ -128,10 +128,10 @@ class OneSpectrumOneStepActivationData(BaseData):
                    'neutron_flux(n/cm**2/s)',
                    'number_fission',
                    'dose_rate(Sv/h)',
-                   'ingestion_dose(Sv/h)',
-                   'inhalation_dose(Sv/h)',
-                   'ingestion_dose_ex_tritium(Sv/h)',
-                   'inhalation_dose_ex_tritium(Sv/h)',
+                   'ingestion_dose(Sv/kg)',
+                   'inhalation_dose(Sv/kg)',
+                   'ingestion_dose_ex_tritium(Sv/kg)',
+                   'inhalation_dose_ex_tritium(Sv/kg)',
                    'gase_rate(appm/sec)']
     data_position = []
 
@@ -215,14 +215,14 @@ class OneSpectrumOneStepActivationData(BaseData):
         #self.parameters['number_fission'] = eval_str_number(lines[nuclide_data_end_idx + 13][40:51])
         for i in range(4, 100):
             if lines[nuclide_data_end_idx + i].find('INGESTION  HAZARD FOR ALL MATERIALS') > 0:
-                self.parameters['ingestion_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                self.parameters['ingestion_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
                 break
-        #self.parameters['ingestion_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
+        #self.parameters['ingestion_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 14][40:51])
         for i in range(4, 100):
             if lines[nuclide_data_end_idx + i].find('INHALATION HAZARD FOR ALL MATERIALS') > 0:
-                self.parameters['inhalation_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                self.parameters['inhalation_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
                 break
-        #self.parameters['inhalation_dose(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
+        #self.parameters['inhalation_dose(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 15][40:51])
         for i in range(4, 100):
             if lines[nuclide_data_end_idx + i].find('INGESTION  HAZARD EXCLUDING TRITIUM') > 0:
                 self.parameters['ingestion_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
@@ -230,10 +230,10 @@ class OneSpectrumOneStepActivationData(BaseData):
         #self.parameters['ingestion_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 16][40:51])
         for i in range(4, 100):
             if lines[nuclide_data_end_idx + i].find('INHALATION HAZARD EXCLUDING TRITIUM') > 0:
-                self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
+                self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + i][40:51])
                 break
-        #self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
-        #self.parameters['inhalation_dose_ex_tritium(Sv/h)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
+        #self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 17][40:51])
+        #self.parameters['inhalation_dose_ex_tritium(Sv/kg)'] = eval_str_number(lines[nuclide_data_end_idx + 18][27:38])
         # spectra
         spectra_beg_idx = -1
         spectra_end_idx = -1
@@ -306,8 +306,8 @@ class OneNuclideData(BaseData):
                    'alpha_heat(kW/kg)',
                    'gamma_heat(kW/kg)',
                    'dose_rate(Sv/h)',
-                   'ingestion_dose(Sv/h)',
-                   'inhalation_dose(Sv/h)',
+                   'ingestion_dose(Sv/kg)',
+                   'inhalation_dose(Sv/kg)',
                    'Bq/A2_Ratio',
                    'half_life(sec)',
                    'total_heat(kW/kg)']
