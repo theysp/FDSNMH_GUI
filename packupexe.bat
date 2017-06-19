@@ -1,1 +1,2 @@
-pyinstaller -F D:\4-Work\项目\2016年3月ITER活化手册项目\QT_practice\iterui
+pyinstaller -F d:\4-Work\NMHproject\iterui\InputDlg.py -p d:\4-Work\NMHproject\iterui;C:\Python35\Lib\site-packages;C:\Python35\Lib\site-packages\PyQt5\Qt\bin -i d:\4-Work\NMHproject\fds.ico
+pause
