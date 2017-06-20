@@ -24,7 +24,7 @@ class ShowResultDlg(QDialog, Ui_ShowResultDlg):
 
     def data_to_uis(self):
         self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name)
-                                   ,self.material_name,self.spectrum_name)
+                                   ,self.material_name,self.spectrum_name,self.material)
         self.PathwayAnalysis.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))
         self.PrimaryNuclides.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))
         self.TransmutationGraph.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name))

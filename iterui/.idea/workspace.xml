@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9335de09-7fc1-43d6-bd4a-d5319edfed5f" name="Default" comment="add data reading codes">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../packupexe.bat" afterPath="$PROJECT_DIR$/../packupexe.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ShowResultDlg.py" afterPath="$PROJECT_DIR$/ShowResultDlg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/widgetparam.py" afterPath="$PROJECT_DIR$/widgetparam.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,24 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="widgetprimarynuclides.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/widgetprimarynuclides.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2507">
-              <caret line="115" column="29" lean-forward="false" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
-              <folding>
-                <marker date="1497835794542" expanded="true" signature="793:928" ph="..." />
-                <marker date="1497835794542" expanded="true" signature="1089:1091" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="InputDlg.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/InputDlg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3266">
-              <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+            <state relative-caret-position="414">
+              <caret line="163" column="66" lean-forward="false" selection-start-line="163" selection-start-column="53" selection-end-line="163" selection-end-column="66" />
               <folding>
                 <element signature="e#25#74#0" expanded="true" />
                 <marker date="1497696478921" expanded="true" signature="5484:5609" ph="..." />
@@ -68,11 +57,43 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ShowResultDlg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="413">
+              <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+              <folding>
+                <element signature="e#25#69#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="transforms.py" pinned="false" current-in-tab="false">
+        <entry file="file://C:/Python35/Lib/site-packages/matplotlib/transforms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="1988" column="0" lean-forward="false" selection-start-line="1988" selection-start-column="0" selection-end-line="1988" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ui_ShowResultDlg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ui_ShowResultDlg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="466">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="widgetparam.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/widgetparam.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="129" column="45" lean-forward="false" selection-start-line="129" selection-start-column="45" selection-end-line="129" selection-end-column="45" />
+            <state relative-caret-position="228">
+              <caret line="214" column="30" lean-forward="true" selection-start-line="214" selection-start-column="30" selection-end-line="214" selection-end-column="30" />
               <folding>
                 <element signature="e#198#246#0" expanded="true" />
               </folding>
@@ -83,7 +104,7 @@
       <file leaf-file-name="QFileDialog.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/.PyCharmCE2017.1/system/python_stubs/-1313743207/PyQt5/QtWidgets/QFileDialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3703">
+            <state relative-caret-position="23">
               <caret line="165" column="64" lean-forward="false" selection-start-line="165" selection-start-column="55" selection-end-line="165" selection-end-column="64" />
               <folding />
             </state>
@@ -103,28 +124,8 @@
       <file leaf-file-name="material.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_handling/material.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4600">
-              <caret line="205" column="59" lean-forward="false" selection-start-line="205" selection-start-column="59" selection-end-line="205" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/base.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="15" column="46" lean-forward="false" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="genericpath.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Python35/Lib/genericpath.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="414">
+              <caret line="41" column="14" lean-forward="false" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -134,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_spectra_dir</find>
       <find>activation_data</find>
       <find>activition_data</find>
       <find>show_message</find>
@@ -164,6 +164,7 @@
       <find>co</find>
       <find>continu</find>
       <find>continue</find>
+      <find>Parameters</find>
     </findStrings>
     <replaceStrings>
       <replace>eval_str_number(</replace>
@@ -196,7 +197,6 @@
         <option value="$PROJECT_DIR$/qtablewidgetmaterial.py" />
         <option value="$PROJECT_DIR$/Ui_InputDlg.py" />
         <option value="$PROJECT_DIR$/Main.py" />
-        <option value="$PROJECT_DIR$/ShowResultDlg.py" />
         <option value="$PROJECT_DIR$/widgettransgraph.py" />
         <option value="$PROJECT_DIR$/data_handling/activationdata.py" />
         <option value="$PROJECT_DIR$/widgetprimarynuclides.py" />
@@ -204,6 +204,7 @@
         <option value="$PROJECT_DIR$/base/base.py" />
         <option value="$PROJECT_DIR$/data_handling/material.py" />
         <option value="$PROJECT_DIR$/data_handling/pathway.py" />
+        <option value="$PROJECT_DIR$/ShowResultDlg.py" />
         <option value="$PROJECT_DIR$/widgetparam.py" />
       </list>
     </option>
@@ -246,8 +247,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -304,6 +303,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -599,19 +600,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1184" height="1040" extended-state="6" />
+    <frame x="-8" y="-8" width="1184" height="1040" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30604982" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28291816" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.496208" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22958058" sideWeight="0.47411004" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22321428" sideWeight="0.52589" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26931566" sideWeight="0.19128114" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.496208" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22321428" sideWeight="0.52589" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.4969743" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27040815" sideWeight="0.81391585" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26931566" sideWeight="0.80871886" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -638,14 +639,14 @@
           <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/widgetparam.py</url>
-          <line>207</line>
-          <option name="timeStamp" value="250" />
+          <url>file://$PROJECT_DIR$/Ui_ShowResultDlg.py</url>
+          <line>20</line>
+          <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/widgetparam.py</url>
-          <line>204</line>
-          <option name="timeStamp" value="251" />
+          <url>file://$PROJECT_DIR$/Ui_WidgetParam.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="260" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -658,7 +659,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="259" />
+      <option name="time" value="261" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -672,13 +673,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="43" lean-forward="false" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generateuipy.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -841,24 +835,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Ui_ShowResultDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ui_InputDlg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="171" column="75" lean-forward="false" selection-start-line="171" selection-start-column="75" selection-end-line="171" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -896,29 +876,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/InputDlg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3266">
-          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
-          <folding>
-            <element signature="e#25#74#0" expanded="true" />
-            <marker date="1497696478921" expanded="true" signature="5484:5609" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data_handling/activationdata.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1656">
           <caret line="79" column="42" lean-forward="false" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_handling/material.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4600">
-          <caret line="205" column="59" lean-forward="false" selection-start-line="205" selection-start-column="59" selection-end-line="205" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -933,6 +894,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/InputDlg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="163" column="66" lean-forward="false" selection-start-line="163" selection-start-column="53" selection-end-line="163" selection-end-column="66" />
+          <folding>
+            <element signature="e#25#74#0" expanded="true" />
+            <marker date="1497696478921" expanded="true" signature="5484:5609" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_handling/material.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="41" column="14" lean-forward="false" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2017.1/system/python_stubs/-1313743207/PyQt5/QtWidgets/QFileDialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="165" column="64" lean-forward="false" selection-start-line="165" selection-start-column="55" selection-end-line="165" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ui_ShowResultDlg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Ui_WidgetParam.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4094">
@@ -941,18 +937,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2017.1/system/python_stubs/-1313743207/PyQt5/QtWidgets/QFileDialog.py">
+    <entry file="file://$PROJECT_DIR$/ShowResultDlg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3703">
-          <caret line="165" column="64" lean-forward="false" selection-start-line="165" selection-start-column="55" selection-end-line="165" selection-end-column="64" />
+        <state relative-caret-position="413">
+          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+          <folding>
+            <element signature="e#25#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python35/Lib/site-packages/matplotlib/transforms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="1988" column="0" lean-forward="false" selection-start-line="1988" selection-start-column="0" selection-end-line="1988" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/widgetparam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="129" column="45" lean-forward="false" selection-start-line="129" selection-start-column="45" selection-end-line="129" selection-end-column="45" />
+        <state relative-caret-position="228">
+          <caret line="214" column="30" lean-forward="true" selection-start-line="214" selection-start-column="30" selection-end-line="214" selection-end-column="30" />
           <folding>
             <element signature="e#198#246#0" expanded="true" />
           </folding>

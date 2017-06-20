@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QVBoxLayo
 from Ui_WidgetParam import Ui_WidgetParam
 from PyQt5.Qt import QResizeEvent, QSize
 from data_handling.activationdata import OneSpectrumActivationData
+from data_handling.material import Material
 from PyQt5.QtWidgets import QTableWidgetItem
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
@@ -38,16 +39,18 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         self.axes = [None, None, None, None]
         self.material_name = ''
         self.spectrum_name = ''
+        self.material = Material()
         self.checkButtons = [self.checkBoxAct, self.checkBoxHeat, self.checkBoxDose, self.checkBoxIng]
         self.extra_valuesss = {} #every extra valuess contains valuess for other element/material
         for checkButton in self.checkButtons:
             checkButton.clicked.connect(self.on_click)
 
-    def data_to_ui(self, act_data: OneSpectrumActivationData, material_name: str, spectrum_name: str):
+    def data_to_ui(self, act_data: OneSpectrumActivationData, material_name: str, spectrum_name: str, mat: Material):
         # show parameters of 6 cooling times
         self.material_name = material_name
         self.spectrum_name = spectrum_name
         self.act_data = act_data
+        self.material = mat
         for idx in range(0,4):
             values = []
             for i in range(0, len(self.act_data.all_steps_activation_data)):
@@ -177,6 +180,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         if filename:
             with open(filename,'w') as fileout:
                 fileout.write('{}\t{}\n'.format(self.material_name,self.spectrum_name))
+                fileout.write(self.material.to_string()+"\n")
                 fileout.write('cooling time\t ')
                 for coolingtime in WidgetParam.cooling_times:
                     fileout.write('{0:.2e}'.format(coolingtime)+'\t')
@@ -209,7 +213,7 @@ class WidgetParam(QWidget, Ui_WidgetParam):
                     if len(lines)<5:
                         return
                     valss = []
-                    for i in range(2, 6):
+                    for i in range(3, 7):
                         line = lines[i]
                         line = line.strip("\r\n")
                         val_strs = [a for a in line.split('\t') if len(a) > 0]
