@@ -10,6 +10,7 @@ from PyQt5.QtCore import pyqtSlot,pyqtSignal
 from PyQt5.QtWidgets import QWidget,QDialog,QApplication, QHBoxLayout, QTableWidgetItem, QFileDialog
 from Ui_WidgetPathway import Ui_WidgetPathway
 from data_handling.activationdata import *
+from data_handling.material import Material
 
 
 class WidgetPathway(QWidget, Ui_WidgetPathway):
@@ -17,8 +18,10 @@ class WidgetPathway(QWidget, Ui_WidgetPathway):
         super(WidgetPathway, self).__init__(parent)
         self.setupUi(self)
         self.data = data
+        self.material = Material()
 
-    def data_to_ui(self, data: OneSpectrumActivationData):
+    def data_to_ui(self, data: OneSpectrumActivationData, mat: Material):
+        self.material = mat
         for i in range(0, self.tableWidgetPathway.rowCount()):
             for j in range(0, self.tableWidgetPathway.columnCount()):
                 self.tableWidgetPathway.item(i, j).setText('')
@@ -55,6 +58,8 @@ class WidgetPathway(QWidget, Ui_WidgetPathway):
         filename, _ = QFileDialog.getSaveFileName(parent=self, initialFilter='.txt')
         if filename:
             with open(filename, 'w') as fileout:
+                fileout.write(self.material.name+" "+self.material.spectrum+'\n')
+                fileout.write(self.material.to_string()+'\n')
                 fileout.write('Target Nuclides\tPropotion\tPathway\n')
                 search_keys = [a for a in self.plainTextEditSearchNuclide.toPlainText().split(' ')]
                 for nuclide, one_target_pathway in self.data.path_way.all_path_ways.items():

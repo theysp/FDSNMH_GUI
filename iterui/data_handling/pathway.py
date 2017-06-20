@@ -83,13 +83,13 @@ class MaterialPathWays(BaseData):
         for i in range(atom_start_idx,real_start_idx):
             if lines[i].find('1') == 0:
                 break;
-            val_list = [a for a in lines[i].split(' ') if len(a) > 0
+            target_nuclide = lines[i][0:12].replace(' ','')
+            val_list = [a for a in lines[i][12:].split(' ') if len(a) > 0
                         and a != '\n'
                         and ('#' not in a)
                         and ('<' not in a)
                         and ('?' not in a)]
-            target_nuclide = val_list[0]+' '+val_list[1]
-            self.atom_num_dict[target_nuclide] = eval_str_number(val_list[2])
+            self.atom_num_dict[target_nuclide] = eval_str_number(val_list[0])
         #read pathway
         real_end_idx = -1
         for i in range(real_start_idx, len(lines)-1):
@@ -161,14 +161,13 @@ class PathWay(BaseData):
         words = [a for a in lines[start_idx].split(' ') if len(a) > 0 and a != '\n']
         number_target = 0
         if len(words) > 10:
-            self.target_nuclide = words[2] + ' ' + words[3]
+            self.target_nuclide = words[2] + words[3]
             number_target = eval(words[9])
         elif len(words) == 10:
             self.target_nuclide = words[2]
             number_target = eval(words[8])
         else:
             raise YSPException('No enough information in target nuclide line')
-        self.target_nuclide = words[2]+' '+words[3]
         for i in range(start_idx+1, len(lines)-1):
             if lines[i].find('path continued') > 0:
                 continue
