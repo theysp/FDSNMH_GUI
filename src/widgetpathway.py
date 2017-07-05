@@ -51,7 +51,7 @@ class WidgetPathway(QWidget, Ui_WidgetPathway):
 
     @pyqtSlot()
     def on_plainTextEditSearchNuclide_textChanged(self):
-        self.data_to_ui(self.data)
+        self.data_to_ui(self.data,self.material)
 
     @pyqtSlot()
     def on_pushButtonSave_clicked(self):

@@ -64,3 +64,6 @@ bk/simple plot/plotdialog.ui
 bk/simple plot/TestClass.py
 .idea/workspace.xml
 .idea/workspace.xml
+*.xml___jb_tmp___
+ITER DATA/FLUX1/FLUXES
+*.xml
