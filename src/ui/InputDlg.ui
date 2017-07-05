@@ -20,7 +20,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Input parameters for activation data</string>
+   <string>Material Activation Estimator</string>
+  </property>
+  <property name="toolTip">
+   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This program is developed by the &lt;span style=&quot; font-weight:600;&quot;&gt;FDS Team&lt;/span&gt;, and delivered to ITER and maintained by ITER&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -75,7 +78,7 @@
           <item>
            <widget class="QListWidget" name="listWidgetMaterialLib">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This list contains currently cached materials, which can be found in the file in &amp;quot;Data Save/matlist.txt&amp;quot;, in which, each line represent one material's components.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This list contains currently cached materials, which can be found in the file in &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;quot;Data Save/matlist.txt&amp;quot;&lt;/span&gt;, in which, each line represent one material's components.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -215,85 +218,72 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Current Material</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Edit Material Name:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPlainTextEdit" name="textMatName">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>25</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QTableWidgetMaterial" name="tableWidgetMatComposition">
-            <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>88</number>
-            </attribute>
-            <attribute name="horizontalHeaderStretchLastSection">
-             <bool>true</bool>
-            </attribute>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderMinimumSectionSize">
-             <number>16</number>
-            </attribute>
-            <attribute name="verticalHeaderStretchLastSection">
-             <bool>false</bool>
-            </attribute>
-            <column>
-             <property name="text">
-              <string>Nuclide</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Weight Proportion (%)</string>
-             </property>
-            </column>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonClearCurrentMat">
-            <property name="text">
-             <string>Clear</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item>
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
+            <string>Current Material</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Edit Material Name:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="textMatName"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidgetMaterial" name="tableWidgetMatComposition">
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>88</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderMinimumSectionSize">
+               <number>16</number>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Nuclide</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Weight Proportion (%)</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonClearCurrentMat">
+              <property name="text">
+               <string>Clear</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
