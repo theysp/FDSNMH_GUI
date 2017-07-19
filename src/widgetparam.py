@@ -21,12 +21,12 @@ import traceback
 
 class WidgetParam(QWidget, Ui_WidgetParam):
     param_names = ['activity(Bq/kg)',
-                   'total_heat(kW/kg)',
                    'dose_rate(Sv/h)',
+                   'total_heat(kW/kg)',
                    'ingestion_dose(Sv/kg)']
     show_names = ['Specific activity(Bq/kg)',
-                   'Heat(kW/kg)',
                    'Dose rate(Sv/h)',
+                   'Heat(kW/kg)',
                    'Ingestion dose(Sv/kg)']
     cooling_times = [1, 1.0e5, 1.0e6, 1.0e7, 1.0e8, 1.0e9, 1.5e9]
 
@@ -92,19 +92,19 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     def initialize_figs_parameters(self):
         self.canvas.figure.clf()
-        checked_button_num = 0
+        self.checked_button_num = 0
         for i in range(0, 4):
             if self.checkButtons[i].isChecked():
-                checked_button_num += 1
-        if checked_button_num is 0:
+                self.checked_button_num += 1
+        if self.checked_button_num is 0:
             return
         idx = 1
-        if checked_button_num % 2 is 0:
-            totalnum = checked_button_num * 50 + 20
-        elif checked_button_num == 3:
+        if self.checked_button_num % 2 is 0:
+            totalnum = self.checked_button_num * 50 + 20
+        elif self.checked_button_num == 3:
             totalnum = 220
         else:
-            totalnum = checked_button_num * 100 + 10
+            totalnum = self.checked_button_num * 100 + 10
         for i in range(0, 4):
             if self.checkButtons[i].isChecked():
                 self.axes[i] = self.figure.add_subplot(totalnum + idx)
@@ -113,8 +113,10 @@ class WidgetParam(QWidget, Ui_WidgetParam):
         self.canvas.draw()
 
     def on_click(self):
+        self.setCursor(Qt.WaitCursor)
         self.update()
         self.initialize_figs_parameters()
+        self.setCursor(Qt.ArrowCursor)
 
     def resizeEvent(self, event: QResizeEvent):
         super(WidgetParam, self).resizeEvent(event)
@@ -170,7 +172,11 @@ class WidgetParam(QWidget, Ui_WidgetParam):
             for key, val in self.extra_valuesss.items():
                 cur_axe.plot(WidgetParam.cooling_times, val[idx], color=color_sequence[color_idx], label=key)
                 color_idx += 1
-            cur_axe.legend()
+            if self.checked_button_num >= 2:
+                cur_axe.legend(loc='best', fontsize='xx-small')
+            else:
+                cur_axe.legend(loc='best')
+# xx-large, small, medium, smaller, None, large, larger, x-large, xx-small, x-small
         cur_axe.set_xscale('log')
         cur_axe.set_yscale('log')
 
@@ -202,9 +208,9 @@ class WidgetParam(QWidget, Ui_WidgetParam):
 
     @pyqtSlot()
     def on_pushButtonLoadOther_clicked(self):
+        self.setCursor(Qt.WaitCursor)
         try:
             filename, _ = QFileDialog.getOpenFileName(parent=self)
-            self.setCursor(Qt.WaitCursor)
             if filename:
                 with open(filename, 'r') as filein:
                     lines = filein.readlines()
@@ -229,4 +235,4 @@ class WidgetParam(QWidget, Ui_WidgetParam):
             traceback.print_exc()
         finally:
             self.setCursor(Qt.ArrowCursor)
-
+        self.setCursor(Qt.ArrowCursor)

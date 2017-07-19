@@ -20,7 +20,7 @@ class ShowResultDlg(QDialog, Ui_ShowResultDlg):
         self.spectrum_name = material.spectrum
         self.data_to_uis()
         self.setWindowIcon(QIcon('fds.ico'))
-        # self.setWindowFlags(Qt.WindowMinimizeButtonHint)
+        # self.setWindowFlags(Qt.WindowMinimizeButtonHint)c1
 
     def data_to_uis(self):
         self.Parameters.data_to_ui(self.material.activation_data.get_spectra_data(self.spectrum_name)

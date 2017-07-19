@@ -14,6 +14,7 @@ class Ui_InputDlg(object):
         InputDlg.setEnabled(True)
         InputDlg.resize(717, 515)
         InputDlg.setMinimumSize(QtCore.QSize(700, 500))
+        InputDlg.setToolTip("")
         InputDlg.setSizeGripEnabled(False)
         InputDlg.setModal(False)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(InputDlg)
@@ -151,7 +152,7 @@ class Ui_InputDlg(object):
     def retranslateUi(self, InputDlg):
         _translate = QtCore.QCoreApplication.translate
         InputDlg.setWindowTitle(_translate("InputDlg", "Material Activation Estimator"))
-        InputDlg.setToolTip(_translate("InputDlg", "<html><head/><body><p>This program is developed by the <span style=\" font-weight:600;\">FDS Team</span>, and delivered to ITER and maintained by ITER</p></body></html>"))
+        InputDlg.setWhatsThis(_translate("InputDlg", "<html><head/><body><p>This is the interface program for the Activation Handbook for ITER, developed by the FDS team, named as Material Activation Estimator</p></body></html>"))
         self.groupBox_3.setTitle(_translate("InputDlg", "Material Library"))
         self.label_3.setText(_translate("InputDlg", "Search Material:"))
         self.label_2.setText(_translate("InputDlg", "Material List in Library:"))

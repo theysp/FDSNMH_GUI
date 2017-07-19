@@ -166,7 +166,7 @@ class WidgetTransGraph(QWidget, Ui_WidgetTransGraph):
                 'weight': 'bold', 'size': 10}
         ylow,yhigh = self.axe.get_ylim()
         if allInRange:
-            self.axe.set_ylim(1e-11, 10000)
+            self.axe.set_ylim(1e-10, 10000)
         elif ylow < 1e-60:
             self.axe.set_ylim(1e-60, 10000)
         else:

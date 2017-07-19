@@ -49,7 +49,7 @@ class InputDlg(QDialog, Ui_InputDlg):
         if mat_ret is None:
             return None
         else:
-            mat_ret.name = self.textMatName.toPlainText()
+            mat_ret.name = self.textMatName.text()
             return mat_ret
 
     def show_message(self, msg):
@@ -91,18 +91,18 @@ class InputDlg(QDialog, Ui_InputDlg):
         if self.tableWidgetSelectedMatComposition.cur_material:
             new_mat = copy.deepcopy(self.tableWidgetSelectedMatComposition.cur_material)
             self.tableWidgetMatComposition.mat_info_to_ui(new_mat)
-            self.textMatName.setPlainText(new_mat.name)
+            self.textMatName.setText(new_mat.name)
 
     @pyqtSlot()
     def on_pushButtonSave_clicked(self):
         if self.tableWidgetMatComposition.cur_material:
             material = self.tableWidgetMatComposition.ui_to_mat_info()
-            material.name = self.textMatName.toPlainText()
+            material.name = self.textMatName.text()
             if material:
                 try:
                     self.matlib.add_material(material)
-                except MaterialAlreadyException as err:
-                    self.show_message('\"'+material.name + "\" already exists in the material library, please change the material name to save it.")
+                except YSPException as err:
+                    self.show_message(err.message)
                     return
                 except Exception:
                     pass

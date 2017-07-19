@@ -67,3 +67,7 @@ bk/simple plot/TestClass.py
 *.xml___jb_tmp___
 ITER DATA/FLUX1/FLUXES
 *.xml
+ITER DATA/FLUX2/FLUXES
+ITER DATA/FLUX3/FLUXES
+ITER DATA/FLUX5/fluxes
+ITER DATA/FLUX6/fluxes
